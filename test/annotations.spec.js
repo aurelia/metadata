@@ -3,7 +3,7 @@ import {
   getAllAnnotations, 
   addAnnotation,
   normalize
-} from '~/index';
+} from '../lib/index';
 
 describe('annotations', () => {
   it('can be located by type', () => {

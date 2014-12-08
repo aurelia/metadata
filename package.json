@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -24,7 +24,10 @@
       "lib": "dist"
     },
     "main": "commonjs/index",
-    "browser": "amd/index"
+    "browser": "amd/index",
+    "map": {
+      "aurelia-metadata": "/dist/amd/index"
+    }
   },
   "devDependencies": {
     "conventional-changelog": "0.0.11",

@@ -1,7 +1,5 @@
 System.config({
   "paths": {
-    "*": "*.js",
-    "~/*": "lib/*.js"
+    "*": "*.js"
   }
 });
-
