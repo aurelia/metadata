@@ -15,7 +15,7 @@ var VERSION = pkg.version;
 var path = {
   source:'lib/**/*.js',
   output:'dist/',
-  docs:'./doc'
+  doc:'./doc'
 };
 
 var compilerOptions = {
@@ -38,7 +38,7 @@ var compilerOptions = {
 var jshintConfig = {esnext:true};
 
 gulp.task('clean', function() {
-  return gulp.src([path.output, path.docs], {read: false})
+  return gulp.src([path.output], {read: false})
     .pipe(clean());
 });
 
@@ -65,10 +65,10 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('docs', function(){
+gulp.task('doc', function(){
   gulp.src(path.source)
     .pipe(yuidoc.parser(null, 'api.json'))
-    .pipe(gulp.dest(path.docs));
+    .pipe(gulp.dest(path.doc));
 });
 
 gulp.task('changelog', function(callback) {
@@ -77,7 +77,7 @@ gulp.task('changelog', function(callback) {
     version: VERSION,
     file: 'CHANGELOG.md'
   }, function(err, log) {
-    fs.writeFileSync(__dirname + '/CHANGELOG.md', log);
+    fs.writeFileSync(path.doc + '/CHANGELOG.md', log);
   });
 });
 
@@ -93,7 +93,7 @@ gulp.task('prepare-release', function(callback){
   runSequence(
     'build',
     'lint',
-    'docs',
+    'doc',
     'changelog',
     callback
   );
