@@ -19,15 +19,10 @@
     "url": "git://github.com/aurelia/metadata"
   },
   "jspm": {
-    "name": "aurelia-metadata",
     "directories": {
       "lib": "dist"
     },
-    "main": "commonjs/index",
-    "browser": "amd/index",
-    "map": {
-      "aurelia-metadata": "/dist/amd/index"
-    }
+    "main": "amd/index"
   },
   "devDependencies": {
     "conventional-changelog": "0.0.11",
