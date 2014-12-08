@@ -20,7 +20,7 @@ To build the code, follow these steps.
 2. From the project folder, execute the following command:
 
 	```shell
-	sudo npm install
+	npm install
 	```
 3. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
 
