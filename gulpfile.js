@@ -73,7 +73,7 @@ gulp.task('doc', function(){
 
 gulp.task('changelog', function(callback) {
   changelog({
-    repository: 'https://github.com/Aurelia/metadata',
+    repository: pkg.repository.url,
     version: VERSION,
     file: 'CHANGELOG.md'
   }, function(err, log) {

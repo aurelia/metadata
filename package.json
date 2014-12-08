@@ -9,14 +9,14 @@
   ],
   "homepage": "http://aurelia.io",
   "bugs": {
-    "url": "https://github.com/Aurelia/metadata/issues"
+    "url": "https://github.com/aurelia/metadata/issues"
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Aurelia/metadata"
+    "url": "git://github.com/aurelia/metadata"
   },
   "jspm": {
     "name": "aurelia-metadata",
