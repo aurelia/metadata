@@ -3,7 +3,7 @@ import {
   getAllAnnotations, 
   addAnnotation,
   normalize
-} from '../dist/amd/index';
+} from '../lib/index';
 
 describe('annotations', () => {
   it('can be located by type', () => {
