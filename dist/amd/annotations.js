@@ -1,18 +1,17 @@
 define(["exports"], function (exports) {
   "use strict";
 
-  exports.normalize = normalize;
   exports.getAnnotation = getAnnotation;
   exports.getAllAnnotations = getAllAnnotations;
   exports.addAnnotation = addAnnotation;
-  function normalize(fn) {
+  function getAnnotation(fn, annotationType) {
+    var annotations, i, ii, annotation;
+
     if (typeof fn.annotations === "function") {
       fn.annotations = fn.annotations();
     }
-  }
 
-  function getAnnotation(fn, annotationType) {
-    var annotations = fn.annotations, i, ii, annotation;
+    annotations = fn.annotations;
 
     if (annotations === undefined) {
       return null;
@@ -29,12 +28,22 @@ define(["exports"], function (exports) {
     return null;
   }
 
+  var noAnnotations = [];
+
   function getAllAnnotations(fn, annotationType) {
-    var annotations = fn.annotations, found = [], i, ii, annotation;
+    var annotations, i, ii, annotation, found;
+
+    if (typeof fn.annotations === "function") {
+      fn.annotations = fn.annotations();
+    }
+
+    annotations = fn.annotations;
 
     if (annotations === undefined) {
-      return found;
+      return noAnnotations;
     }
+
+    found = [];
 
     for (i = 0, ii = annotations.length; i < ii; ++i) {
       annotation = annotations[i];
@@ -48,7 +57,13 @@ define(["exports"], function (exports) {
   }
 
   function addAnnotation(fn, annotation) {
-    var annotations = fn.annotations || (fn.annotations = []);
+    var annotations;
+
+    if (typeof fn.annotations === "function") {
+      fn.annotations = fn.annotations();
+    }
+
+    annotations = fn.annotations || (fn.annotations = []);
     annotations.push(annotation);
   }
 });
