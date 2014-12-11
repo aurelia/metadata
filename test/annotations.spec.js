@@ -17,7 +17,6 @@ describe('annotations', () => {
   });
 
   it('can be normalized to handle the fallback metadata location', () => {
-    normalize(HasFallbackAnnotations);
     var found = getAnnotation(HasFallbackAnnotations, SampleAnnotation);
     expect(found instanceof SampleAnnotation).toBe(true);
   });
