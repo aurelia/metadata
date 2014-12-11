@@ -16,7 +16,7 @@
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/aurelia/metadata"
+    "url": "https://github.com/aurelia/metadata"
   },
   "jspm": {
     "directories": {
