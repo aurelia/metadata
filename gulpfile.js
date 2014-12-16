@@ -11,7 +11,7 @@ var pkg = require('./package.json');
 var fs = require('fs');
 
 var path = {
-  source:'lib/**/*.js',
+  source:'src/**/*.js',
   output:'dist/',
   doc:'./doc'
 };

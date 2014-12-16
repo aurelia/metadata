@@ -40,5 +40,14 @@
     "karma-jspm": "^1.0.1",
     "object.assign": "^1.0.3",
     "run-sequence": "^1.0.2"
+  },
+  "aurelia":{
+    "documentation":{
+      "links":[
+        { "rel":"api", "title":"API", "href":"doc/api.json" },
+        { "rel":"changelog", "title":"Change Log", "href":"doc/CHANGELOG.md" },
+        { "rel":"article", "title":"What is Metadata?", "href":"doc/what-is-metadata.md" }
+      ]
+    }
   }
 }
