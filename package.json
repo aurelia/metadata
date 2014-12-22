@@ -48,7 +48,8 @@
       "aurelia-dependency-injection",
       "aurelia-framework",
       "aurelia-loader-systemjs",
-      "aurelia-templating"
+      "aurelia-templating",
+      "aurelia-templating-router"
     ],
     "documentation": {
       "links": [
