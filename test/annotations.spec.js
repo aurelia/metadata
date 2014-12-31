@@ -55,6 +55,11 @@ describe('annotations', () => {
     var found = getAllAnnotations(DerivedWithBaseAnnotations, SampleAnnotation, true);
     expect(found.length).toBe(2);
   });
+  it('getAllAnnotatons returns empty array when annotation is undefined of the class', () => {  
+    var found = getAllAnnotations(HasNoAnnotation, SampleAnnotation);
+     expect(found).toEqual([]); 
+  })
+
 
   class BaseAnnotation{}
   class SampleAnnotation extends BaseAnnotation {
@@ -78,6 +83,7 @@ describe('annotations', () => {
   HasOneAnnotation.annotations = [new SampleAnnotation()];
 
   class OverridesAnnotations extends HasAnnotations {}
+  class HasNoAnnotation{}
   OverridesAnnotations.annotations = [new SampleAnnotation(3)];
 
   class DerivedWithBaseAnnotations extends HasAnnotations {}

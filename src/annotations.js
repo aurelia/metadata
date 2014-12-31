@@ -40,9 +40,10 @@ export function getAnnotation(fn, annotationType, deep){
   if(deep){
     return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
   }
-
+  
   return null;
 }
+
 
 var noAnnotations = [];
 
