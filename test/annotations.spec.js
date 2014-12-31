@@ -29,6 +29,16 @@ describe('annotations', () => {
     found = getAllAnnotations(HasOneAnnotation, SampleAnnotation);
     expect(found.length).toBe(2);
   });
+  
+  it('can be added with function', () => {
+    
+    HasAnnotations.annotations = () => {
+      return [new SampleAnnotation(), new SampleAnnotation(), new SampleAnnotation()];
+    };
+
+    var found = getAllAnnotations(HasAnnotations, SampleAnnotation);
+    expect(found.length).toBe(3);
+  });
 
   class BaseAnnotation{}
   class SampleAnnotation extends BaseAnnotation {}
