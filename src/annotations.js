@@ -8,23 +8,26 @@
  * @for export
  */
 export function getAnnotation(fn, annotationType){
-
+  var annotations, i, ii, annotation;
+  
   resolveAnnotations(fn);
 
-  let annotations = fn.annotations;
+  annotations = fn.annotations;
 
   if(annotations === undefined){
     return null;
   }
 
-  for(let annotation of annotations){
+  for(i = 0, ii = annotations.length; i < ii; ++i){
+    annotation = annotations[i];
+
     if(annotation instanceof annotationType){
       return annotation;
     }
   }
-   return null;
-}
 
+  return null;
+}
 
 var noAnnotations = [];
 
@@ -38,18 +41,21 @@ var noAnnotations = [];
  * @for export
  */
 export function getAllAnnotations(fn, annotationType){
+  var annotations, i, ii, annotation, found;
 
   resolveAnnotations(fn);
 
-  let annotations = fn.annotations;
+  annotations = fn.annotations;
 
   if(annotations === undefined){
     return noAnnotations;
   }
 
-  let found = [];
+  found = [];
 
-  for(let annotation of annotations){
+  for(i = 0, ii = annotations.length; i < ii; ++i){
+    annotation = annotations[i];
+
     if(annotation instanceof annotationType){
       found.push(annotation);
     }
@@ -67,10 +73,11 @@ export function getAllAnnotations(fn, annotationType){
  * @for export
  */
 export function addAnnotation(fn, annotation){
+  var annotations;
 
   resolveAnnotations(fn);
-  
-  let annotations = fn.annotations || (fn.annotations = []);
+
+  annotations = fn.annotations || (fn.annotations = []);
   annotations.push(annotation);
 }
 
