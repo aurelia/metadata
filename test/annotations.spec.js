@@ -29,6 +29,20 @@ describe('annotations', () => {
     found = getAllAnnotations(HasOneAnnotation, SampleAnnotation);
     expect(found.length).toBe(2);
   });
+  
+  it('can be added with function', () => {
+    HasAnnotations.annotations = () => {
+      return [new SampleAnnotation(), new SampleAnnotation(), new SampleAnnotation()];
+    };
+
+    var found = getAllAnnotations(HasAnnotations, SampleAnnotation);
+    expect(found.length).toBe(3);
+  });
+
+  it('getAllAnnotatons returns empty array when annotation is undefined of the class', () => {  
+    var found = getAllAnnotations(HasNoAnnotation, SampleAnnotation);
+     expect(found).toEqual([]); 
+  })
 
   class BaseAnnotation{}
   class SampleAnnotation extends BaseAnnotation {}
@@ -44,4 +58,6 @@ describe('annotations', () => {
 
   class HasOneAnnotation{}
   HasOneAnnotation.annotations = [new SampleAnnotation()];
+
+  class HasNoAnnotation{}
 });

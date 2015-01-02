@@ -9,10 +9,8 @@
  */
 export function getAnnotation(fn, annotationType){
   var annotations, i, ii, annotation;
-
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
+  
+  resolveAnnotations(fn);
 
   annotations = fn.annotations;
 
@@ -45,9 +43,7 @@ var noAnnotations = [];
 export function getAllAnnotations(fn, annotationType){
   var annotations, i, ii, annotation, found;
 
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
+  resolveAnnotations(fn);
 
   annotations = fn.annotations;
 
@@ -79,10 +75,14 @@ export function getAllAnnotations(fn, annotationType){
 export function addAnnotation(fn, annotation){
   var annotations;
 
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
+  resolveAnnotations(fn);
 
   annotations = fn.annotations || (fn.annotations = []);
   annotations.push(annotation);
+}
+
+function resolveAnnotations(fn){
+ if(typeof fn.annotations === 'function'){
+    fn.annotations = fn.annotations();
+  }
 }
