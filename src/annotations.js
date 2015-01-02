@@ -10,7 +10,7 @@
  */
 export function getAnnotation(fn, annotationType, deep){
   var annotations, i, ii, annotation;
-
+  
   if(!fn){
     return null;
   }
