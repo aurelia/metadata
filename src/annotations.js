@@ -4,11 +4,16 @@
  * @method getAnnotation
  * @param {Function} fn The function whose annotations are being inspected.
  * @param {Function} annotationType The annotation type to look for.
+ * @param {Boolean} deep Indicates whether or not to search the inheritance hierarchy for annotations.
  * @return {Object} Returns an instance of the specified annotation type if found; otherwise null.
  * @for export
  */
-export function getAnnotation(fn, annotationType){
+export function getAnnotation(fn, annotationType, deep){
   var annotations, i, ii, annotation;
+
+  if(!fn){
+    return null;
+  }
 
   if(typeof fn.annotations === 'function'){
     fn.annotations = fn.annotations();
@@ -17,6 +22,10 @@ export function getAnnotation(fn, annotationType){
   annotations = fn.annotations;
 
   if(annotations === undefined){
+    if(deep){
+      return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
+    }
+
     return null;
   }
 
@@ -26,6 +35,10 @@ export function getAnnotation(fn, annotationType){
     if(annotation instanceof annotationType){
       return annotation;
     }
+  }
+
+  if(deep){
+    return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
   }
 
   return null;
@@ -39,11 +52,16 @@ var noAnnotations = [];
  * @method getAllAnnotations
  * @param {Function} fn The function whose annotations are being inspected.
  * @param {Function} annotationType The annotation type to look for.
+ * @param {Boolean} deep Indicates whether or not to search the inheritance hierarchy for annotations.
  * @return {Array} Returns an array of the specified annotation type.
  * @for export
  */
-export function getAllAnnotations(fn, annotationType){
+export function getAllAnnotations(fn, annotationType, deep){
   var annotations, i, ii, annotation, found;
+
+  if(!fn){
+    return noAnnotations;
+  }
 
   if(typeof fn.annotations === 'function'){
     fn.annotations = fn.annotations();
@@ -52,6 +70,10 @@ export function getAllAnnotations(fn, annotationType){
   annotations = fn.annotations;
 
   if(annotations === undefined){
+    if(deep){
+      return getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep);
+    }
+
     return noAnnotations;
   }
 
@@ -63,6 +85,10 @@ export function getAllAnnotations(fn, annotationType){
     if(annotation instanceof annotationType){
       found.push(annotation);
     }
+  }
+
+  if(deep){
+    found = found.concat(getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep));
   }
 
   return found;

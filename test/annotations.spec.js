@@ -30,11 +30,32 @@ describe('annotations', () => {
     expect(found.length).toBe(2);
   });
 
+  it('can override base annotations', () => {
+    var found = getAnnotation(OverridesAnnotations, SampleAnnotation);
+    expect(found.id).toBe(3);
+  });
+
+  it('can inherit base annotations when searching deep by type', () => {
+    var found = getAnnotation(DerivedWithBaseAnnotations, SampleAnnotation, true);
+    expect(found instanceof SampleAnnotation).toBe(true);
+  });
+
+  it('can inherit base annotations when searching deep for all', () => {
+    var found = getAllAnnotations(DerivedWithBaseAnnotations, SampleAnnotation, true);
+    expect(found.length).toBe(2);
+  });
+
   class BaseAnnotation{}
-  class SampleAnnotation extends BaseAnnotation {}
+  class SampleAnnotation extends BaseAnnotation {
+    constructor(id){
+      this.id = id;
+    }
+  }
+
+  class SampleAnnotation2 extends BaseAnnotation {}
 
   class HasAnnotations{}
-  HasAnnotations.annotations = [new SampleAnnotation(), new SampleAnnotation()];
+  HasAnnotations.annotations = [new SampleAnnotation(1), new SampleAnnotation(2)];
 
   class HasFallbackAnnotations{
     static annotations(){
@@ -44,4 +65,10 @@ describe('annotations', () => {
 
   class HasOneAnnotation{}
   HasOneAnnotation.annotations = [new SampleAnnotation()];
+
+  class OverridesAnnotations extends HasAnnotations {}
+  OverridesAnnotations.annotations = [new SampleAnnotation(3)];
+
+  class DerivedWithBaseAnnotations extends HasAnnotations {}
+  DerivedWithBaseAnnotations.annotations = ['foo'];
 });
