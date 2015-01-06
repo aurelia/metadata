@@ -1,9 +1,13 @@
 "use strict";
 
-define(["exports"], function (exports) {
-  exports.getAnnotation = getAnnotation;
-  exports.getAllAnnotations = getAllAnnotations;
-  exports.addAnnotation = addAnnotation;
+System.register([], function (_export) {
+  var noAnnotations;
+  _export("getAnnotation", getAnnotation);
+
+  _export("getAllAnnotations", getAllAnnotations);
+
+  _export("addAnnotation", addAnnotation);
+
   function getAnnotation(fn, annotationType, deep) {
     var annotations, i, ii, annotation;
 
@@ -39,8 +43,6 @@ define(["exports"], function (exports) {
 
     return null;
   }
-
-  var noAnnotations = [];
 
   function getAllAnnotations(fn, annotationType, deep) {
     var annotations, i, ii, annotation, found;
@@ -90,4 +92,10 @@ define(["exports"], function (exports) {
     annotations = fn.annotations || (fn.annotations = []);
     annotations.push(annotation);
   }
+  return {
+    setters: [],
+    execute: function () {
+      noAnnotations = [];
+    }
+  };
 });

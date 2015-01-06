@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -63,7 +63,7 @@
         },
         {
           "rel": "describedby",
-          "mediaType": "application/yuidoc+json",
+          "mediaType": "application/aurelia-doc+json",
           "title": "API",
           "href": "doc/api.json"
         },

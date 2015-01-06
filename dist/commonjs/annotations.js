@@ -3,8 +3,12 @@
 exports.getAnnotation = getAnnotation;
 exports.getAllAnnotations = getAllAnnotations;
 exports.addAnnotation = addAnnotation;
-function getAnnotation(fn, annotationType) {
+function getAnnotation(fn, annotationType, deep) {
   var annotations, i, ii, annotation;
+
+  if (!fn) {
+    return null;
+  }
 
   if (typeof fn.annotations === "function") {
     fn.annotations = fn.annotations();
@@ -13,6 +17,10 @@ function getAnnotation(fn, annotationType) {
   annotations = fn.annotations;
 
   if (annotations === undefined) {
+    if (deep) {
+      return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
+    }
+
     return null;
   }
 
@@ -24,13 +32,21 @@ function getAnnotation(fn, annotationType) {
     }
   }
 
+  if (deep) {
+    return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
+  }
+
   return null;
 }
 
 var noAnnotations = [];
 
-function getAllAnnotations(fn, annotationType) {
+function getAllAnnotations(fn, annotationType, deep) {
   var annotations, i, ii, annotation, found;
+
+  if (!fn) {
+    return noAnnotations;
+  }
 
   if (typeof fn.annotations === "function") {
     fn.annotations = fn.annotations();
@@ -39,6 +55,10 @@ function getAllAnnotations(fn, annotationType) {
   annotations = fn.annotations;
 
   if (annotations === undefined) {
+    if (deep) {
+      return getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep);
+    }
+
     return noAnnotations;
   }
 
@@ -50,6 +70,10 @@ function getAllAnnotations(fn, annotationType) {
     if (annotation instanceof annotationType) {
       found.push(annotation);
     }
+  }
+
+  if (deep) {
+    found = found.concat(getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep));
   }
 
   return found;
