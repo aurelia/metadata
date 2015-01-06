@@ -1,3 +1,5 @@
+"use strict";
+
 System.register(["./origin", "./resource-type", "./annotations"], function (_export) {
   return {
     setters: [function (_origin) {

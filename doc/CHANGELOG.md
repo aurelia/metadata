@@ -1,3 +1,7 @@
+### 0.2.3 (2015-01-06)
+
+* Updated package data to ensure proper system.register module format detetion by jspm.
+
 ## 0.2.0 (2015-01-06)
 
 

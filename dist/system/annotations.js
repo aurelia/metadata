@@ -1,3 +1,5 @@
+"use strict";
+
 System.register([], function (_export) {
   var noAnnotations;
   _export("getAnnotation", getAnnotation);
