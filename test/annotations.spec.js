@@ -2,7 +2,6 @@ import {
   getAnnotation, 
   getAllAnnotations, 
   addAnnotation,
-  normalize
 } from '../src/index';
 
 describe('annotations', () => {
