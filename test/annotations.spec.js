@@ -40,7 +40,6 @@ describe('annotations', () => {
     expect(found instanceof SampleAnnotation).toBe(true);
   });
 
-
   it('can be added with function', () => {    
     HasAnnotations.annotations = () => {
       return [new SampleAnnotation(), new SampleAnnotation(), new SampleAnnotation()];
@@ -50,11 +49,11 @@ describe('annotations', () => {
     expect(found.length).toBe(3);
   });
 
-
   it('can inherit base annotations when searching deep for all', () => {
     var found = getAllAnnotations(DerivedWithBaseAnnotations, SampleAnnotation, true);
-    expect(found.length).toBe(2);
+    expect(found.length).toBe(3);
   });
+
   it('getAllAnnotatons returns empty array when annotation is undefined of the class', () => {  
     var found = getAllAnnotations(HasNoAnnotation, SampleAnnotation);
      expect(found).toEqual([]); 

@@ -8,40 +8,40 @@
  * @return {Object} Returns an instance of the specified annotation type if found; otherwise null.
  * @for export
  */
-export function getAnnotation(fn, annotationType, deep){
-  var annotations, i, ii, annotation;
-  
-  if(!fn){
-    return null;
-  }
+export function getAnnotation(fn, annotationType, deep) {
+    var annotations, i, ii, annotation;
 
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
+    if (!fn) {
+        return null;
+    }
 
-  annotations = fn.annotations;
+    if (typeof fn.annotations === 'function') {
+        fn.annotations = fn.annotations();
+    }
 
-  if(annotations === undefined){
-    if(deep){
-      return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
+    annotations = fn.annotations;
+
+    if (annotations === undefined) {
+        if (deep) {
+            return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
+        }
+
+        return null;
+    }
+
+    for (i = 0, ii = annotations.length; i < ii; ++i) {
+        annotation = annotations[i];
+
+        if (annotation instanceof annotationType) {
+            return annotation;
+        }
+    }
+
+    if (deep) {
+        return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
     }
 
     return null;
-  }
-
-  for(i = 0, ii = annotations.length; i < ii; ++i){
-    annotation = annotations[i];
-
-    if(annotation instanceof annotationType){
-      return annotation;
-    }
-  }
-
-  if(deep){
-    return getAnnotation(Object.getPrototypeOf(fn), annotationType, deep);
-  }
-  
-  return null;
 }
 
 
@@ -57,42 +57,42 @@ var noAnnotations = [];
  * @return {Array} Returns an array of the specified annotation type.
  * @for export
  */
-export function getAllAnnotations(fn, annotationType, deep){
-  var annotations, i, ii, annotation, found;
+export function getAllAnnotations(fn, annotationType, deep) {
+    var annotations, i, ii, annotation, found;
 
-  if(!fn){
-    return noAnnotations;
-  }
-
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
-
-  annotations = fn.annotations;
-
-  if(annotations === undefined){
-    if(deep){
-      return getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep);
+    if (!fn) {
+        return noAnnotations;
     }
 
-    return noAnnotations;
-  }
-
-  found = [];
-
-  for(i = 0, ii = annotations.length; i < ii; ++i){
-    annotation = annotations[i];
-
-    if(annotation instanceof annotationType){
-      found.push(annotation);
+    if (typeof fn.annotations === 'function') {
+        fn.annotations = fn.annotations();
     }
-  }
 
-  if(deep){
-    found = found.concat(getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep));
-  }
+    annotations = fn.annotations;
 
-  return found;
+    if (annotations === undefined) {
+        if (deep) {
+            return getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep);
+        }
+
+        return noAnnotations;
+    }
+
+    found = [];
+
+    for (i = 0, ii = annotations.length; i < ii; ++i) {
+        annotation = annotations[i];
+
+        if (annotation instanceof annotationType) {
+            found.push(annotation);
+        }
+    }
+
+    if (deep) {
+        found = found.concat(getAllAnnotations(Object.getPrototypeOf(fn), annotationType, deep));
+    }
+
+    return found;
 }
 
 /**
@@ -103,13 +103,13 @@ export function getAllAnnotations(fn, annotationType, deep){
  * @param {Object} annotation The annotation instance to add.
  * @for export
  */
-export function addAnnotation(fn, annotation){
-  var annotations;
+export function addAnnotation(fn, annotation) {
+    var annotations;
 
-  if(typeof fn.annotations === 'function'){
-    fn.annotations = fn.annotations();
-  }
+    if (typeof fn.annotations === 'function') {
+        fn.annotations = fn.annotations();
+    }
 
-  annotations = fn.annotations || (fn.annotations = []);
-  annotations.push(annotation);
+    annotations = fn.annotations || (fn.annotations = []);
+    annotations.push(annotation);
 }

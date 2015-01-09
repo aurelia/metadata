@@ -1,12 +1,7 @@
-"use strict";
+System.register("annotations", [], function (_export) {
+  "use strict";
 
-System.register([], function (_export) {
-  var noAnnotations;
-  _export("getAnnotation", getAnnotation);
-
-  _export("getAllAnnotations", getAllAnnotations);
-
-  _export("addAnnotation", addAnnotation);
+  var __moduleName = "annotations";
 
   function getAnnotation(fn, annotationType, deep) {
     var annotations, i, ii, annotation;
@@ -43,6 +38,9 @@ System.register([], function (_export) {
 
     return null;
   }
+
+
+  var noAnnotations = [];
 
   function getAllAnnotations(fn, annotationType, deep) {
     var annotations, i, ii, annotation, found;
@@ -91,11 +89,14 @@ System.register([], function (_export) {
 
     annotations = fn.annotations || (fn.annotations = []);
     annotations.push(annotation);
-  }
-  return {
+  }return {
     setters: [],
     execute: function () {
-      noAnnotations = [];
+      _export("getAnnotation", getAnnotation);
+
+      _export("getAllAnnotations", getAllAnnotations);
+
+      _export("addAnnotation", addAnnotation);
     }
   };
 });

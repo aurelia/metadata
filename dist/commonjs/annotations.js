@@ -39,6 +39,7 @@ function getAnnotation(fn, annotationType, deep) {
   return null;
 }
 
+
 var noAnnotations = [];
 
 function getAllAnnotations(fn, annotationType, deep) {

@@ -1,15 +1,19 @@
-"use strict";
-
 define(["exports"], function (exports) {
-  var ResourceType = function ResourceType() {};
+  "use strict";
 
-  ResourceType.prototype.load = function (container, target) {
-    return this;
-  };
+  var ResourceType = (function () {
+    var ResourceType = function ResourceType() {};
 
-  ResourceType.prototype.register = function (registry, name) {
-    throw new Error("All descendents of \"ResourceType\" must implement the \"register\" method.");
-  };
+    ResourceType.prototype.load = function (container, target) {
+      return this;
+    };
+
+    ResourceType.prototype.register = function (registry, name) {
+      throw new Error("All descendents of \"ResourceType\" must implement the \"register\" method.");
+    };
+
+    return ResourceType;
+  })();
 
   exports.ResourceType = ResourceType;
 });

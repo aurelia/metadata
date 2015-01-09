@@ -1,20 +1,20 @@
-"use strict";
+System.register("index", [], function (_export) {
+  "use strict";
 
-System.register(["./origin", "./resource-type", "./annotations"], function (_export) {
+  var __moduleName = "index";
+
   return {
-    setters: [function (_origin) {
-      _export("Origin", _origin.Origin);
-    }, function (_resourceType) {
-      _export("ResourceType", _resourceType.ResourceType);
-    }, function (_annotations) {
-      _export("getAnnotation", _annotations.getAnnotation);
+    setters: [],
+    execute: function () {
+      _export("Origin", ./origin.Origin);
 
-      _export("getAllAnnotations", _annotations.getAllAnnotations);
+      _export("ResourceType", ./resource-type.ResourceType);
 
-      _export("addAnnotation", _annotations.addAnnotation);
+      _export("getAnnotation", ./annotations.getAnnotation);
 
-      _export("normalize", _annotations.normalize);
-    }],
-    execute: function () {}
+      _export("getAllAnnotations", ./annotations.getAllAnnotations);
+
+      _export("addAnnotation", ./annotations.addAnnotation);
+    }
   };
 });
