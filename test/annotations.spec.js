@@ -2,8 +2,7 @@ import {
   getAnnotation,
   getAllAnnotations,
   addAnnotation,
-}
-from '../src/index';
+} from '../src/index';
 
 describe('annotations', () => {
   it('can be located by type', () => {
@@ -38,11 +37,6 @@ describe('annotations', () => {
   it('can inherit base annotations when searching deep by type', () => {
     var found = getAnnotation(DerivedWithBaseAnnotations, SampleAnnotation, true);
     expect(found instanceof SampleAnnotation).toBe(true);
-  });
-
-  it('can inherit base annotations when searching deep for all', () => {
-    var found = getAllAnnotations(DerivedWithBaseAnnotations, SampleAnnotation, true);
-    expect(found.length).toBe(2);
   });
 
   it('can be added with function', () => {
