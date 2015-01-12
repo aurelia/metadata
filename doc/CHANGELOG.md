@@ -1,3 +1,12 @@
+### 0.2.4 (2015-01-12)
+
+
+#### Bug Fixes
+
+* **annotations:** remove bad export ([e307aaa8](https://github.com/aurelia/metadata/commit/e307aaa80260b4c674dd6fb577d92be37c297916))
+* **annotations spec:** remove bad import ([d949c42d](https://github.com/aurelia/metadata/commit/d949c42d8129829c5168fcf4b861d9e6231af11f))
+
+
 ### 0.2.3 (2015-01-06)
 
 * Updated package data to ensure proper system.register module format detetion by jspm.

@@ -1,5 +1,10 @@
 "use strict";
 
+var _prototypeProperties = function (child, staticProps, instanceProps) {
+  if (staticProps) Object.defineProperties(child, staticProps);
+  if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
+};
+
 function ensureType(value) {
   if (value instanceof Origin) {
     return value;
@@ -8,33 +13,48 @@ function ensureType(value) {
   return new Origin(value);
 }
 
-var Origin = function Origin(moduleId, moduleMember) {
-  this.moduleId = moduleId;
-  this.moduleMember = moduleMember;
-};
+var Origin = (function () {
+  var Origin = function Origin(moduleId, moduleMember) {
+    this.moduleId = moduleId;
+    this.moduleMember = moduleMember;
+  };
 
-Origin.get = function (fn) {
-  var origin = fn.__origin__;
+  _prototypeProperties(Origin, {
+    get: {
+      value: function (fn) {
+        var origin = fn.__origin__;
 
-  if (origin !== undefined) {
-    return origin;
-  }
+        if (origin !== undefined) {
+          return origin;
+        }
 
-  if (typeof fn.origin === "function") {
-    return fn.__origin__ = ensureType(fn.origin());
-  }
+        if (typeof fn.origin === "function") {
+          return fn.__origin__ = ensureType(fn.origin());
+        }
 
-  if (fn.origin !== undefined) {
-    return fn.__origin__ = ensureType(fn.origin);
-  }
+        if (fn.origin !== undefined) {
+          return fn.__origin__ = ensureType(fn.origin);
+        }
 
-  return null;
-};
+        return null;
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    },
+    set: {
+      value: function (fn, origin) {
+        if (Origin.get(fn) === null) {
+          fn.__origin__ = origin;
+        }
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    }
+  });
 
-Origin.set = function (fn, origin) {
-  if (Origin.get(fn) === null) {
-    fn.__origin__ = origin;
-  }
-};
+  return Origin;
+})();
 
 exports.Origin = Origin;

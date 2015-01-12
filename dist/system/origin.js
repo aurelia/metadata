@@ -1,7 +1,7 @@
-"use strict";
-
 System.register([], function (_export) {
-  var Origin;
+  "use strict";
+
+  var _prototypeProperties, Origin;
 
 
   function ensureType(value) {
@@ -15,35 +15,54 @@ System.register([], function (_export) {
   return {
     setters: [],
     execute: function () {
-      Origin = function Origin(moduleId, moduleMember) {
-        this.moduleId = moduleId;
-        this.moduleMember = moduleMember;
+      _prototypeProperties = function (child, staticProps, instanceProps) {
+        if (staticProps) Object.defineProperties(child, staticProps);
+        if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
       };
 
-      Origin.get = function (fn) {
-        var origin = fn.__origin__;
+      Origin = (function () {
+        var Origin = function Origin(moduleId, moduleMember) {
+          this.moduleId = moduleId;
+          this.moduleMember = moduleMember;
+        };
 
-        if (origin !== undefined) {
-          return origin;
-        }
+        _prototypeProperties(Origin, {
+          get: {
+            value: function (fn) {
+              var origin = fn.__origin__;
 
-        if (typeof fn.origin === "function") {
-          return fn.__origin__ = ensureType(fn.origin());
-        }
+              if (origin !== undefined) {
+                return origin;
+              }
 
-        if (fn.origin !== undefined) {
-          return fn.__origin__ = ensureType(fn.origin);
-        }
+              if (typeof fn.origin === "function") {
+                return fn.__origin__ = ensureType(fn.origin());
+              }
 
-        return null;
-      };
+              if (fn.origin !== undefined) {
+                return fn.__origin__ = ensureType(fn.origin);
+              }
 
-      Origin.set = function (fn, origin) {
-        if (Origin.get(fn) === null) {
-          fn.__origin__ = origin;
-        }
-      };
+              return null;
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          set: {
+            value: function (fn, origin) {
+              if (Origin.get(fn) === null) {
+                fn.__origin__ = origin;
+              }
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          }
+        });
 
+        return Origin;
+      })();
       _export("Origin", Origin);
     }
   };

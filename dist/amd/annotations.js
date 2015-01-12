@@ -1,6 +1,6 @@
-"use strict";
-
 define(["exports"], function (exports) {
+  "use strict";
+
   exports.getAnnotation = getAnnotation;
   exports.getAllAnnotations = getAllAnnotations;
   exports.addAnnotation = addAnnotation;
