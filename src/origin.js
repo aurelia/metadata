@@ -1,9 +1,3 @@
-/**
- * Utilities for reading and writing the metadata of JavaScript functions.
- *
- * @module metadata
- */
-
 function ensureType(value){
   if(value instanceof Origin){
     return value;
