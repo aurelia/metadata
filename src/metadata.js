@@ -47,7 +47,7 @@ export function addFunctionMetadataLocation(staticPropertyName){
  * Adds a function capable of locating metadata for functions.
  *
  * @method addFunctionMetadataLocator
- * @param {Function} locator A function which receives a function which it searched for metadata. It should return unefined if none are found.
+ * @param {Function} locator Configures a function which searches for metadata. It should return undefined if none is found.
  * @for export
  */
 export function addFunctionMetadataLocator(locator){
