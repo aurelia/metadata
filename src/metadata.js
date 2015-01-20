@@ -53,6 +53,7 @@ export function addFunctionMetadataLocation(staticPropertyName){
 export function addFunctionMetadataLocator(locator){
   if(locateFunctionMetadataElsewhere === undefined){
     locateFunctionMetadataElsewhere = locator;
+    return;
   }
 
   var original = locateFunctionMetadataElsewhere;
