@@ -100,7 +100,13 @@ class MetadataStorage {
       this.metadata = [];
     }
 
+    this.last = instance;
     this.metadata.push(instance);
+    return this;
+  }
+
+  and(func){
+    func(this.last);
     return this;
   }
 }
