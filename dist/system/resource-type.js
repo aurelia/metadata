@@ -11,11 +11,11 @@ System.register([], function (_export) {
       };
 
       ResourceType = (function () {
-        var ResourceType = function ResourceType() {};
+        function ResourceType() {}
 
         _prototypeProperties(ResourceType, null, {
           load: {
-            value: function (container, target) {
+            value: function load(container, target) {
               return this;
             },
             writable: true,
@@ -23,7 +23,7 @@ System.register([], function (_export) {
             configurable: true
           },
           register: {
-            value: function (registry, name) {
+            value: function register(registry, name) {
               throw new Error("All descendents of \"ResourceType\" must implement the \"register\" method.");
             },
             writable: true,

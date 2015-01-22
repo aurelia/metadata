@@ -1,9 +1,7 @@
-define(["exports", "./origin", "./resource-type", "./annotations"], function (exports, _origin, _resourceType, _annotations) {
+define(["exports", "./origin", "./resource-type", "./metadata"], function (exports, _origin, _resourceType, _metadata) {
   "use strict";
 
   exports.Origin = _origin.Origin;
   exports.ResourceType = _resourceType.ResourceType;
-  exports.getAnnotation = _annotations.getAnnotation;
-  exports.getAllAnnotations = _annotations.getAllAnnotations;
-  exports.addAnnotation = _annotations.addAnnotation;
+  exports.Metadata = _metadata.Metadata;
 });

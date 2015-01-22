@@ -1,3 +1,23 @@
+## 0.3.0 (2015-01-22)
+
+
+#### Bug Fixes
+
+* **metadata:**
+  * rename configuration helper ([81c73ec1](https://github.com/aurelia/metadata/commit/81c73ec13ceeb6f257d6ae7a6ca91a02ed43ddcf))
+  * accidental double wrapping of custom location function ([ac11ead8](https://github.com/aurelia/metadata/commit/ac11ead8cdb031c51bf705ea7775108b6f29ddcb))
+
+
+#### Features
+
+* **metadata:**
+  * enhance dsl for configuring added metadata ([8ba28995](https://github.com/aurelia/metadata/commit/8ba2899578cf1353e16f6e695ce93a538153d6bf))
+  * add a "has" helper to MetadataStorage ([362fcc7b](https://github.com/aurelia/metadata/commit/362fcc7bfe4793cc2b2c296b33d21a5a6a9e99f8))
+  * new metadata fluent api ([b4c8162f](https://github.com/aurelia/metadata/commit/b4c8162f3428b7aa09db4bd8dd01f6a5505bf7ef))
+  * re-implement metadata ([ce0304e2](https://github.com/aurelia/metadata/commit/ce0304e2fdc1f2aa69c3146aa9c42a260d868c0e))
+* **origin:**  do not alter target object or function with origin data ([cbb8ac3a](https://github.com/aurelia/metadata/commit/cbb8ac3aeb15873232d76a97d1ba97dd8aa63d91))
+
+
 ### 0.2.4 (2015-01-12)
 
 

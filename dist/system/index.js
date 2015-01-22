@@ -1,4 +1,4 @@
-System.register(["./origin", "./resource-type", "./annotations"], function (_export) {
+System.register(["./origin", "./resource-type", "./metadata"], function (_export) {
   "use strict";
 
   return {
@@ -6,12 +6,8 @@ System.register(["./origin", "./resource-type", "./annotations"], function (_exp
       _export("Origin", _origin.Origin);
     }, function (_resourceType) {
       _export("ResourceType", _resourceType.ResourceType);
-    }, function (_annotations) {
-      _export("getAnnotation", _annotations.getAnnotation);
-
-      _export("getAllAnnotations", _annotations.getAllAnnotations);
-
-      _export("addAnnotation", _annotations.addAnnotation);
+    }, function (_metadata) {
+      _export("Metadata", _metadata.Metadata);
     }],
     execute: function () {}
   };

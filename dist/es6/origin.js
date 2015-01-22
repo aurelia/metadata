@@ -1,8 +1,4 @@
-/**
- * Utilities for reading and writing the metadata of JavaScript functions.
- *
- * @module metadata
- */
+var originStorage = new Map();
 
 function ensureType(value){
   if(value instanceof Origin){
@@ -35,21 +31,19 @@ export class Origin {
   * @return {Origin} Returns the Origin metadata.
   */
   static get(fn){
-    var origin = fn.__origin__;
+    var origin = originStorage.get(fn);
     
     if(origin !== undefined){
       return origin;
     }
 
     if(typeof fn.origin === 'function'){
-      return fn.__origin__ = ensureType(fn.origin());
+      originStorage.set(fn, origin = ensureType(fn.origin()));
+    } else if(fn.origin !== undefined){
+      originStorage.set(fn, origin = ensureType(fn.origin));
     }
 
-    if(fn.origin !== undefined){
-      return fn.__origin__ = ensureType(fn.origin);
-    }
-
-    return null;
+    return origin;
   }
 
   /**
@@ -62,8 +56,8 @@ export class Origin {
   * @return {Origin} Returns the Origin metadata.
   */
   static set(fn, origin){
-    if(Origin.get(fn) === null){
-      fn.__origin__ = origin;
+    if(Origin.get(fn) === undefined){
+      originStorage.set(fn, origin);
     }
   }
 }
