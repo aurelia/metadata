@@ -190,7 +190,7 @@ export var Metadata = {
       var original = locateFunctionMetadataElsewhere;
       locateFunctionMetadataElsewhere = function(fn){return original(fn) || locator(fn);};
     },
-    annotationHelper(name, fn){
+    classHelper(name, fn){
       MetadataStorage.prototype[name] = function(){
         var context = Object.create(fn.prototype);
         var metadata = fn.apply(context, arguments) || context;
