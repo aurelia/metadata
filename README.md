@@ -13,7 +13,7 @@ This library has **NO** external dependencies.
 * [aurelia-binding](https://github.com/aurelia/binding)
 * [aurelia-dependency-injection](https://github.com/aurelia/dependency-injection)
 * [aurelia-framework](https://github.com/aurelia/framework)
-* [aurelia-loader-systemjs](https://github.com/aurelia/loader-systemjs)
+* [aurelia-loader-default](https://github.com/aurelia/loader-default)
 * [aurelia-templating](https://github.com/aurelia/templating)
 * [aurelia-templating-router](https://github.com/aurelia/templating-router)
 

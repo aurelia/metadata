@@ -50,7 +50,7 @@
       "aurelia-binding",
       "aurelia-dependency-injection",
       "aurelia-framework",
-      "aurelia-loader-systemjs",
+      "aurelia-loader-default",
       "aurelia-templating",
       "aurelia-templating-router"
     ],
