@@ -48,6 +48,10 @@ class MetadataStorage {
     return null;
   }
 
+  has(type, searchPrototype){
+    return this.first(type, searchPrototype) !== null;
+  }
+
   /**
   * Searches metadata for all instances of a particular type.
   *
