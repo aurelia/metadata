@@ -1,160 +1,218 @@
 var functionMetadataStorage = new Map(),
-    emptyMetadata = Object.freeze([]),
+    emptyArray = Object.freeze([]),
     locateFunctionMetadataElsewhere;
 
-function getFunctionMetadataStorage(fn){
-  var metadata = functionMetadataStorage.get(fn);
+/**
+* Stores metadata and provides helpers for searching and adding to it.
+*
+* @class MetadataStorage
+*/
+class MetadataStorage {
+  constructor(metadata, owner){
+    this.metadata = metadata;
+    this.owner = owner;
+  }
 
-  if(metadata === undefined){
-    if('metadata' in fn){
-      if(typeof fn.metadata === 'function'){
-        functionMetadataStorage.set(fn, metadata = fn.metadata());
-      }else if(Array.isArray(fn.metadata)){
-        functionMetadataStorage.set(fn, metadata = fn.metadata);
-      }else{
-        throw new Error(`Incorrect metadata format for ${fn}.`);
+  /**
+  * Searches metadata and returns the first instance of a particular type.
+  *
+  * @method first
+  * @param {Function} type The metadata type to look for.
+  * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
+  * @return {Object} Returns an instance of the specified metadata type if found; otherwise null.
+  */
+  first(type, searchPrototype){
+    var metadata = this.metadata, 
+        i, ii, potential;
+
+    if(metadata === undefined || metadata.length === 0){
+      if(searchPrototype && this.owner !== undefined){
+        return Metadata.on(Object.getPrototypeOf(this.owner)).first(type, searchPrototype);
       }
-    }else if(locateFunctionMetadataElsewhere !== undefined){
-      metadata = locateFunctionMetadataElsewhere(fn);
-      
-      if(metadata === undefined){
-        metadata = [];
-      } else if(Array.isArray(metadata)){
-        functionMetadataStorage.set(fn, metadata);
-      }else{
-        throw new Error(`Incorrect metadata format for ${fn}.`);
-      }
-    }else{
-      functionMetadataStorage.set(fn, metadata = []);
+
+      return null;
     }
-  }
 
-  return metadata;
-}
+    for(i = 0, ii = metadata.length; i < ii; ++i){
+      potential = metadata[i];
 
-/**
- * Adds an additional location to search for metadata in.
- *
- * @method addFunctionMetadataLocation
- * @param {String} staticPropertyName The name of the property on the function instance to search for metadata.
- * @for export
- */
-export function addFunctionMetadataLocation(staticPropertyName){
-  addMetadataLocator(function(fn){return fn[staticPropertyName];});
-}
+      if(potential instanceof type){
+        return potential;
+      }
+    }
 
-/**
- * Adds a function capable of locating metadata for functions.
- *
- * @method addFunctionMetadataLocator
- * @param {Function} locator Configures a function which searches for metadata. It should return undefined if none is found.
- * @for export
- */
-export function addFunctionMetadataLocator(locator){
-  if(locateFunctionMetadataElsewhere === undefined){
-    locateFunctionMetadataElsewhere = locator;
-    return;
-  }
-
-  var original = locateFunctionMetadataElsewhere;
-  locateFunctionMetadataElsewhere = function(fn){return original(fn) || locator(fn);};
-}
-
-/**
- * Searches a function's metadata for a particular type.
- *
- * @method getFunctionMetadata
- * @param {Function} fn The function whose metadata is being searched.
- * @param {Function} type The metadata type to look for.
- * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
- * @return {Object} Returns an instance of the specified metadata type if found; otherwise null.
- * @for export
- */
-export function getFunctionMetadata(fn, type, searchPrototype){
-  var metadata, i, ii, potential;
-
-  if(!fn){
-    return null;
-  }
-
-  metadata = getFunctionMetadataStorage(fn);
-
-  if(metadata.length === 0){
-    if(searchPrototype){
-      return getFunctionMetadata(Object.getPrototypeOf(fn), type, searchPrototype);
+    if(searchPrototype && this.owner !== undefined){
+      return Metadata.on(Object.getPrototypeOf(this.owner)).first(type, searchPrototype);
     }
 
     return null;
   }
 
-  for(i = 0, ii = metadata.length; i < ii; ++i){
-    potential = metadata[i];
+  /**
+  * Searches metadata for all instances of a particular type.
+  *
+  * @method all
+  * @param {Function} type The metadata type to look for.
+  * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
+  * @return {Array} Returns an array of the specified metadata type.
+  */
+  all(type, searchPrototype){
+    var metadata = this.metadata, 
+        i, ii, found, potential;
 
-    if(potential instanceof type){
-      return potential;
+    if(metadata === undefined || metadata.length === 0){
+      if(searchPrototype && this.owner !== undefined){
+        return Metadata.on(Object.getPrototypeOf(this.owner)).all(type, searchPrototype);
+      }
+
+      return emptyArray;
     }
+
+    found = [];
+
+    for(i = 0, ii = metadata.length; i < ii; ++i){
+      potential = metadata[i];
+
+      if(potential instanceof type){
+        found.push(potential);
+      }
+    }
+
+    if(searchPrototype && this.owner !== undefined){
+      found = found.concat(Metadata.on(Object.getPrototypeOf(this.owner)).all(type, searchPrototype));
+    }
+
+    return found;
   }
 
-  if(searchPrototype){
-    return getFunctionMetadata(Object.getPrototypeOf(fn), type, searchPrototype);
+  /**
+  * Adds metadata.
+  *
+  * @method add
+  * @param {Object} instance The metadata instance to add.
+  */
+  add(instance){
+    if(this.metadata === undefined){
+      this.metadata = [];
+    }
+
+    this.metadata.push(instance);
+    return this;
+  }
+}
+
+MetadataStorage.empty = Object.freeze(new MetadataStorage());
+
+function normalize(metadata, fn, replace){
+  if(metadata instanceof MetadataStorage){
+    if(replace){
+      fn.metadata = function() { return metadata; };
+    }
+
+    metadata.owner = fn;
+    return metadata;
   }
 
-  return null;
+  if(Array.isArray(metadata)){
+    return new MetadataStorage(metadata, fn);
+  }
+
+  throw new Error(`Incorrect metadata format for ${metadata}.`);
 }
 
 /**
- * Searches a function's metadata for all instances of a particular type.
- *
- * @method getAllFunctionMetadata
- * @param {Function} fn The function whose memtadata is being inspected.
- * @param {Function} type The metadata type to look for.
- * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
- * @return {Array} Returns an array of the specified metadata type.
- * @for export
- */
-export function getAllFunctionMetadata(fn, type, searchPrototype){
-  var metadata, i, ii, found, potential;
-
-  if(!fn){
-    return emptyMetadata;
-  }
-
-  metadata = getFunctionMetadataStorage(fn);
-
-  if(metadata.length === 0){
-    if(searchPrototype){
-      return getAllFunctionMetadata(Object.getPrototypeOf(fn), type, searchPrototype);
+* Provides access to metadata.
+*
+* @class Metadata
+* @static
+*/
+export var Metadata = {
+  /**
+  * Locates the metadata on the owner.
+  *
+  * @method on
+  * @param {Function} owner The owner of the metadata.
+  * @return {MetadataStorage} Returns the stored metadata.
+  */
+  on(owner){
+    var metadata;
+    
+    if(!owner){
+      return MetadataStorage.empty;
     }
 
-    return emptyMetadata;
-  }
+    metadata = functionMetadataStorage.get(owner);
 
-  found = [];
+    if(metadata === undefined){
+      if('metadata' in owner){
+        if(typeof owner.metadata === 'function'){
+          functionMetadataStorage.set(owner, metadata = normalize(owner.metadata(), owner, true));
+        }else{
+          functionMetadataStorage.set(owner, metadata = normalize(owner.metadata, owner));
+        }
+      }else if(locateFunctionMetadataElsewhere !== undefined){
+        metadata = locateFunctionMetadataElsewhere(owner);
+        
+        if(metadata === undefined){
+          functionMetadataStorage.set(owner, metadata = new MetadataStorage(undefined, owner));
+        }else{
+          functionMetadataStorage.set(owner, metadata = normalize(metadata, owner));
+        }
+      }else{
+        functionMetadataStorage.set(owner, metadata = new MetadataStorage(undefined, owner));
+      }
+    }
 
-  for(i = 0, ii = metadata.length; i < ii; ++i){
-    potential = metadata[i];
+    return metadata;
+  },
+  configure:{
+    /**
+    * Adds an additional location to search for metadata in.
+    *
+    * @method location
+    * @param {String} staticPropertyName The name of the property on the function instance to search for metadata.
+    */
+    location(staticPropertyName){
+      this.locator(function(fn){return fn[staticPropertyName];});
+    },
+    /**
+    * Adds a function capable of locating metadata.
+    *
+    * @method locator
+    * @param {Function} locator Configures a function which searches for metadata. It should return undefined if none is found.
+    */
+    locator(locator){
+      if(locateFunctionMetadataElsewhere === undefined){
+        locateFunctionMetadataElsewhere = locator;
+        return;
+      }
 
-    if(potential instanceof type){
-      found.push(potential);
+      var original = locateFunctionMetadataElsewhere;
+      locateFunctionMetadataElsewhere = function(fn){return original(fn) || locator(fn);};
+    },
+    annotationHelper(name, fn){
+      MetadataStorage.prototype[name] = function(){
+        var context = Object.create(fn.prototype);
+        var metadata = fn.apply(context, arguments) || context;
+        this.add(metadata);
+        return this;
+      };
+
+      Metadata[name] = function(){
+        var storage = new MetadataStorage([]);
+        return storage[name].apply(storage, arguments);
+      };
+    },
+    functionHelper(name, fn){
+      MetadataStorage.prototype[name] = function(){
+        fn.apply(this, arguments);
+        return this;
+      };
+
+      Metadata[name] = function(){
+        var storage = new MetadataStorage([]);
+        return storage[name].apply(storage, arguments);
+      };
     }
   }
-
-  if(searchPrototype){
-    found = found.concat(getAllFunctionMetadata(Object.getPrototypeOf(fn), type, searchPrototype));
-  }
-
-  return found;
-}
-
-/**
- * Adds metadata to a function.
- *
- * @method addFunctionMetadata
- * @param {Function} fn The function being tagged with metadata.
- * @param {Object} instance The metadata instance to add.
- * @for export
- */
-export function addFunctionMetadata(fn, instance){
-  var metadata = getFunctionMetadataStorage(fn);
-  metadata.push(instance);
 }

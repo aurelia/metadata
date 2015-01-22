@@ -6,10 +6,4 @@
  
 export {Origin} from './origin';
 export {ResourceType} from './resource-type';
-export {
-  addFunctionMetadataLocation,
-  addFunctionMetadataLocator,
-  getFunctionMetadata,
-  getAllFunctionMetadata,
-  addFunctionMetadata
-} from './metadata';
+export {Metadata} from './metadata';
