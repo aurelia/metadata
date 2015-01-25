@@ -191,14 +191,14 @@ export var Metadata = {
     * @method locator
     * @param {Function} locator Configures a function which searches for metadata. It should return undefined if none is found.
     */
-    locator(locator){
+    locator(loc){
       if(locateFunctionMetadataElsewhere === undefined){
-        locateFunctionMetadataElsewhere = locator;
+        locateFunctionMetadataElsewhere = loc;
         return;
       }
 
       var original = locateFunctionMetadataElsewhere;
-      locateFunctionMetadataElsewhere = function(fn){return original(fn) || locator(fn);};
+      locateFunctionMetadataElsewhere = function(fn){return original(fn) || loc(fn);};
     },
     classHelper(name, fn){
       MetadataStorage.prototype[name] = function(){

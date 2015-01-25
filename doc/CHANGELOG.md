@@ -1,3 +1,11 @@
+### 0.3.1 (2015-01-25)
+
+
+#### Bug Fixes
+
+* **metadata:** fix safari complaint about variable "locator" ([6e887eac](https://github.com/aurelia/metadata/commit/6e887eac6eb4a7cd74b3b87080c6169d180cfa8e))
+
+
 ## 0.3.0 (2015-01-22)
 
 

@@ -180,15 +180,15 @@ var Metadata = exports.Metadata = {
         return fn[staticPropertyName];
       });
     },
-    locator: function locator(locator) {
+    locator: function locator(loc) {
       if (locateFunctionMetadataElsewhere === undefined) {
-        locateFunctionMetadataElsewhere = locator;
+        locateFunctionMetadataElsewhere = loc;
         return;
       }
 
       var original = locateFunctionMetadataElsewhere;
       locateFunctionMetadataElsewhere = function (fn) {
-        return original(fn) || locator(fn);
+        return original(fn) || loc(fn);
       };
     },
     classHelper: function classHelper(name, fn) {
