@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -19,11 +19,11 @@
     "url": "https://github.com/aurelia/metadata"
   },
   "jspm": {
+    "main": "system/index",
+    "format": "register",
     "directories": {
       "lib": "dist"
-    },
-    "main": "system/index",
-    "format": "register"
+    }
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.0",

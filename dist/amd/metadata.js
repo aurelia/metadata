@@ -1,23 +1,40 @@
 define(["exports"], function (exports) {
   "use strict";
 
-  var _prototypeProperties = function (child, staticProps, instanceProps) {
-    if (staticProps) Object.defineProperties(child, staticProps);
-    if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-  };
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
   var functionMetadataStorage = new Map(),
       emptyArray = Object.freeze([]),
       locateFunctionMetadataElsewhere;
 
+  /**
+  * Stores metadata and provides helpers for searching and adding to it.
+  *
+  * @class MetadataStorage
+  */
+
   var MetadataStorage = (function () {
     function MetadataStorage(metadata, owner) {
+      _classCallCheck(this, MetadataStorage);
+
       this.metadata = metadata;
       this.owner = owner;
     }
 
     _prototypeProperties(MetadataStorage, null, {
       first: {
+
+        /**
+        * Searches metadata and returns the first instance of a particular type.
+        *
+        * @method first
+        * @param {Function} type The metadata type to look for.
+        * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
+        * @return {Object} Returns an instance of the specified metadata type if found; otherwise null.
+        */
+
         value: function first(type, searchPrototype) {
           var metadata = this.metadata,
               i,
@@ -47,7 +64,6 @@ define(["exports"], function (exports) {
           return null;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       has: {
@@ -55,10 +71,19 @@ define(["exports"], function (exports) {
           return this.first(type, searchPrototype) !== null;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       all: {
+
+        /**
+        * Searches metadata for all instances of a particular type.
+        *
+        * @method all
+        * @param {Function} type The metadata type to look for.
+        * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
+        * @return {Array} Returns an array of the specified metadata type.
+        */
+
         value: function all(type, searchPrototype) {
           var metadata = this.metadata,
               i,
@@ -91,10 +116,17 @@ define(["exports"], function (exports) {
           return found;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       add: {
+
+        /**
+        * Adds metadata.
+        *
+        * @method add
+        * @param {Object} instance The metadata instance to add.
+        */
+
         value: function add(instance) {
           if (this.metadata === undefined) {
             this.metadata = [];
@@ -105,7 +137,6 @@ define(["exports"], function (exports) {
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       and: {
@@ -114,7 +145,6 @@ define(["exports"], function (exports) {
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       }
     });
@@ -143,7 +173,20 @@ define(["exports"], function (exports) {
     throw new Error("Incorrect metadata format for " + metadata + ".");
   }
 
+  /**
+  * Provides access to metadata.
+  *
+  * @class Metadata
+  * @static
+  */
   var Metadata = exports.Metadata = {
+    /**
+    * Locates the metadata on the owner.
+    *
+    * @method on
+    * @param {Function} owner The owner of the metadata.
+    * @return {MetadataStorage} Returns the stored metadata.
+    */
     on: function on(owner) {
       var metadata;
 
@@ -176,11 +219,23 @@ define(["exports"], function (exports) {
       return metadata;
     },
     configure: {
+      /**
+      * Adds an additional location to search for metadata in.
+      *
+      * @method location
+      * @param {String} staticPropertyName The name of the property on the function instance to search for metadata.
+      */
       location: function location(staticPropertyName) {
         this.locator(function (fn) {
           return fn[staticPropertyName];
         });
       },
+      /**
+      * Adds a function capable of locating metadata.
+      *
+      * @method locator
+      * @param {Function} locator Configures a function which searches for metadata. It should return undefined if none is found.
+      */
       locator: function locator(loc) {
         if (locateFunctionMetadataElsewhere === undefined) {
           locateFunctionMetadataElsewhere = loc;
@@ -218,4 +273,7 @@ define(["exports"], function (exports) {
       }
     }
   };
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });
