@@ -19,10 +19,10 @@
     "url": "https://github.com/aurelia/metadata"
   },
   "jspm": {
-    "main": "system/index",
+    "main": "index",
     "format": "register",
     "directories": {
-      "lib": "dist"
+      "lib": "dist/system"
     }
   },
   "devDependencies": {
