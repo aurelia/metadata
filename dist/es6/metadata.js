@@ -22,7 +22,7 @@ class MetadataStorage {
   * @return {Object} Returns an instance of the specified metadata type if found; otherwise null.
   */
   first(type, searchPrototype){
-    var metadata = this.metadata, 
+    var metadata = this.metadata,
         i, ii, potential;
 
     if(metadata === undefined || metadata.length === 0){
@@ -61,7 +61,7 @@ class MetadataStorage {
   * @return {Array} Returns an array of the specified metadata type.
   */
   all(type, searchPrototype){
-    var metadata = this.metadata, 
+    var metadata = this.metadata,
         i, ii, found, potential;
 
     if(metadata === undefined || metadata.length === 0){
@@ -146,7 +146,7 @@ export var Metadata = {
   */
   on(owner){
     var metadata;
-    
+
     if(!owner){
       return MetadataStorage.empty;
     }
@@ -162,7 +162,7 @@ export var Metadata = {
         }
       }else if(locateFunctionMetadataElsewhere !== undefined){
         metadata = locateFunctionMetadataElsewhere(owner);
-        
+
         if(metadata === undefined){
           functionMetadataStorage.set(owner, metadata = new MetadataStorage(undefined, owner));
         }else{
@@ -174,6 +174,16 @@ export var Metadata = {
     }
 
     return metadata;
+  },
+  /**
+  * Adds metadata.
+  *
+  * @method add
+  * @param {Object} instance The metadata instance to add.
+  */
+  add(instance){
+    var storage = new MetadataStorage([]);
+    return storage.add(instance);
   },
   configure:{
     /**

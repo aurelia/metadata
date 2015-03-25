@@ -220,6 +220,16 @@ System.register([], function (_export) {
 
           return metadata;
         },
+        /**
+        * Adds metadata.
+        *
+        * @method add
+        * @param {Object} instance The metadata instance to add.
+        */
+        add: function add(instance) {
+          var storage = new MetadataStorage([]);
+          return storage.add(instance);
+        },
         configure: {
           /**
           * Adds an additional location to search for metadata in.

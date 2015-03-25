@@ -2,7 +2,7 @@
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains utilities for reading and writing the metadata of JavaScript functions. It provides a consistent way of accessing type, annotation and origin metadata across a number of languages and formats. Currently there is support for AtScript metadata with plans to support TypeScript metadata when that is finalized. The helper functions also understand several simple, alternate locations and formats for metadata which are more easily leveraged by developers authoring code in plain ES6 or ES5.
 
-> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [our Gitter Channel](https://gitter.im/aurelia/discuss).
+> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge).
 
 ## Dependencies
 

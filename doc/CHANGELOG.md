@@ -1,3 +1,11 @@
+### 0.3.4 (2015-03-24)
+
+
+#### Features
+
+* **metadata:** enable adding custom metadata as first metadata method ([705fd865](https://github.com/aurelia/metadata/commit/705fd8650f8d5e20933582cf4d694062cc2e15de), closes [#7](https://github.com/aurelia/metadata/issues/7))
+
+
 ### 0.3.3 (2015-02-28)
 
 
