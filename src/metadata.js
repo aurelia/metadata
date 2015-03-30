@@ -107,6 +107,23 @@ export class MetadataStore {
   }
 
   /**
+  * Searches metadata and returns the first instance of a particular type or creates and adds one if none is found.
+  *
+  * @method first
+  * @param {Function} type The metadata type to look for.
+  * @param {Boolean} searchPrototype Indicates whether or not to search the inheritance hierarchy for metadata.
+  * @return {Object} Returns an instance of the specified metadata type.
+  */
+  firstOrAdd(type, searchPrototype){
+    var existing = this.first(type, searchPrototype);
+    if(existing === null){
+      existing = new type();
+      this.add(existing);
+    }
+    return existing;
+  }
+
+  /**
   * Adds metadata.
   *
   * @method add
@@ -145,7 +162,7 @@ export class MetadataStore {
 * @static
 */
 export var Metadata = {
-  emptyStore: Object.freeze(new MetadataStore()),
+  none: Object.freeze(new MetadataStore()),
   /**
   * Locates the metadata on the owner.
   *
@@ -157,7 +174,7 @@ export var Metadata = {
     var metadata;
 
     if(!owner){
-      return this.emptyStore;
+      return this.none;
     }
 
     metadata = owner.__metadata__;
