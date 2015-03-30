@@ -1,4 +1,4 @@
-import {Metadata} from '../src/index';
+import {Metadata,Decorators} from '../src/index';
 
 describe('metadata', () => {
   it('can be located by type', () => {
@@ -38,8 +38,8 @@ describe('metadata', () => {
   it('can be added with function', () => {
     class Annotated {}
 
-    Annotated.metadata = () => {
-      return [new SampleMetadata(), new SampleMetadata(), new SampleMetadata()];
+    Annotated.decorators = () => {
+      return Decorators.metadata(new SampleMetadata(), new SampleMetadata(), new SampleMetadata());
     };
 
     var found = Metadata.on(Annotated).all(SampleMetadata);
@@ -80,6 +80,14 @@ describe('metadata', () => {
     });
   });
 
+  function sampleES7Decorator(value){
+    return function(target){
+      Metadata.on(target).add(new SampleMetadata(value));
+    }
+  }
+
+  Decorators.configure.parameterizedDecorator('sample', sampleES7Decorator);
+
   class BaseMetadata {}
   class SampleMetadata extends BaseMetadata {
     constructor(id) {
@@ -90,22 +98,22 @@ describe('metadata', () => {
   class SampleMetadata2 extends BaseMetadata {}
 
   class HasMetadata {}
-  HasMetadata.metadata = [new SampleMetadata(1), new SampleMetadata(2)];
+  HasMetadata.decorators = Decorators.metadata(new SampleMetadata(1), new SampleMetadata(2));
 
   class HasFallbackMetadata {
-    static metadata() {
-      return [new SampleMetadata()];
+    static decorators() {
+      return Decorators.sample();
     }
   }
 
   class HasOneMetadataInstance {}
-  HasOneMetadataInstance.metadata = [new SampleMetadata()];
+  HasOneMetadataInstance.decorators = Decorators.metadata(new SampleMetadata());
 
   class OverridesMetadata extends HasMetadata {}
-  OverridesMetadata.metadata = [new SampleMetadata(3)];
+  OverridesMetadata.decorators = Decorators.sample(3);
 
   class DerivedWithBaseMetadata extends HasMetadata {}
-  DerivedWithBaseMetadata.metadata = ['foo'];
+  DerivedWithBaseMetadata.decorators = Decorators.metadata('foo');
 
   class HasNoMetadata {}
 
