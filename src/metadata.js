@@ -204,22 +204,24 @@ export var Metadata = {
 
     return metadata;
   },
-  /**
-  * Adds a function capable of locating metadata.
-  *
-  * @method locator
-  * @param {Function} locator Configures a function which searches for metadata.
-  */
-  locator(loc){
-    if(locateMetadataElsewhere === undefined){
-      locateMetadataElsewhere = loc;
-      return;
-    }
+  configure: {
+    /**
+    * Adds a function capable of locating metadata.
+    *
+    * @method locator
+    * @param {Function} locator Configures a function which searches for metadata.
+    */
+    locator(loc){
+      if(locateMetadataElsewhere === undefined){
+        locateMetadataElsewhere = loc;
+        return;
+      }
 
-    var original = locateMetadataElsewhere;
-    locateMetadataElsewhere = function(fn, meta){
-      original(fn, meta);
-      loc(fn, meta);
-    };
+      var original = locateMetadataElsewhere;
+      locateMetadataElsewhere = function(fn, meta){
+        original(fn, meta);
+        loc(fn, meta);
+      };
+    }
   }
 }
