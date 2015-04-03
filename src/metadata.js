@@ -8,7 +8,7 @@ var locateMetadataElsewhere;
 export class MetadataStore {
   constructor(owner){
     this._owner = owner;
-    this._one = null;
+    this._first = null;
     this._second = null;
     this._third = null;
     this._rest = null;
