@@ -14,7 +14,7 @@ export class ResourceType {
   * @return {Promise} Returns a promise for itself, resolving when all dependent resources are loaded.
   */
   load(container, target){ 
-    return this;
+    return Promise.resolve(this);
   }
 
   /**
