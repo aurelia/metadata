@@ -1,4 +1,5 @@
-var locateMetadataElsewhere;
+var metadataStoreLookup = new Map(),
+    locateMetadataElsewhere;
 
 /**
 * Stores metadata and provides helpers for searching and adding to it.
@@ -177,12 +178,13 @@ export var Metadata = {
       return this.none;
     }
 
-    metadata = owner.__metadata__;
+    metadata = metadataStoreLookup.get(owner);
     if(metadata !== undefined && metadata._owner === owner){
       return metadata;
     }
 
-    owner.__metadata__ = metadata = new MetadataStore(owner);
+    metadata = new MetadataStore(owner);
+    metadataStoreLookup.set(owner, metadata);
 
     if('decorators' in owner){
       var applicator;
