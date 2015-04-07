@@ -39,7 +39,7 @@ describe('metadata', () => {
     class Annotated {}
 
     Annotated.decorators = () => {
-      return Decorators.metadata(new SampleMetadata(), new SampleMetadata(), new SampleMetadata());
+      return Decorators.sample().sample().sample();
     };
 
     var found = Metadata.on(Annotated).all(SampleMetadata);
@@ -74,7 +74,7 @@ describe('metadata', () => {
       expect(found).toEqual([]);
     });
 
-    it('retruns the base metadata when serching deep if no metadata is defined for the type', () => {
+    it('returns the base metadata when serching deep if no metadata is defined for the type', () => {
       var found = Metadata.on(DerivedWithBaseMetadata).all(SampleMetadata, true);
       expect(found.length).toEqual(2);
     });
@@ -91,6 +91,7 @@ describe('metadata', () => {
   class BaseMetadata {}
   class SampleMetadata extends BaseMetadata {
     constructor(id) {
+      super();
       this.id = id;
     }
   }
@@ -98,7 +99,7 @@ describe('metadata', () => {
   class SampleMetadata2 extends BaseMetadata {}
 
   class HasMetadata {}
-  HasMetadata.decorators = Decorators.metadata(new SampleMetadata(1), new SampleMetadata(2));
+  HasMetadata.decorators = Decorators.sample(1).sample(2);
 
   class HasFallbackMetadata {
     static decorators() {
@@ -107,13 +108,13 @@ describe('metadata', () => {
   }
 
   class HasOneMetadataInstance {}
-  HasOneMetadataInstance.decorators = Decorators.metadata(new SampleMetadata());
+  HasOneMetadataInstance.decorators = Decorators.sample();
 
   class OverridesMetadata extends HasMetadata {}
   OverridesMetadata.decorators = Decorators.sample(3);
 
   class DerivedWithBaseMetadata extends HasMetadata {}
-  DerivedWithBaseMetadata.decorators = Decorators.metadata('foo');
+  Metadata.on(DerivedWithBaseMetadata).add('foo');
 
   class HasNoMetadata {}
 

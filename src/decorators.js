@@ -1,10 +1,6 @@
 import {DecoratorApplicator} from './decorator-applicator';
 
 export var Decorators = {
-  metadata(...rest){
-    var applicator = new DecoratorApplicator();
-    return applicator.metadata.apply(applicator, rest);
-  },
   configure: {
     parameterizedDecorator(name, decorator){
       Decorators[name] = function(){

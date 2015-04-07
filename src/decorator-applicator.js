@@ -8,15 +8,6 @@ export class DecoratorApplicator {
     this._rest = null;
   }
 
-  metadata(...rest){
-    return this.decorator(function(target){
-      var meta = Metadata.on(target);
-      for(var i = 0, ii = rest.length; i < ii; ++i){
-        meta.add(rest[i]);
-      }
-    });
-  }
-
   decorator(decorator){
     if(this._first === null){
       this._first = decorator;
