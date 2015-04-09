@@ -1,16 +1,31 @@
-define(["exports", "./origin", "./resource-type", "./metadata"], function (exports, _origin, _resourceType, _metadata) {
-  "use strict";
+define(['exports', './origin', './resource-type', './metadata', './decorators'], function (exports, _origin, _resourceType, _metadata, _decorators) {
+  'use strict';
 
-  /**
-   * Utilities for reading and writing the metadata of JavaScript functions.
-   *
-   * @module metadata
-   */
-
-  exports.Origin = _origin.Origin;
-  exports.ResourceType = _resourceType.ResourceType;
-  exports.Metadata = _metadata.Metadata;
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(exports, '__esModule', {
     value: true
+  });
+  Object.defineProperty(exports, 'Origin', {
+    enumerable: true,
+    get: function get() {
+      return _origin.Origin;
+    }
+  });
+  Object.defineProperty(exports, 'ResourceType', {
+    enumerable: true,
+    get: function get() {
+      return _resourceType.ResourceType;
+    }
+  });
+  Object.defineProperty(exports, 'Metadata', {
+    enumerable: true,
+    get: function get() {
+      return _metadata.Metadata;
+    }
+  });
+  Object.defineProperty(exports, 'Decorators', {
+    enumerable: true,
+    get: function get() {
+      return _decorators.Decorators;
+    }
   });
 });

@@ -1,5 +1,5 @@
-System.register([], function (_export) {
-  var _prototypeProperties, _classCallCheck, originStorage, Origin;
+System.register(['core-js'], function (_export) {
+  var core, _classCallCheck, _createClass, originStorage, Origin;
 
   function ensureType(value) {
     if (value instanceof Origin) {
@@ -10,24 +10,19 @@ System.register([], function (_export) {
   }
 
   return {
-    setters: [],
+    setters: [function (_coreJs) {
+      core = _coreJs['default'];
+    }],
     execute: function () {
-      "use strict";
+      'use strict';
 
-      _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+      _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
       originStorage = new Map();
-      /**
-      * A metadata annotation that describes the origin module of the function to which it's attached.
-      *
-      * @class Origin
-      * @constructor
-      * @param {string} moduleId The origin module id.
-      * @param {string} moduleMember The name of the export in the origin module.
-      */
-      Origin = _export("Origin", (function () {
+
+      Origin = (function () {
         function Origin(moduleId, moduleMember) {
           _classCallCheck(this, Origin);
 
@@ -35,60 +30,36 @@ System.register([], function (_export) {
           this.moduleMember = moduleMember;
         }
 
-        _prototypeProperties(Origin, {
-          get: {
+        _createClass(Origin, null, [{
+          key: 'get',
+          value: function get(fn) {
+            var origin = originStorage.get(fn);
 
-            /**
-            * Get the Origin annotation for the specified function.
-            *
-            * @method get
-            * @static
-            * @param {Function} fn The function to inspect for Origin metadata.
-            * @return {Origin} Returns the Origin metadata.
-            */
-
-            value: function get(fn) {
-              var origin = originStorage.get(fn);
-
-              if (origin !== undefined) {
-                return origin;
-              }
-
-              if (typeof fn.origin === "function") {
-                originStorage.set(fn, origin = ensureType(fn.origin()));
-              } else if (fn.origin !== undefined) {
-                originStorage.set(fn, origin = ensureType(fn.origin));
-              }
-
+            if (origin !== undefined) {
               return origin;
-            },
-            writable: true,
-            configurable: true
-          },
-          set: {
+            }
 
-            /**
-            * Set the Origin annotation for the specified function.
-            *
-            * @method set
-            * @static
-            * @param {Function} fn The function to set the Origin metadata on.
-            * @param {origin} fn The Origin metadata to store on the function.
-            * @return {Origin} Returns the Origin metadata.
-            */
+            if (typeof fn.origin === 'function') {
+              originStorage.set(fn, origin = ensureType(fn.origin()));
+            } else if (fn.origin !== undefined) {
+              originStorage.set(fn, origin = ensureType(fn.origin));
+            }
 
-            value: function set(fn, origin) {
-              if (Origin.get(fn) === undefined) {
-                originStorage.set(fn, origin);
-              }
-            },
-            writable: true,
-            configurable: true
+            return origin;
           }
-        });
+        }, {
+          key: 'set',
+          value: function set(fn, origin) {
+            if (Origin.get(fn) === undefined) {
+              originStorage.set(fn, origin);
+            }
+          }
+        }]);
 
         return Origin;
-      })());
+      })();
+
+      _export('Origin', Origin);
     }
   };
 });

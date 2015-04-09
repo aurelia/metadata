@@ -1,3 +1,22 @@
+## 0.4.0 (2015-04-09)
+
+
+#### Bug Fixes
+
+* **ResourceType:** fix load to return Promise ([a43e8d28](https://github.com/aurelia/metadata/commit/a43e8d28b7c85bcff20119de2b0c384a9853a50e))
+* **all:** update compiler, fix core-js ref ([b3dd9ea8](https://github.com/aurelia/metadata/commit/b3dd9ea8619f90efbaf9ff2d6617b7d92ad348bb))
+* **metadata:**
+  * store in private map ([52aed24e](https://github.com/aurelia/metadata/commit/52aed24ec5f7f25477cb8021493232c49d67be8b))
+  * fix initializer for _first property ([740eb07c](https://github.com/aurelia/metadata/commit/740eb07c39b883b1d4e08e5dc779ee9e960a4e07))
+  * add the locator config back on a configure property ([555612d1](https://github.com/aurelia/metadata/commit/555612d1df56e18c75b2c27bb9c99e0449fefa7e))
+
+
+#### Features
+
+* **all:** new decorator infrastructure ([72a6226e](https://github.com/aurelia/metadata/commit/72a6226e202c28f538f1f6350a130d0d76e23fa9))
+* **metadata:** add firstOrAdd helper ([8ba74b71](https://github.com/aurelia/metadata/commit/8ba74b710f78ddd3f6aa6b059ca54273e91ce960))
+
+
 ### 0.3.4 (2015-03-24)
 
 

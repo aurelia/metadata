@@ -1,3 +1,5 @@
+import core from 'core-js';
+
 var originStorage = new Map();
 
 function ensureType(value){
@@ -32,7 +34,7 @@ export class Origin {
   */
   static get(fn){
     var origin = originStorage.get(fn);
-    
+
     if(origin !== undefined){
       return origin;
     }

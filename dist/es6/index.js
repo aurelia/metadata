@@ -3,7 +3,8 @@
  *
  * @module metadata
  */
- 
+
 export {Origin} from './origin';
 export {ResourceType} from './resource-type';
 export {Metadata} from './metadata';
+export {Decorators} from './decorators';
