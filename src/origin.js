@@ -1,6 +1,7 @@
 import core from 'core-js';
 
-var originStorage = new Map();
+var originStorage = new Map(),
+    unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
 
 function ensureType(value){
   if(value instanceof Origin){
@@ -45,7 +46,7 @@ export class Origin {
       originStorage.set(fn, origin = ensureType(fn.origin));
     }
 
-    return origin;
+    return origin || unknownOrigin;
   }
 
   /**
@@ -58,7 +59,7 @@ export class Origin {
   * @return {Origin} Returns the Origin metadata.
   */
   static set(fn, origin){
-    if(Origin.get(fn) === undefined){
+    if(Origin.get(fn) === unknownOrigin){
       originStorage.set(fn, origin);
     }
   }
