@@ -5,9 +5,9 @@ describe('origin', () => {
       origin2 = new Origin('ModuleId2', 'ModuleMember2');
 
   describe('get', () => {
-    it('should return undefined if not set', () => {
+    it('should return an empty origin if not set', () => {
       class HasNoOrigin {}
-      expect(Origin.get(HasNoOrigin)).toBe(undefined);
+      expect(Origin.get(HasNoOrigin).moduleId).toBe(undefined);
     });
 
     it('should return the origin if set', () => {
