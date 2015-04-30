@@ -1,3 +1,17 @@
+## 0.5.0 (2015-04-30)
+
+
+#### Bug Fixes
+
+* **origin:** never return null for a origin check ([cc25a5e6](https://github.com/aurelia/metadata/commit/cc25a5e6f8e0336cd5817a3460f1921d83969af8))
+* **origin.spec:** incorrect test for empty origin data ([14304d56](https://github.com/aurelia/metadata/commit/14304d562eb78c93264052bd1fe21eb74dd69842))
+
+
+#### Features
+
+* **all:** metadata is now based on the ES7 proposal ([32ebe967](https://github.com/aurelia/metadata/commit/32ebe9676b89156cda736ecdf106b92002275ffd))
+
+
 ## 0.4.0 (2015-04-09)
 
 

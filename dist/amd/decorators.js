@@ -1,9 +1,7 @@
 define(['exports', './decorator-applicator'], function (exports, _decoratorApplicator) {
   'use strict';
 
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
+  exports.__esModule = true;
   var Decorators = {
     configure: {
       parameterizedDecorator: function parameterizedDecorator(name, decorator) {
