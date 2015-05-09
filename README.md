@@ -68,7 +68,9 @@ To run the unit tests, first ensure that you have followed the steps above in or
 	jspm dl-loader
 	```
 
-4. You can now run the tests with this command:
+4. Ensure that you have Chrome installed. Karma runs the test suite in Chrome.
+
+5. You can now run the tests with this command:
 
 	```shell
 	karma start
