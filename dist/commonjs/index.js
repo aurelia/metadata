@@ -2,14 +2,14 @@
 
 exports.__esModule = true;
 
-var _Origin = require('./origin');
+var _origin = require('./origin');
 
-exports.Origin = _Origin.Origin;
+exports.Origin = _origin.Origin;
 
-var _Metadata = require('./metadata');
+var _metadata = require('./metadata');
 
-exports.Metadata = _Metadata.Metadata;
+exports.Metadata = _metadata.Metadata;
 
-var _Decorators = require('./decorators');
+var _decorators = require('./decorators');
 
-exports.Decorators = _Decorators.Decorators;
+exports.Decorators = _decorators.Decorators;

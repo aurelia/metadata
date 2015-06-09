@@ -1,9 +1,9 @@
 define(["exports", "core-js"], function (exports, _coreJs) {
     "use strict";
 
-    var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-    var _core = _interopRequire(_coreJs);
+    var _core = _interopRequireDefault(_coreJs);
 
     var functionPrototype = Object.getPrototypeOf(Function);
     var _Map = Map;
@@ -217,11 +217,11 @@ define(["exports", "core-js"], function (exports, _coreJs) {
         var _again = true;
 
         _function: while (_again) {
-            hasOwn = parent = undefined;
-            _again = false;
             var MetadataKey = _x,
                 O = _x2,
                 P = _x3;
+            hasOwn = parent = undefined;
+            _again = false;
 
             var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
             if (hasOwn) {
@@ -251,11 +251,11 @@ define(["exports", "core-js"], function (exports, _coreJs) {
         var _again2 = true;
 
         _function2: while (_again2) {
-            hasOwn = parent = undefined;
-            _again2 = false;
             var MetadataKey = _x4,
                 O = _x5,
                 P = _x6;
+            hasOwn = parent = undefined;
+            _again2 = false;
 
             var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
             if (hasOwn) {

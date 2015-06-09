@@ -3,12 +3,12 @@ import core from 'core-js';
 var originStorage = new Map(),
     unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
 
-function ensureType(value){
-  if(value instanceof Origin){
-    return value;
-  }
+if(!window.System){
+  window.System = {};
+}
 
-  return new Origin(value);
+if(!System.forEachModule){
+  System.forEachModule = function(){};
 }
 
 /**
@@ -36,14 +36,21 @@ export class Origin {
   static get(fn){
     var origin = originStorage.get(fn);
 
-    if(origin !== undefined){
-      return origin;
-    }
+    if(origin === undefined){
+      System.forEachModule((key, value) => {
+        for(var name in value){
+          var exp = value[name];
+          if(exp === fn){
+            originStorage.set(fn, origin = new Origin(key, name));
+            return;
+          }
+        }
 
-    if(typeof fn.origin === 'function'){
-      originStorage.set(fn, origin = ensureType(fn.origin()));
-    } else if(fn.origin !== undefined){
-      originStorage.set(fn, origin = ensureType(fn.origin));
+        if(value === fn){
+          originStorage.set(fn, origin = new Origin(key, 'default'));
+          return;
+        }
+      });
     }
 
     return origin || unknownOrigin;
@@ -59,8 +66,6 @@ export class Origin {
   * @return {Origin} Returns the Origin metadata.
   */
   static set(fn, origin){
-    if(Origin.get(fn) === unknownOrigin){
-      originStorage.set(fn, origin);
-    }
+    originStorage.set(fn, origin);
   }
 }

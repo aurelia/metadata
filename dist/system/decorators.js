@@ -1,12 +1,12 @@
 System.register(['./decorator-applicator'], function (_export) {
+  'use strict';
+
   var DecoratorApplicator, Decorators;
   return {
     setters: [function (_decoratorApplicator) {
       DecoratorApplicator = _decoratorApplicator.DecoratorApplicator;
     }],
     execute: function () {
-      'use strict';
-
       Decorators = {
         configure: {
           parameterizedDecorator: function parameterizedDecorator(name, decorator) {

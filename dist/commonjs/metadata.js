@@ -1,12 +1,12 @@
 'use strict';
 
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
 exports.__esModule = true;
 
-var _meta = require('./reflect-metadata');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _meta2 = _interopRequireDefault(_meta);
+var _reflectMetadata = require('./reflect-metadata');
+
+var _reflectMetadata2 = _interopRequireDefault(_reflectMetadata);
 
 function ensureDecorators(target) {
   var applicator;

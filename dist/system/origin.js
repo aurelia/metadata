@@ -1,25 +1,25 @@
 System.register(['core-js'], function (_export) {
-  var core, _classCallCheck, originStorage, unknownOrigin, Origin;
+  'use strict';
 
-  function ensureType(value) {
-    if (value instanceof Origin) {
-      return value;
-    }
+  var core, originStorage, unknownOrigin, Origin;
 
-    return new Origin(value);
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [function (_coreJs) {
       core = _coreJs['default'];
     }],
     execute: function () {
-      'use strict';
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
       originStorage = new Map();
       unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
+
+      if (!window.System) {
+        window.System = {};
+      }
+
+      if (!System.forEachModule) {
+        System.forEachModule = function () {};
+      }
 
       Origin = (function () {
         function Origin(moduleId, moduleMember) {
@@ -32,23 +32,28 @@ System.register(['core-js'], function (_export) {
         Origin.get = function get(fn) {
           var origin = originStorage.get(fn);
 
-          if (origin !== undefined) {
-            return origin;
-          }
+          if (origin === undefined) {
+            System.forEachModule(function (key, value) {
+              for (var name in value) {
+                var exp = value[name];
+                if (exp === fn) {
+                  originStorage.set(fn, origin = new Origin(key, name));
+                  return;
+                }
+              }
 
-          if (typeof fn.origin === 'function') {
-            originStorage.set(fn, origin = ensureType(fn.origin()));
-          } else if (fn.origin !== undefined) {
-            originStorage.set(fn, origin = ensureType(fn.origin));
+              if (value === fn) {
+                originStorage.set(fn, origin = new Origin(key, 'default'));
+                return;
+              }
+            });
           }
 
           return origin || unknownOrigin;
         };
 
         Origin.set = function set(fn, origin) {
-          if (Origin.get(fn) === unknownOrigin) {
-            originStorage.set(fn, origin);
-          }
+          originStorage.set(fn, origin);
         };
 
         return Origin;

@@ -1,4 +1,6 @@
 System.register(['./reflect-metadata'], function (_export) {
+  'use strict';
+
   var meta, Metadata;
 
   function ensureDecorators(target) {
@@ -23,8 +25,6 @@ System.register(['./reflect-metadata'], function (_export) {
       meta = _reflectMetadata['default'];
     }],
     execute: function () {
-      'use strict';
-
       Metadata = {
         resource: 'aurelia:resource',
         paramTypes: 'design:paramtypes',

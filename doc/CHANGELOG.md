@@ -1,3 +1,16 @@
+## 0.6.0 (2015-06-08)
+
+
+#### Bug Fixes
+
+* **readme:** Now mentions Chrome required to run tests. ([86d9f4c2](https://github.com/aurelia/metadata/commit/86d9f4c29c9a859bb22d981d30707c85761d5a38))
+
+
+#### Features
+
+* **origin:** search module registry for module id if not found ([4abfc246](https://github.com/aurelia/metadata/commit/4abfc2469da4db3d3a077cb733c75e0c364f7068))
+
+
 ## 0.5.0 (2015-04-30)
 
 

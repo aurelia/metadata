@@ -1,4 +1,6 @@
 System.register(["core-js"], function (_export) {
+    "use strict";
+
     var core, functionPrototype, _Map, _Set, _WeakMap, __Metadata__;
 
     function decorate(decorators, target, targetKey, targetDescriptor) {
@@ -196,11 +198,11 @@ System.register(["core-js"], function (_export) {
         var _again = true;
 
         _function: while (_again) {
-            hasOwn = parent = undefined;
-            _again = false;
             var MetadataKey = _x,
                 O = _x2,
                 P = _x3;
+            hasOwn = parent = undefined;
+            _again = false;
 
             var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
             if (hasOwn) {
@@ -230,11 +232,11 @@ System.register(["core-js"], function (_export) {
         var _again2 = true;
 
         _function2: while (_again2) {
-            hasOwn = parent = undefined;
-            _again2 = false;
             var MetadataKey = _x4,
                 O = _x5,
                 P = _x6;
+            hasOwn = parent = undefined;
+            _again2 = false;
 
             var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
             if (hasOwn) {
@@ -368,8 +370,6 @@ System.register(["core-js"], function (_export) {
             core = _coreJs["default"];
         }],
         execute: function () {
-            "use strict";
-
             functionPrototype = Object.getPrototypeOf(Function);
             _Map = Map;
             _Set = Set;

@@ -1,10 +1,10 @@
 "use strict";
 
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _core = require("core-js");
+var _coreJs = require("core-js");
 
-var _core2 = _interopRequireDefault(_core);
+var _coreJs2 = _interopRequireDefault(_coreJs);
 
 var functionPrototype = Object.getPrototypeOf(Function);
 var _Map = Map;
@@ -218,11 +218,11 @@ function OrdinaryHasMetadata(_x, _x2, _x3) {
     var _again = true;
 
     _function: while (_again) {
-        hasOwn = parent = undefined;
-        _again = false;
         var MetadataKey = _x,
             O = _x2,
             P = _x3;
+        hasOwn = parent = undefined;
+        _again = false;
 
         var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
         if (hasOwn) {
@@ -252,11 +252,11 @@ function OrdinaryGetMetadata(_x4, _x5, _x6) {
     var _again2 = true;
 
     _function2: while (_again2) {
-        hasOwn = parent = undefined;
-        _again2 = false;
         var MetadataKey = _x4,
             O = _x5,
             P = _x6;
+        hasOwn = parent = undefined;
+        _again2 = false;
 
         var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
         if (hasOwn) {

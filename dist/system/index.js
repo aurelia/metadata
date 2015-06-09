@@ -1,4 +1,6 @@
 System.register(['./origin', './metadata', './decorators'], function (_export) {
+  'use strict';
+
   return {
     setters: [function (_origin) {
       _export('Origin', _origin.Origin);
@@ -7,8 +9,6 @@ System.register(['./origin', './metadata', './decorators'], function (_export) {
     }, function (_decorators) {
       _export('Decorators', _decorators.Decorators);
     }],
-    execute: function () {
-      'use strict';
-    }
+    execute: function () {}
   };
 });

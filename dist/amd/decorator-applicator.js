@@ -1,9 +1,9 @@
 define(['exports', './metadata'], function (exports, _metadata) {
   'use strict';
 
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
   exports.__esModule = true;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   var DecoratorApplicator = (function () {
     function DecoratorApplicator() {
@@ -15,29 +15,19 @@ define(['exports', './metadata'], function (exports, _metadata) {
       this._rest = null;
     }
 
-    DecoratorApplicator.prototype.decorator = (function (_decorator) {
-      function decorator(_x) {
-        return _decorator.apply(this, arguments);
-      }
-
-      decorator.toString = function () {
-        return _decorator.toString();
-      };
-
-      return decorator;
-    })(function (decorator) {
+    DecoratorApplicator.prototype.decorator = function decorator(_decorator) {
       if (this._first === null) {
-        this._first = decorator;
+        this._first = _decorator;
         return this;
       }
 
       if (this._second === null) {
-        this._second = decorator;
+        this._second = _decorator;
         return this;
       }
 
       if (this._third === null) {
-        this._third = decorator;
+        this._third = _decorator;
         return this;
       }
 
@@ -45,10 +35,10 @@ define(['exports', './metadata'], function (exports, _metadata) {
         this._rest = [];
       }
 
-      this._rest.push(decorator);
+      this._rest.push(_decorator);
 
       return this;
-    });
+    };
 
     DecoratorApplicator.prototype._decorate = function _decorate(target) {
       var i, ii, rest;

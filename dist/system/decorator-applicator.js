@@ -1,15 +1,15 @@
 System.register(['./metadata'], function (_export) {
-  var Metadata, _classCallCheck, DecoratorApplicator;
+  'use strict';
+
+  var Metadata, DecoratorApplicator;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [function (_metadata) {
       Metadata = _metadata.Metadata;
     }],
     execute: function () {
-      'use strict';
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
       DecoratorApplicator = (function () {
         function DecoratorApplicator() {
           _classCallCheck(this, DecoratorApplicator);
@@ -20,29 +20,19 @@ System.register(['./metadata'], function (_export) {
           this._rest = null;
         }
 
-        DecoratorApplicator.prototype.decorator = (function (_decorator) {
-          function decorator(_x) {
-            return _decorator.apply(this, arguments);
-          }
-
-          decorator.toString = function () {
-            return _decorator.toString();
-          };
-
-          return decorator;
-        })(function (decorator) {
+        DecoratorApplicator.prototype.decorator = function decorator(_decorator) {
           if (this._first === null) {
-            this._first = decorator;
+            this._first = _decorator;
             return this;
           }
 
           if (this._second === null) {
-            this._second = decorator;
+            this._second = _decorator;
             return this;
           }
 
           if (this._third === null) {
-            this._third = decorator;
+            this._third = _decorator;
             return this;
           }
 
@@ -50,10 +40,10 @@ System.register(['./metadata'], function (_export) {
             this._rest = [];
           }
 
-          this._rest.push(decorator);
+          this._rest.push(_decorator);
 
           return this;
-        });
+        };
 
         DecoratorApplicator.prototype._decorate = function _decorate(target) {
           var i, ii, rest;
