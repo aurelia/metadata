@@ -1,11 +1,55 @@
-define(['exports', './reflect-metadata'], function (exports, _reflectMetadata) {
+define(['exports'], function (exports) {
   'use strict';
 
   exports.__esModule = true;
+  var theGlobal = (function () {
+    if (typeof self !== 'undefined') {
+      return self;
+    }
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+    if (typeof global !== 'undefined') {
+      return global;
+    }
 
-  var _meta = _interopRequireDefault(_reflectMetadata);
+    return new Function('return this')();
+  })();
+
+  var emptyMetadata = Object.freeze({});
+  var metadataContainerKey = '__metadata__';
+
+  if (typeof theGlobal.System === 'undefined') {
+    theGlobal.System = {};
+  }
+
+  if (typeof System.forEachModule === 'undefined') {
+    System.forEachModule = function () {};
+  }
+
+  if (typeof theGlobal.Reflect === 'undefined') {
+    theGlobal.Reflect = {};
+  }
+
+  if (typeof Reflect.getOwnMetadata === 'undefined') {
+    Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
+      return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+    };
+  }
+
+  if (typeof Reflect.defineMetadata === 'undefined') {
+    Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
+      var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+      var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+      targetContainer[metadataKey] = metadataValue;
+    };
+  }
+
+  if (typeof Reflect.metadata === 'undefined') {
+    Reflect.metadata = function (metadataKey, metadataValue) {
+      return function (target, targetKey) {
+        Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+      };
+    };
+  }
 
   function ensureDecorators(target) {
     var applicator;
@@ -25,18 +69,19 @@ define(['exports', './reflect-metadata'], function (exports, _reflectMetadata) {
   }
 
   var Metadata = {
+    global: theGlobal,
     resource: 'aurelia:resource',
     paramTypes: 'design:paramtypes',
     properties: 'design:properties',
-    get: function get(metadataKey, target, propertyKey) {
+    get: function get(metadataKey, target, targetKey) {
       if (!target) {
         return undefined;
       }
 
-      var result = Metadata.getOwn(metadataKey, target, propertyKey);
-      return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), propertyKey) : result;
+      var result = Metadata.getOwn(metadataKey, target, targetKey);
+      return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
     },
-    getOwn: function getOwn(metadataKey, target, propertyKey) {
+    getOwn: function getOwn(metadataKey, target, targetKey) {
       if (!target) {
         return undefined;
       }
@@ -45,14 +90,17 @@ define(['exports', './reflect-metadata'], function (exports, _reflectMetadata) {
         ensureDecorators(target);
       }
 
-      return Reflect.getOwnMetadata(metadataKey, target, propertyKey);
+      return Reflect.getOwnMetadata(metadataKey, target, targetKey);
     },
-    getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, propertyKey) {
-      var result = Metadata.getOwn(metadataKey, target, propertyKey);
+    define: function define(metadataKey, metadataValue, target, targetKey) {
+      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+    },
+    getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, targetKey) {
+      var result = Metadata.getOwn(metadataKey, target, targetKey);
 
       if (result === undefined) {
         result = new Type();
-        Reflect.defineMetadata(metadataKey, result, target, propertyKey);
+        Reflect.defineMetadata(metadataKey, result, target, targetKey);
       }
 
       return result;

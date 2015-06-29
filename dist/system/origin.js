@@ -13,14 +13,6 @@ System.register(['core-js'], function (_export) {
       originStorage = new Map();
       unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-      if (!window.System) {
-        window.System = {};
-      }
-
-      if (!System.forEachModule) {
-        System.forEachModule = function () {};
-      }
-
       Origin = (function () {
         function Origin(moduleId, moduleMember) {
           _classCallCheck(this, Origin);

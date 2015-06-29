@@ -1,7 +1,7 @@
-System.register(['./reflect-metadata'], function (_export) {
+System.register([], function (_export) {
   'use strict';
 
-  var meta, Metadata;
+  var theGlobal, emptyMetadata, metadataContainerKey, Metadata;
 
   function ensureDecorators(target) {
     var applicator;
@@ -21,23 +21,69 @@ System.register(['./reflect-metadata'], function (_export) {
   }
 
   return {
-    setters: [function (_reflectMetadata) {
-      meta = _reflectMetadata['default'];
-    }],
+    setters: [],
     execute: function () {
-      Metadata = {
+      theGlobal = (function () {
+        if (typeof self !== 'undefined') {
+          return self;
+        }
+
+        if (typeof global !== 'undefined') {
+          return global;
+        }
+
+        return new Function('return this')();
+      })();
+
+      emptyMetadata = Object.freeze({});
+      metadataContainerKey = '__metadata__';
+
+      if (typeof theGlobal.System === 'undefined') {
+        theGlobal.System = {};
+      }
+
+      if (typeof System.forEachModule === 'undefined') {
+        System.forEachModule = function () {};
+      }
+
+      if (typeof theGlobal.Reflect === 'undefined') {
+        theGlobal.Reflect = {};
+      }
+
+      if (typeof Reflect.getOwnMetadata === 'undefined') {
+        Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
+          return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
+        };
+      }
+
+      if (typeof Reflect.defineMetadata === 'undefined') {
+        Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
+          var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+          var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+          targetContainer[metadataKey] = metadataValue;
+        };
+      }
+
+      if (typeof Reflect.metadata === 'undefined') {
+        Reflect.metadata = function (metadataKey, metadataValue) {
+          return function (target, targetKey) {
+            Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+          };
+        };
+      }Metadata = {
+        global: theGlobal,
         resource: 'aurelia:resource',
         paramTypes: 'design:paramtypes',
         properties: 'design:properties',
-        get: function get(metadataKey, target, propertyKey) {
+        get: function get(metadataKey, target, targetKey) {
           if (!target) {
             return undefined;
           }
 
-          var result = Metadata.getOwn(metadataKey, target, propertyKey);
-          return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), propertyKey) : result;
+          var result = Metadata.getOwn(metadataKey, target, targetKey);
+          return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
         },
-        getOwn: function getOwn(metadataKey, target, propertyKey) {
+        getOwn: function getOwn(metadataKey, target, targetKey) {
           if (!target) {
             return undefined;
           }
@@ -46,14 +92,17 @@ System.register(['./reflect-metadata'], function (_export) {
             ensureDecorators(target);
           }
 
-          return Reflect.getOwnMetadata(metadataKey, target, propertyKey);
+          return Reflect.getOwnMetadata(metadataKey, target, targetKey);
         },
-        getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, propertyKey) {
-          var result = Metadata.getOwn(metadataKey, target, propertyKey);
+        define: function define(metadataKey, metadataValue, target, targetKey) {
+          Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+        },
+        getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, targetKey) {
+          var result = Metadata.getOwn(metadataKey, target, targetKey);
 
           if (result === undefined) {
             result = new Type();
-            Reflect.defineMetadata(metadataKey, result, target, propertyKey);
+            Reflect.defineMetadata(metadataKey, result, target, targetKey);
           }
 
           return result;

@@ -51,7 +51,7 @@ describe('metadata', () => {
 
   function sampleES7Decorator(value){
     return function(target){
-      Reflect.defineMetadata(Metadata.resource, new SampleMetadata(value), target);
+      Metadata.define(Metadata.resource, new SampleMetadata(value), target);
     }
   }
 
@@ -79,7 +79,7 @@ describe('metadata', () => {
   OverridesMetadata.decorators = Decorators.sample(3);
 
   class DerivedWithBaseMetadata extends HasMetadata {}
-  Reflect.defineMetadata('another', 'foo', DerivedWithBaseMetadata);
+  Metadata.define('another', 'foo', DerivedWithBaseMetadata);
 
   class HasNoMetadata {}
 

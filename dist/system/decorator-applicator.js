@@ -1,14 +1,12 @@
-System.register(['./metadata'], function (_export) {
-  'use strict';
+System.register([], function (_export) {
+  "use strict";
 
-  var Metadata, DecoratorApplicator;
+  var DecoratorApplicator;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
-    setters: [function (_metadata) {
-      Metadata = _metadata.Metadata;
-    }],
+    setters: [],
     execute: function () {
       DecoratorApplicator = (function () {
         function DecoratorApplicator() {
@@ -71,7 +69,7 @@ System.register(['./metadata'], function (_export) {
         return DecoratorApplicator;
       })();
 
-      _export('DecoratorApplicator', DecoratorApplicator);
+      _export("DecoratorApplicator", DecoratorApplicator);
     }
   };
 });

@@ -1,5 +1,3 @@
-import {Metadata} from './metadata';
-
 export class DecoratorApplicator {
   constructor(){
     this._first = null;

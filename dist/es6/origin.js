@@ -3,14 +3,6 @@ import core from 'core-js';
 var originStorage = new Map(),
     unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
 
-if(!window.System){
-  window.System = {};
-}
-
-if(!System.forEachModule){
-  System.forEachModule = function(){};
-}
-
 /**
 * A metadata annotation that describes the origin module of the function to which it's attached.
 *
