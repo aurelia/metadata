@@ -2,7 +2,7 @@ import {DecoratorApplicator} from './decorator-applicator';
 
 export var Decorators = {
   configure: {
-    parameterizedDecorator(name, decorator){
+    parameterizedDecorator(name:string, decorator:Function){
       Decorators[name] = function(){
         var applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
@@ -13,7 +13,7 @@ export var Decorators = {
         return this.decorator(result);
       };
     },
-    simpleDecorator(name, decorator){
+    simpleDecorator(name:string, decorator:Function){
       Decorators[name] = function(){
         return new DecoratorApplicator().decorator(decorator);
       };

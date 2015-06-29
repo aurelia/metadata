@@ -12,7 +12,7 @@ var originStorage = new Map(),
 * @param {string} moduleMember The name of the export in the origin module.
 */
 export class Origin {
-  constructor(moduleId, moduleMember){
+  constructor(moduleId:string, moduleMember:string){
     this.moduleId = moduleId;
     this.moduleMember = moduleMember;
   }
@@ -25,7 +25,7 @@ export class Origin {
   * @param {Function} fn The function to inspect for Origin metadata.
   * @return {Origin} Returns the Origin metadata.
   */
-  static get(fn){
+  static get(fn:Function){
     var origin = originStorage.get(fn);
 
     if(origin === undefined){
@@ -57,7 +57,7 @@ export class Origin {
   * @param {origin} fn The Origin metadata to store on the function.
   * @return {Origin} Returns the Origin metadata.
   */
-  static set(fn, origin){
+  static set(fn:Function, origin:Origin){
     originStorage.set(fn, origin);
   }
 }

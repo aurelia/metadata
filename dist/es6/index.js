@@ -9,7 +9,7 @@ export class DecoratorApplicator {
     this._rest = null;
   }
 
-  decorator(decorator){
+  decorator(decorator:Function):DecoratorApplicator{
     if(this._first === null){
       this._first = decorator;
       return this;
@@ -34,7 +34,7 @@ export class DecoratorApplicator {
     return this;
   }
 
-  _decorate(target){
+  _decorate(target:Function){
     var i, ii, rest;
 
     if(this._first !== null){
@@ -60,7 +60,7 @@ export class DecoratorApplicator {
 
 export var Decorators = {
   configure: {
-    parameterizedDecorator(name, decorator){
+    parameterizedDecorator(name:string, decorator:Function){
       Decorators[name] = function(){
         var applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
@@ -71,7 +71,7 @@ export var Decorators = {
         return this.decorator(result);
       };
     },
-    simpleDecorator(name, decorator){
+    simpleDecorator(name:string, decorator:Function){
       Decorators[name] = function(){
         return new DecoratorApplicator().decorator(decorator);
       };
@@ -163,7 +163,7 @@ export var Metadata = {
   resource:'aurelia:resource',
   paramTypes:'design:paramtypes',
   properties:'design:properties',
-  get(metadataKey, target, targetKey){
+  get(metadataKey:string, target:Function, targetKey:string){
     if(!target){
       return undefined;
     }
@@ -171,7 +171,7 @@ export var Metadata = {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn(metadataKey, target, targetKey){
+  getOwn(metadataKey:string, target:Function, targetKey:string){
     if(!target){
       return undefined;
     }
@@ -182,10 +182,10 @@ export var Metadata = {
 
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define(metadataKey, metadataValue, target, targetKey){
+  define(metadataKey:string, metadataValue:string, target:Function, targetKey:string){
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey, Type, target, targetKey){
+  getOrCreateOwn(metadataKey:string, Type:Function, target:string, targetKey:string){
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
     if(result === undefined){
@@ -209,7 +209,7 @@ var originStorage = new Map(),
 * @param {string} moduleMember The name of the export in the origin module.
 */
 export class Origin {
-  constructor(moduleId, moduleMember){
+  constructor(moduleId:string, moduleMember:string){
     this.moduleId = moduleId;
     this.moduleMember = moduleMember;
   }
@@ -222,7 +222,7 @@ export class Origin {
   * @param {Function} fn The function to inspect for Origin metadata.
   * @return {Origin} Returns the Origin metadata.
   */
-  static get(fn){
+  static get(fn:Function){
     var origin = originStorage.get(fn);
 
     if(origin === undefined){
@@ -254,7 +254,7 @@ export class Origin {
   * @param {origin} fn The Origin metadata to store on the function.
   * @return {Origin} Returns the Origin metadata.
   */
-  static set(fn, origin){
+  static set(fn:Function, origin:Origin){
     originStorage.set(fn, origin);
   }
 }

@@ -78,7 +78,7 @@ export var Metadata = {
   resource:'aurelia:resource',
   paramTypes:'design:paramtypes',
   properties:'design:properties',
-  get(metadataKey, target, targetKey){
+  get(metadataKey:string, target:Function, targetKey:string){
     if(!target){
       return undefined;
     }
@@ -86,7 +86,7 @@ export var Metadata = {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn(metadataKey, target, targetKey){
+  getOwn(metadataKey:string, target:Function, targetKey:string){
     if(!target){
       return undefined;
     }
@@ -97,10 +97,10 @@ export var Metadata = {
 
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define(metadataKey, metadataValue, target, targetKey){
+  define(metadataKey:string, metadataValue:string, target:Function, targetKey:string){
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey, Type, target, targetKey){
+  getOrCreateOwn(metadataKey:string, Type:Function, target:string, targetKey:string){
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
     if(result === undefined){

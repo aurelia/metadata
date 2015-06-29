@@ -6,7 +6,7 @@ export class DecoratorApplicator {
     this._rest = null;
   }
 
-  decorator(decorator){
+  decorator(decorator:Function):DecoratorApplicator{
     if(this._first === null){
       this._first = decorator;
       return this;
@@ -31,7 +31,7 @@ export class DecoratorApplicator {
     return this;
   }
 
-  _decorate(target){
+  _decorate(target:Function){
     var i, ii, rest;
 
     if(this._first !== null){

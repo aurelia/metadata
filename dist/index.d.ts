@@ -2,8 +2,8 @@ declare module 'aurelia-metadata' {
   import core from 'core-js';
   export class DecoratorApplicator {
     constructor();
-    decorator(decorator: any): any;
-    _decorate(target: any): any;
+    decorator(decorator: Function): DecoratorApplicator;
+    _decorate(target: Function): any;
   }
   export var Decorators: any;
   
@@ -24,7 +24,7 @@ declare module 'aurelia-metadata' {
   * @param {string} moduleMember The name of the export in the origin module.
   */
   export class Origin {
-    constructor(moduleId: any, moduleMember: any);
+    constructor(moduleId: string, moduleMember: string);
     
     /**
       * Get the Origin annotation for the specified function.
@@ -34,7 +34,7 @@ declare module 'aurelia-metadata' {
       * @param {Function} fn The function to inspect for Origin metadata.
       * @return {Origin} Returns the Origin metadata.
       */
-    static get(fn: any): any;
+    static get(fn: Function): any;
     
     /**
       * Set the Origin annotation for the specified function.
@@ -45,6 +45,6 @@ declare module 'aurelia-metadata' {
       * @param {origin} fn The Origin metadata to store on the function.
       * @return {Origin} Returns the Origin metadata.
       */
-    static set(fn: any, origin: any): any;
+    static set(fn: Function, origin: Origin): any;
   }
 }
