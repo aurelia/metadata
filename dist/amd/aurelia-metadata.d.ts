@@ -1,11 +1,5 @@
 declare module 'aurelia-metadata' {
   import core from 'core-js';
-  export class DecoratorApplicator {
-    constructor();
-    decorator(decorator: Function): DecoratorApplicator;
-    _decorate(target: Function): any;
-  }
-  export var Decorators: any;
   
   /**
   * Provides helpers for working with metadata.
@@ -47,4 +41,10 @@ declare module 'aurelia-metadata' {
       */
     static set(fn: Function, origin: Origin): any;
   }
+  export class DecoratorApplicator {
+    constructor();
+    decorator(decorator: Function): DecoratorApplicator;
+    _decorate(target: Function): any;
+  }
+  export var Decorators: any;
 }

@@ -1,88 +1,5 @@
 import core from 'core-js';
 
-
-export class DecoratorApplicator {
-  constructor(){
-    this._first = null;
-    this._second = null;
-    this._third = null;
-    this._rest = null;
-  }
-
-  decorator(decorator:Function):DecoratorApplicator{
-    if(this._first === null){
-      this._first = decorator;
-      return this;
-    }
-
-    if(this._second === null){
-      this._second = decorator;
-      return this;
-    }
-
-    if(this._third === null){
-      this._third = decorator;
-      return this;
-    }
-
-    if(this._rest === null){
-      this._rest = [];
-    }
-
-    this._rest.push(decorator);
-
-    return this;
-  }
-
-  _decorate(target:Function){
-    var i, ii, rest;
-
-    if(this._first !== null){
-      this._first(target);
-    }
-
-    if(this._second !== null){
-      this._second(target);
-    }
-
-    if(this._third !== null){
-      this._third(target);
-    }
-
-    rest = this._rest;
-    if(rest !== null){
-      for(i = 0, ii = rest.length; i < ii; ++i){
-        rest[i](target);
-      }
-    }
-  }
-}
-
-export var Decorators = {
-  configure: {
-    parameterizedDecorator(name:string, decorator:Function){
-      Decorators[name] = function(){
-        var applicator = new DecoratorApplicator();
-        return applicator[name].apply(applicator, arguments);
-      };
-
-      DecoratorApplicator.prototype[name] = function(){
-        var result = decorator.apply(null, arguments);
-        return this.decorator(result);
-      };
-    },
-    simpleDecorator(name:string, decorator:Function){
-      Decorators[name] = function(){
-        return new DecoratorApplicator().decorator(decorator);
-      };
-
-      DecoratorApplicator.prototype[name] = function(){
-        return this.decorator(decorator);
-      }
-    }
-  }
-}
-
 const theGlobal = (function() {
   // Workers don’t have `window`, only `self`
   if (typeof self !== 'undefined') {
@@ -256,5 +173,87 @@ export class Origin {
   */
   static set(fn:Function, origin:Origin){
     originStorage.set(fn, origin);
+  }
+}
+
+export class DecoratorApplicator {
+  constructor(){
+    this._first = null;
+    this._second = null;
+    this._third = null;
+    this._rest = null;
+  }
+
+  decorator(decorator:Function):DecoratorApplicator{
+    if(this._first === null){
+      this._first = decorator;
+      return this;
+    }
+
+    if(this._second === null){
+      this._second = decorator;
+      return this;
+    }
+
+    if(this._third === null){
+      this._third = decorator;
+      return this;
+    }
+
+    if(this._rest === null){
+      this._rest = [];
+    }
+
+    this._rest.push(decorator);
+
+    return this;
+  }
+
+  _decorate(target:Function){
+    var i, ii, rest;
+
+    if(this._first !== null){
+      this._first(target);
+    }
+
+    if(this._second !== null){
+      this._second(target);
+    }
+
+    if(this._third !== null){
+      this._third(target);
+    }
+
+    rest = this._rest;
+    if(rest !== null){
+      for(i = 0, ii = rest.length; i < ii; ++i){
+        rest[i](target);
+      }
+    }
+  }
+}
+
+export var Decorators = {
+  configure: {
+    parameterizedDecorator(name:string, decorator:Function){
+      Decorators[name] = function(){
+        var applicator = new DecoratorApplicator();
+        return applicator[name].apply(applicator, arguments);
+      };
+
+      DecoratorApplicator.prototype[name] = function(){
+        var result = decorator.apply(null, arguments);
+        return this.decorator(result);
+      };
+    },
+    simpleDecorator(name:string, decorator:Function){
+      Decorators[name] = function(){
+        return new DecoratorApplicator().decorator(decorator);
+      };
+
+      DecoratorApplicator.prototype[name] = function(){
+        return this.decorator(decorator);
+      }
+    }
   }
 }
