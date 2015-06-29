@@ -1,4 +1,5 @@
-import {Metadata,Decorators} from '../src/index';
+import {Metadata} from '../src/metadata';
+import {Decorators} from '../src/decorators';
 
 describe('metadata', () => {
   it('can be located by key', () => {

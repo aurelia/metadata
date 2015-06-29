@@ -1,4 +1,4 @@
-import {Origin} from '../src/index';
+import {Origin} from '../src/origin';
 
 describe('origin', () => {
   var origin1 = new Origin('ModuleId1', 'ModuleMember1'),
