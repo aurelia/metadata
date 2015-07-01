@@ -34,13 +34,13 @@ export class Origin {
           var exp = value[name];
           if(exp === fn){
             originStorage.set(fn, origin = new Origin(key, name));
-            return;
+            return true;
           }
         }
 
         if(value === fn){
           originStorage.set(fn, origin = new Origin(key, 'default'));
-          return;
+          return true;
         }
       });
     }
