@@ -17,7 +17,7 @@ const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
 
 if(typeof theGlobal.System === 'undefined'){
-  theGlobal.System = {};
+  theGlobal.System = { isFake:true };
 }
 
 if(typeof System.forEachModule === 'undefined'){
