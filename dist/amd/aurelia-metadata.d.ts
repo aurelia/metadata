@@ -44,7 +44,6 @@ declare module 'aurelia-metadata' {
   export class DecoratorApplicator {
     constructor();
     decorator(decorator: Function): DecoratorApplicator;
-    _decorate(target: Function): any;
   }
   export var Decorators: any;
 }
