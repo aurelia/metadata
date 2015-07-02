@@ -26,7 +26,7 @@ var emptyMetadata = Object.freeze({});
 var metadataContainerKey = '__metadata__';
 
 if (typeof theGlobal.System === 'undefined') {
-  theGlobal.System = {};
+  theGlobal.System = { isFake: true };
 }
 
 if (typeof System.forEachModule === 'undefined') {
@@ -136,13 +136,13 @@ var Origin = (function () {
           var exp = value[name];
           if (exp === fn) {
             originStorage.set(fn, origin = new Origin(key, name));
-            return;
+            return true;
           }
         }
 
         if (value === fn) {
           originStorage.set(fn, origin = new Origin(key, 'default'));
-          return;
+          return true;
         }
       });
     }

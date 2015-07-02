@@ -1,3 +1,20 @@
+## 0.7.0 (2015-07-01)
+
+
+#### Bug Fixes
+
+* **all:** address issue with globals and remove unnecessary Reflect.metadata poly ([93cda3b4](https://github.com/aurelia/metadata/commit/93cda3b401e706b837fc398c1fc106e829e936fe))
+* **metadata:** mark fake System as such ([c40cfcb8](https://github.com/aurelia/metadata/commit/c40cfcb87c3c788f607d3ff67bf494ca05f5be15))
+* **origin:** short-circuit module registry search on origin location success ([889e0ce7](https://github.com/aurelia/metadata/commit/889e0ce753d40b320ca803a5e4b16e4716219707))
+* **package:** update aurelia tools and dts generator ([4cba6176](https://github.com/aurelia/metadata/commit/4cba61761b80ad9241a2516c72bee5999abe8986))
+* **test:** correct import sources ([fd5b6f06](https://github.com/aurelia/metadata/commit/fd5b6f0696aa8e735fcf59f633e7b7f75924932f))
+
+
+#### Features
+
+* **build:** d.ts generation and build concat ([e7e24b5b](https://github.com/aurelia/metadata/commit/e7e24b5b0502920c6616219d305134c1e69b4fea))
+
+
 ## 0.6.0 (2015-06-08)
 
 
