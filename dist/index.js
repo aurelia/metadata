@@ -22,21 +22,21 @@ if(typeof theGlobal.System === 'undefined'){
   theGlobal.System = { isFake:true };
 }
 
-if(typeof System.forEachModule === 'undefined'){
-  System.forEachModule = function(){};
+if(typeof theGlobal.System.forEachModule === 'undefined'){
+  theGlobal.System.forEachModule = function(){};
 }
 
 if(typeof theGlobal.Reflect === 'undefined'){
   theGlobal.Reflect = {};
 }
 
-if(typeof Reflect.getOwnMetadata === 'undefined'){
+if(typeof theGlobal.Reflect.getOwnMetadata === 'undefined'){
   Reflect.getOwnMetadata = function(metadataKey, target, targetKey){
     return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
   };
 }
 
-if(typeof Reflect.defineMetadata === 'undefined'){
+if(typeof theGlobal.Reflect.defineMetadata === 'undefined'){
   Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey){
     var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
     var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
@@ -44,7 +44,7 @@ if(typeof Reflect.defineMetadata === 'undefined'){
   };
 }
 
-if(typeof Reflect.metadata === 'undefined'){
+if(typeof theGlobal.Reflect.metadata === 'undefined'){
   Reflect.metadata = function(metadataKey, metadataValue){
     return function(target, targetKey){
       Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
@@ -102,7 +102,7 @@ export var Metadata = {
   define(metadataKey:string, metadataValue:string, target:Function, targetKey:string){
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey:string, Type:Function, target:string, targetKey:string){
+  getOrCreateOwn(metadataKey:string, Type:Function, target:Function, targetKey:string){
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
     if(result === undefined){

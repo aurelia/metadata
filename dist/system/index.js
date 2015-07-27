@@ -46,21 +46,21 @@ System.register(['core-js'], function (_export) {
         theGlobal.System = { isFake: true };
       }
 
-      if (typeof System.forEachModule === 'undefined') {
-        System.forEachModule = function () {};
+      if (typeof theGlobal.System.forEachModule === 'undefined') {
+        theGlobal.System.forEachModule = function () {};
       }
 
       if (typeof theGlobal.Reflect === 'undefined') {
         theGlobal.Reflect = {};
       }
 
-      if (typeof Reflect.getOwnMetadata === 'undefined') {
+      if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
         Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
           return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
         };
       }
 
-      if (typeof Reflect.defineMetadata === 'undefined') {
+      if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
         Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
           var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
           var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
@@ -68,7 +68,7 @@ System.register(['core-js'], function (_export) {
         };
       }
 
-      if (typeof Reflect.metadata === 'undefined') {
+      if (typeof theGlobal.Reflect.metadata === 'undefined') {
         Reflect.metadata = function (metadataKey, metadataValue) {
           return function (target, targetKey) {
             Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
