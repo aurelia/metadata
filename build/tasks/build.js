@@ -32,7 +32,7 @@ gulp.task('build-index', function(){
 });
 
 gulp.task('build-es6', function () {
-  return gulp.src(paths.output + 'index.js')
+  return gulp.src(paths.output + jsName)
     .pipe(gulp.dest(paths.output + 'es6'));
 });
 
