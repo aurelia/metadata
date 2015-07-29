@@ -1,3 +1,11 @@
+### 0.7.1 (2015-07-29)
+
+
+#### Bug Fixes
+
+* **metadata:** incorrect types and global references ([88dbfb5e](https://github.com/aurelia/metadata/commit/88dbfb5e5925af9b95f8731f3700bd2e3ec034e6), closes [#16](https://github.com/aurelia/metadata/issues/16), [#17](https://github.com/aurelia/metadata/issues/17))
+
+
 ## 0.7.0 (2015-07-01)
 
 
