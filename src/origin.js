@@ -1,4 +1,4 @@
-import core from 'core-js';
+import * as core from 'core-js';
 
 var originStorage = new Map(),
     unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
