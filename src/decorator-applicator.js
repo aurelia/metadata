@@ -1,5 +1,5 @@
 export class DecoratorApplicator {
-  constructor(){
+  constructor() {
     this._first = null;
     this._second = null;
     this._third = null;
@@ -7,22 +7,22 @@ export class DecoratorApplicator {
   }
 
   decorator(decorator : Function) : DecoratorApplicator {
-    if(this._first === null){
+    if (this._first === null) {
       this._first = decorator;
       return this;
     }
 
-    if(this._second === null){
+    if (this._second === null) {
       this._second = decorator;
       return this;
     }
 
-    if(this._third === null){
+    if (this._third === null) {
       this._third = decorator;
       return this;
     }
 
-    if(this._rest === null){
+    if (this._rest === null) {
       this._rest = [];
     }
 
@@ -31,24 +31,22 @@ export class DecoratorApplicator {
     return this;
   }
 
-  _decorate(target : Function) : void {
-    var i, ii, rest;
-
-    if(this._first !== null){
+  _decorate(target: Function): void {
+    if (this._first !== null) {
       this._first(target);
     }
 
-    if(this._second !== null){
+    if (this._second !== null) {
       this._second(target);
     }
 
-    if(this._third !== null){
+    if (this._third !== null) {
       this._third(target);
     }
 
-    rest = this._rest;
-    if(rest !== null){
-      for(i = 0, ii = rest.length; i < ii; ++i){
+    let rest = this._rest;
+    if (rest !== null) {
+      for (let i = 0, ii = rest.length; i < ii; ++i) {
         rest[i](target);
       }
     }

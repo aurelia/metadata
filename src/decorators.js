@@ -5,30 +5,30 @@ interface DecoratorsConfigType {
 }
 
 interface DecoratorsType {
-	configure : DecoratorsConfigType;
+  configure: DecoratorsConfigType;
 }
 
-export let Decorators : DecoratorsType = {
+export const Decorators: DecoratorsType = {
   configure: {
-    parameterizedDecorator(name : string, decorator : Function) : void {
-      Decorators[name] = function(){
-        var applicator = new DecoratorApplicator();
+    parameterizedDecorator(name: string, decorator: Function): void {
+      Decorators[name] = function() {
+        let applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
       };
 
-      DecoratorApplicator.prototype[name] = function(){
-        var result = decorator.apply(null, arguments);
+      DecoratorApplicator.prototype[name] = function() {
+        let result = decorator.apply(null, arguments);
         return this.decorator(result);
       };
     },
-    simpleDecorator(name : string, decorator : Function) : void {
-      Decorators[name] = function(){
+    simpleDecorator(name: string, decorator: Function): void {
+      Decorators[name] = function() {
         return new DecoratorApplicator().decorator(decorator);
       };
 
-      DecoratorApplicator.prototype[name] = function(){
+      DecoratorApplicator.prototype[name] = function() {
         return this.decorator(decorator);
-      }
+      };
     }
   }
-}
+};
