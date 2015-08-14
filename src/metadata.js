@@ -36,7 +36,7 @@ if(typeof theGlobal.Reflect.getOwnMetadata === 'undefined'){
 
 if(typeof theGlobal.Reflect.defineMetadata === 'undefined'){
   Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey){
-    var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
     var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
     targetContainer[metadataKey] = metadataValue;
   };
