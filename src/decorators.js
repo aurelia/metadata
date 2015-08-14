@@ -1,8 +1,16 @@
 import {DecoratorApplicator} from './decorator-applicator';
 
-export var Decorators = {
+interface DecoratorsConfigType {
+
+}
+
+interface DecoratorsType {
+	configure : DecoratorsConfigType;
+}
+
+export let Decorators : DecoratorsType = {
   configure: {
-    parameterizedDecorator(name:string, decorator:Function){
+    parameterizedDecorator(name : string, decorator : Function) : void {
       Decorators[name] = function(){
         var applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
@@ -13,7 +21,7 @@ export var Decorators = {
         return this.decorator(result);
       };
     },
-    simpleDecorator(name:string, decorator:Function){
+    simpleDecorator(name : string, decorator : Function) : void {
       Decorators[name] = function(){
         return new DecoratorApplicator().decorator(decorator);
       };

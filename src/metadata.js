@@ -67,18 +67,25 @@ function ensureDecorators(target){
   }
 }
 
+interface MetadataType {
+  global: Object;
+  resource:string;
+  paramTypes:string;
+  properties:string;
+}
+
 /**
 * Provides helpers for working with metadata.
 *
 * @class Metadata
 * @static
 */
-export var Metadata = {
+export var Metadata : MetadataType = {
   global: theGlobal,
   resource:'aurelia:resource',
   paramTypes:'design:paramtypes',
   properties:'design:properties',
-  get(metadataKey:string, target:Function, targetKey:string){
+  get(metadataKey : string, target : Function, targetKey : string) : Object {
     if(!target){
       return undefined;
     }
@@ -86,7 +93,7 @@ export var Metadata = {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn(metadataKey:string, target:Function, targetKey:string){
+  getOwn(metadataKey : string, target : Function, targetKey : string) : Object {
     if(!target){
       return undefined;
     }
@@ -97,10 +104,10 @@ export var Metadata = {
 
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define(metadataKey:string, metadataValue:string, target:Function, targetKey:string){
+  define(metadataKey : string, metadataValue : Object, target : Function, targetKey : string) : void {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey:string, Type:Function, target:Function, targetKey:string){
+  getOrCreateOwn(metadataKey : string, Type : Function, target : Function, targetKey : string) : Object {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
     if(result === undefined){

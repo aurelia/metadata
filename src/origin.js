@@ -1,6 +1,6 @@
 import * as core from 'core-js';
 
-var originStorage = new Map(),
+let originStorage = new Map(),
     unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
 
 /**
@@ -12,7 +12,7 @@ var originStorage = new Map(),
 * @param {string} moduleMember The name of the export in the origin module.
 */
 export class Origin {
-  constructor(moduleId:string, moduleMember:string){
+  constructor(moduleId : string, moduleMember : string){
     this.moduleId = moduleId;
     this.moduleMember = moduleMember;
   }
@@ -25,7 +25,7 @@ export class Origin {
   * @param {Function} fn The function to inspect for Origin metadata.
   * @return {Origin} Returns the Origin metadata.
   */
-  static get(fn:Function){
+  static get(fn : Function) : Origin {
     var origin = originStorage.get(fn);
 
     if(origin === undefined){
@@ -57,7 +57,7 @@ export class Origin {
   * @param {origin} fn The Origin metadata to store on the function.
   * @return {Origin} Returns the Origin metadata.
   */
-  static set(fn:Function, origin:Origin){
+  static set(fn : Function, origin : Origin) : void {
     originStorage.set(fn, origin);
   }
 }
