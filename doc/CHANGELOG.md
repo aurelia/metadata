@@ -1,3 +1,17 @@
+### 0.7.3 (2015-08-14)
+
+
+#### Bug Fixes
+
+* **metadata:** Use correct import for core-js We were previously using `import core from core-j ([d7895cf5](https://github.com/aurelia/metadata/commit/d7895cf54debecce7f281eae33024d74f254815e))
+
+
+#### Features
+
+* **all:** improve type info ([1818b0a8](https://github.com/aurelia/metadata/commit/1818b0a8631c32870dc93a7fff53a31e9871cdc7))
+* **docs:** generate api.json from .d.ts file ([8edc2390](https://github.com/aurelia/metadata/commit/8edc2390d55fec7b9538d86d900a921e907b209b))
+
+
 ### 0.7.2 (2015-08-04)
 
 

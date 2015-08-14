@@ -3,11 +3,7 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
   exports.__esModule = true;
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  var _core = _interopRequireDefault(_coreJs);
 
   var theGlobal = (function () {
     if (typeof self !== 'undefined') {
@@ -44,7 +40,7 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
   if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
     Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-      var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+      var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
       var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
       targetContainer[metadataKey] = metadataValue;
     };

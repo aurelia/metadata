@@ -2,13 +2,13 @@
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _coreJs = require('core-js');
 
-var _coreJs2 = _interopRequireDefault(_coreJs);
+var core = _interopRequireWildcard(_coreJs);
 
 var theGlobal = (function () {
   if (typeof self !== 'undefined') {
@@ -45,7 +45,7 @@ if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
 
 if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
   Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-    var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
     var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
     targetContainer[metadataKey] = metadataValue;
   };

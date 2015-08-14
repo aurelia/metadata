@@ -24,7 +24,7 @@ System.register(['core-js'], function (_export) {
 
   return {
     setters: [function (_coreJs) {
-      core = _coreJs['default'];
+      core = _coreJs;
     }],
     execute: function () {
       theGlobal = (function () {
@@ -62,7 +62,7 @@ System.register(['core-js'], function (_export) {
 
       if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
         Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-          var metadataContainer = target[metadataContainerKey] || (target[metadataContainerKey] = {});
+          var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
           var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
           targetContainer[metadataKey] = metadataValue;
         };
