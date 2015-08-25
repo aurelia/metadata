@@ -69,6 +69,7 @@ function ensureDecorators(target){
 
 interface MetadataType {
   global: Object;
+  noop: Function;
   resource:string;
   paramTypes:string;
   properties:string;
@@ -82,6 +83,7 @@ interface MetadataType {
 */
 export var Metadata : MetadataType = {
   global: theGlobal,
+  noop: function(){},
   resource:'aurelia:resource',
   paramTypes:'design:paramtypes',
   properties:'design:properties',
