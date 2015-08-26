@@ -83,12 +83,12 @@ interface MetadataType {
 */
 export const Metadata: MetadataType = {
   global: theGlobal,
-  noop: function(){},
-  resource:'aurelia:resource',
-  paramTypes:'design:paramtypes',
-  properties:'design:properties',
-  get(metadataKey : string, target : Function, targetKey : string) : Object {
-    if(!target){
+  noop: function() {},
+  resource: 'aurelia:resource',
+  paramTypes: 'design:paramtypes',
+  properties: 'design:properties',
+  get(metadataKey: string, target: Function, targetKey: string): Object {
+    if (!target) {
       return undefined;
     }
 
