@@ -16,53 +16,53 @@ const theGlobal = (function() {
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
 
-if(typeof theGlobal.System === 'undefined'){
-  theGlobal.System = { isFake:true };
+if (typeof theGlobal.System === 'undefined') {
+  theGlobal.System = {isFake: true};
 }
 
-if(typeof theGlobal.System.forEachModule === 'undefined'){
-  theGlobal.System.forEachModule = function(){};
+if (typeof theGlobal.System.forEachModule === 'undefined') {
+  theGlobal.System.forEachModule = function() {};
 }
 
-if(typeof theGlobal.Reflect === 'undefined'){
+if (typeof theGlobal.Reflect === 'undefined') {
   theGlobal.Reflect = {};
 }
 
-if(typeof theGlobal.Reflect.getOwnMetadata === 'undefined'){
-  Reflect.getOwnMetadata = function(metadataKey, target, targetKey){
+if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
+  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
     return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
   };
 }
 
-if(typeof theGlobal.Reflect.defineMetadata === 'undefined'){
-  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey){
-    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
-    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
+  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
+    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
+    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
     targetContainer[metadataKey] = metadataValue;
   };
 }
 
-if(typeof theGlobal.Reflect.metadata === 'undefined'){
-  Reflect.metadata = function(metadataKey, metadataValue){
-    return function(target, targetKey){
+if (typeof theGlobal.Reflect.metadata === 'undefined') {
+  Reflect.metadata = function(metadataKey, metadataValue) {
+    return function(target, targetKey) {
       Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
     };
   };
 }
 
-function ensureDecorators(target){
-  var applicator;
+function ensureDecorators(target) {
+  let applicator;
 
-  if(typeof target.decorators === 'function'){
+  if (typeof target.decorators === 'function') {
     applicator = target.decorators();
-  }else{
+  } else {
     applicator = target.decorators;
   }
 
-  if(typeof applicator._decorate === 'function'){
+  if (typeof applicator._decorate === 'function') {
     delete target.decorators;
     applicator._decorate(target);
-  }else{
+  } else {
     throw new Error('The return value of your decorator\'s method was not valid.');
   }
 }
@@ -81,7 +81,7 @@ interface MetadataType {
 * @class Metadata
 * @static
 */
-export var Metadata : MetadataType = {
+export const Metadata: MetadataType = {
   global: theGlobal,
   noop: function(){},
   resource:'aurelia:resource',
@@ -95,28 +95,28 @@ export var Metadata : MetadataType = {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn(metadataKey : string, target : Function, targetKey : string) : Object {
-    if(!target){
+  getOwn(metadataKey: string, target: Function, targetKey: string): Object {
+    if (!target) {
       return undefined;
     }
 
-    if(target.hasOwnProperty('decorators')){
+    if (target.hasOwnProperty('decorators')) {
       ensureDecorators(target);
     }
 
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define(metadataKey : string, metadataValue : Object, target : Function, targetKey : string) : void {
+  define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey : string, Type : Function, target : Function, targetKey : string) : Object {
+  getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
-    if(result === undefined){
+    if (result === undefined) {
       result = new Type();
       Reflect.defineMetadata(metadataKey, result, target, targetKey);
     }
 
     return result;
   }
-}
+};
