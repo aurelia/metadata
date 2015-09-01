@@ -1,7 +1,8 @@
 import {DecoratorApplicator} from './decorator-applicator';
 
 interface DecoratorsConfigType {
-
+  parameterizedDecorator(name: string, decorator: Function): void;
+  simpleDecorator(name: string, decorator: Function): void;
 }
 
 interface DecoratorsType {

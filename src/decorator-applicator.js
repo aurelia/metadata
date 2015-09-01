@@ -1,3 +1,6 @@
+/**
+* Stores and applies a collection of decorators to a target.
+*/
 export class DecoratorApplicator {
   constructor() {
     this._first = null;
@@ -6,7 +9,12 @@ export class DecoratorApplicator {
     this._rest = null;
   }
 
-  decorator(decorator : Function) : DecoratorApplicator {
+  /**
+  * Adds a decorator to the collection.
+  * @param decorator The decorator to add.
+  * @return The current decorator applicator for chaining.
+  */
+  decorator(decorator: Function): DecoratorApplicator {
     if (this._first === null) {
       this._first = decorator;
       return this;

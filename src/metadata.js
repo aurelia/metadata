@@ -70,16 +70,17 @@ function ensureDecorators(target) {
 interface MetadataType {
   global: Object;
   noop: Function;
-  resource:string;
-  paramTypes:string;
-  properties:string;
+  resource: string;
+  paramTypes: string;
+  properties: string;
+  get(metadataKey: string, target: Function, targetKey: string): Object;
+  getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+  define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+  getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
 }
 
 /**
 * Provides helpers for working with metadata.
-*
-* @class Metadata
-* @static
 */
 export const Metadata: MetadataType = {
   global: theGlobal,
