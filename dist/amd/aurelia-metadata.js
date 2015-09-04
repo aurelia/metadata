@@ -55,7 +55,7 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
   }
 
   function ensureDecorators(target) {
-    var applicator;
+    var applicator = undefined;
 
     if (typeof target.decorators === 'function') {
       applicator = target.decorators();
@@ -73,6 +73,7 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
   var Metadata = {
     global: theGlobal,
+    noop: function noop() {},
     resource: 'aurelia:resource',
     paramTypes: 'design:paramtypes',
     properties: 'design:properties',
@@ -111,8 +112,8 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
   };
 
   exports.Metadata = Metadata;
-  var originStorage = new Map(),
-      unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
+  var originStorage = new Map();
+  var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
   var Origin = (function () {
     function Origin(moduleId, moduleMember) {
@@ -127,10 +128,10 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
 
       if (origin === undefined) {
         System.forEachModule(function (key, value) {
-          for (var name in value) {
-            var exp = value[name];
+          for (var _name in value) {
+            var exp = value[_name];
             if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, name));
+              originStorage.set(fn, origin = new Origin(key, _name));
               return true;
             }
           }
@@ -164,19 +165,29 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
       this._rest = null;
     }
 
-    DecoratorApplicator.prototype.decorator = function decorator(_decorator) {
+    DecoratorApplicator.prototype.decorator = (function (_decorator) {
+      function decorator(_x) {
+        return _decorator.apply(this, arguments);
+      }
+
+      decorator.toString = function () {
+        return _decorator.toString();
+      };
+
+      return decorator;
+    })(function (decorator) {
       if (this._first === null) {
-        this._first = _decorator;
+        this._first = decorator;
         return this;
       }
 
       if (this._second === null) {
-        this._second = _decorator;
+        this._second = decorator;
         return this;
       }
 
       if (this._third === null) {
-        this._third = _decorator;
+        this._third = decorator;
         return this;
       }
 
@@ -184,14 +195,12 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
         this._rest = [];
       }
 
-      this._rest.push(_decorator);
+      this._rest.push(decorator);
 
       return this;
-    };
+    });
 
     DecoratorApplicator.prototype._decorate = function _decorate(target) {
-      var i, ii, rest;
-
       if (this._first !== null) {
         this._first(target);
       }
@@ -204,9 +213,9 @@ define(['exports', 'core-js'], function (exports, _coreJs) {
         this._third(target);
       }
 
-      rest = this._rest;
+      var rest = this._rest;
       if (rest !== null) {
-        for (i = 0, ii = rest.length; i < ii; ++i) {
+        for (var i = 0, ii = rest.length; i < ii; ++i) {
           rest[i](target);
         }
       }

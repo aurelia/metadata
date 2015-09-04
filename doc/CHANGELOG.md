@@ -1,3 +1,17 @@
+## 0.8.0 (2015-09-04)
+
+
+#### Bug Fixes
+
+* **build:** update linting, testing and tools ([15c83ea6](https://github.com/aurelia/metadata/commit/15c83ea6414849e0102a5986358d43e9918578a0))
+
+
+#### Features
+
+* **all:** improve d.ts generation and api doc comments ([901f6747](https://github.com/aurelia/metadata/commit/901f6747e6513a6a03b6d9861b63c843d4487f6e))
+* **metadata:** add a noop property for noop functions ([bcd4fc66](https://github.com/aurelia/metadata/commit/bcd4fc66f49011d55c6635e7025139e139c8867a))
+
+
 ### 0.7.3 (2015-08-14)
 
 

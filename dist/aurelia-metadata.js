@@ -1,4 +1,4 @@
-import * as core from 'core-js';
+import 'core-js';
 
 const theGlobal = (function() {
   // Workers don’t have `window`, only `self`
@@ -18,148 +18,148 @@ const theGlobal = (function() {
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
 
-if(typeof theGlobal.System === 'undefined'){
-  theGlobal.System = { isFake:true };
+if (typeof theGlobal.System === 'undefined') {
+  theGlobal.System = {isFake: true};
 }
 
-if(typeof theGlobal.System.forEachModule === 'undefined'){
-  theGlobal.System.forEachModule = function(){};
+if (typeof theGlobal.System.forEachModule === 'undefined') {
+  theGlobal.System.forEachModule = function() {};
 }
 
-if(typeof theGlobal.Reflect === 'undefined'){
+if (typeof theGlobal.Reflect === 'undefined') {
   theGlobal.Reflect = {};
 }
 
-if(typeof theGlobal.Reflect.getOwnMetadata === 'undefined'){
-  Reflect.getOwnMetadata = function(metadataKey, target, targetKey){
+if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
+  Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
     return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
   };
 }
 
-if(typeof theGlobal.Reflect.defineMetadata === 'undefined'){
-  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey){
-    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
-    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
+  Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
+    let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
+    let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
     targetContainer[metadataKey] = metadataValue;
   };
 }
 
-if(typeof theGlobal.Reflect.metadata === 'undefined'){
-  Reflect.metadata = function(metadataKey, metadataValue){
-    return function(target, targetKey){
+if (typeof theGlobal.Reflect.metadata === 'undefined') {
+  Reflect.metadata = function(metadataKey, metadataValue) {
+    return function(target, targetKey) {
       Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
     };
   };
 }
 
-function ensureDecorators(target){
-  var applicator;
+function ensureDecorators(target) {
+  let applicator;
 
-  if(typeof target.decorators === 'function'){
+  if (typeof target.decorators === 'function') {
     applicator = target.decorators();
-  }else{
+  } else {
     applicator = target.decorators;
   }
 
-  if(typeof applicator._decorate === 'function'){
+  if (typeof applicator._decorate === 'function') {
     delete target.decorators;
     applicator._decorate(target);
-  }else{
+  } else {
     throw new Error('The return value of your decorator\'s method was not valid.');
   }
 }
 
 interface MetadataType {
   global: Object;
-  resource:string;
-  paramTypes:string;
-  properties:string;
+  noop: Function;
+  resource: string;
+  paramTypes: string;
+  properties: string;
+  get(metadataKey: string, target: Function, targetKey: string): Object;
+  getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+  define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+  getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
 }
 
 /**
 * Provides helpers for working with metadata.
-*
-* @class Metadata
-* @static
 */
-export var Metadata : MetadataType = {
+export const Metadata: MetadataType = {
   global: theGlobal,
-  resource:'aurelia:resource',
-  paramTypes:'design:paramtypes',
-  properties:'design:properties',
-  get(metadataKey : string, target : Function, targetKey : string) : Object {
-    if(!target){
+  noop: function() {},
+  resource: 'aurelia:resource',
+  paramTypes: 'design:paramtypes',
+  properties: 'design:properties',
+  get(metadataKey: string, target: Function, targetKey: string): Object {
+    if (!target) {
       return undefined;
     }
 
     let result = Metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn(metadataKey : string, target : Function, targetKey : string) : Object {
-    if(!target){
+  getOwn(metadataKey: string, target: Function, targetKey: string): Object {
+    if (!target) {
       return undefined;
     }
 
-    if(target.hasOwnProperty('decorators')){
+    if (target.hasOwnProperty('decorators')) {
       ensureDecorators(target);
     }
 
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define(metadataKey : string, metadataValue : Object, target : Function, targetKey : string) : void {
+  define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn(metadataKey : string, Type : Function, target : Function, targetKey : string) : Object {
+  getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object {
     let result = Metadata.getOwn(metadataKey, target, targetKey);
 
-    if(result === undefined){
+    if (result === undefined) {
       result = new Type();
       Reflect.defineMetadata(metadataKey, result, target, targetKey);
     }
 
     return result;
   }
-}
+};
 
-let originStorage = new Map(),
-    unknownOrigin = Object.freeze({moduleId:undefined,moduleMember:undefined});
+let originStorage = new Map();
+let unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
 
 /**
 * A metadata annotation that describes the origin module of the function to which it's attached.
-*
-* @class Origin
-* @constructor
-* @param {string} moduleId The origin module id.
-* @param {string} moduleMember The name of the export in the origin module.
 */
 export class Origin {
-  constructor(moduleId : string, moduleMember : string){
+  /**
+  * Creates an instance of Origin metadata.
+  * @param moduleId The origin module id.
+  * @param moduleMember The name of the export in the origin module.
+  */
+  constructor(moduleId: string, moduleMember: string) {
     this.moduleId = moduleId;
     this.moduleMember = moduleMember;
   }
 
   /**
   * Get the Origin annotation for the specified function.
-  *
-  * @method get
-  * @static
-  * @param {Function} fn The function to inspect for Origin metadata.
-  * @return {Origin} Returns the Origin metadata.
+  * @param fn The function to inspect for Origin metadata.
+  * @return Returns the Origin metadata.
   */
-  static get(fn : Function) : Origin {
-    var origin = originStorage.get(fn);
+  static get(fn: Function): Origin {
+    let origin = originStorage.get(fn);
 
-    if(origin === undefined){
+    if (origin === undefined) {
       System.forEachModule((key, value) => {
-        for(var name in value){
-          var exp = value[name];
-          if(exp === fn){
+        for (let name in value) {
+          let exp = value[name];
+          if (exp === fn) {
             originStorage.set(fn, origin = new Origin(key, name));
             return true;
           }
         }
 
-        if(value === fn){
+        if (value === fn) {
           originStorage.set(fn, origin = new Origin(key, 'default'));
           return true;
         }
@@ -171,43 +171,48 @@ export class Origin {
 
   /**
   * Set the Origin annotation for the specified function.
-  *
-  * @method set
-  * @static
-  * @param {Function} fn The function to set the Origin metadata on.
-  * @param {origin} fn The Origin metadata to store on the function.
-  * @return {Origin} Returns the Origin metadata.
+  * @param fn The function to set the Origin metadata on.
+  * @param fn The Origin metadata to store on the function.
+  * @return Returns the Origin metadata.
   */
-  static set(fn : Function, origin : Origin) : void {
+  static set(fn: Function, origin: Origin): void {
     originStorage.set(fn, origin);
   }
 }
 
+/**
+* Stores and applies a collection of decorators to a target.
+*/
 export class DecoratorApplicator {
-  constructor(){
+  constructor() {
     this._first = null;
     this._second = null;
     this._third = null;
     this._rest = null;
   }
 
-  decorator(decorator : Function) : DecoratorApplicator {
-    if(this._first === null){
+  /**
+  * Adds a decorator to the collection.
+  * @param decorator The decorator to add.
+  * @return The current decorator applicator for chaining.
+  */
+  decorator(decorator: Function): DecoratorApplicator {
+    if (this._first === null) {
       this._first = decorator;
       return this;
     }
 
-    if(this._second === null){
+    if (this._second === null) {
       this._second = decorator;
       return this;
     }
 
-    if(this._third === null){
+    if (this._third === null) {
       this._third = decorator;
       return this;
     }
 
-    if(this._rest === null){
+    if (this._rest === null) {
       this._rest = [];
     }
 
@@ -216,24 +221,22 @@ export class DecoratorApplicator {
     return this;
   }
 
-  _decorate(target : Function) : void {
-    var i, ii, rest;
-
-    if(this._first !== null){
+  _decorate(target: Function): void {
+    if (this._first !== null) {
       this._first(target);
     }
 
-    if(this._second !== null){
+    if (this._second !== null) {
       this._second(target);
     }
 
-    if(this._third !== null){
+    if (this._third !== null) {
       this._third(target);
     }
 
-    rest = this._rest;
-    if(rest !== null){
-      for(i = 0, ii = rest.length; i < ii; ++i){
+    let rest = this._rest;
+    if (rest !== null) {
+      for (let i = 0, ii = rest.length; i < ii; ++i) {
         rest[i](target);
       }
     }
@@ -241,34 +244,35 @@ export class DecoratorApplicator {
 }
 
 interface DecoratorsConfigType {
-
+  parameterizedDecorator(name: string, decorator: Function): void;
+  simpleDecorator(name: string, decorator: Function): void;
 }
 
 interface DecoratorsType {
-	configure : DecoratorsConfigType;
+  configure: DecoratorsConfigType;
 }
 
-export let Decorators : DecoratorsType = {
+export const Decorators: DecoratorsType = {
   configure: {
-    parameterizedDecorator(name : string, decorator : Function) : void {
-      Decorators[name] = function(){
-        var applicator = new DecoratorApplicator();
+    parameterizedDecorator(name: string, decorator: Function): void {
+      Decorators[name] = function() {
+        let applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
       };
 
-      DecoratorApplicator.prototype[name] = function(){
-        var result = decorator.apply(null, arguments);
+      DecoratorApplicator.prototype[name] = function() {
+        let result = decorator.apply(null, arguments);
         return this.decorator(result);
       };
     },
-    simpleDecorator(name : string, decorator : Function) : void {
-      Decorators[name] = function(){
+    simpleDecorator(name: string, decorator: Function): void {
+      Decorators[name] = function() {
         return new DecoratorApplicator().decorator(decorator);
       };
 
-      DecoratorApplicator.prototype[name] = function(){
+      DecoratorApplicator.prototype[name] = function() {
         return this.decorator(decorator);
-      }
+      };
     }
   }
-}
+};

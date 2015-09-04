@@ -2,13 +2,9 @@
 
 exports.__esModule = true;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _coreJs = require('core-js');
-
-var core = _interopRequireWildcard(_coreJs);
+require('core-js');
 
 var theGlobal = (function () {
   if (typeof self !== 'undefined') {
@@ -60,7 +56,7 @@ if (typeof theGlobal.Reflect.metadata === 'undefined') {
 }
 
 function ensureDecorators(target) {
-  var applicator;
+  var applicator = undefined;
 
   if (typeof target.decorators === 'function') {
     applicator = target.decorators();
@@ -78,6 +74,7 @@ function ensureDecorators(target) {
 
 var Metadata = {
   global: theGlobal,
+  noop: function noop() {},
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -116,8 +113,8 @@ var Metadata = {
 };
 
 exports.Metadata = Metadata;
-var originStorage = new Map(),
-    unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
+var originStorage = new Map();
+var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
 var Origin = (function () {
   function Origin(moduleId, moduleMember) {
@@ -132,10 +129,10 @@ var Origin = (function () {
 
     if (origin === undefined) {
       System.forEachModule(function (key, value) {
-        for (var name in value) {
-          var exp = value[name];
+        for (var _name in value) {
+          var exp = value[_name];
           if (exp === fn) {
-            originStorage.set(fn, origin = new Origin(key, name));
+            originStorage.set(fn, origin = new Origin(key, _name));
             return true;
           }
         }
@@ -169,19 +166,29 @@ var DecoratorApplicator = (function () {
     this._rest = null;
   }
 
-  DecoratorApplicator.prototype.decorator = function decorator(_decorator) {
+  DecoratorApplicator.prototype.decorator = (function (_decorator) {
+    function decorator(_x) {
+      return _decorator.apply(this, arguments);
+    }
+
+    decorator.toString = function () {
+      return _decorator.toString();
+    };
+
+    return decorator;
+  })(function (decorator) {
     if (this._first === null) {
-      this._first = _decorator;
+      this._first = decorator;
       return this;
     }
 
     if (this._second === null) {
-      this._second = _decorator;
+      this._second = decorator;
       return this;
     }
 
     if (this._third === null) {
-      this._third = _decorator;
+      this._third = decorator;
       return this;
     }
 
@@ -189,14 +196,12 @@ var DecoratorApplicator = (function () {
       this._rest = [];
     }
 
-    this._rest.push(_decorator);
+    this._rest.push(decorator);
 
     return this;
-  };
+  });
 
   DecoratorApplicator.prototype._decorate = function _decorate(target) {
-    var i, ii, rest;
-
     if (this._first !== null) {
       this._first(target);
     }
@@ -209,9 +214,9 @@ var DecoratorApplicator = (function () {
       this._third(target);
     }
 
-    rest = this._rest;
+    var rest = this._rest;
     if (rest !== null) {
-      for (i = 0, ii = rest.length; i < ii; ++i) {
+      for (var i = 0, ii = rest.length; i < ii; ++i) {
         rest[i](target);
       }
     }
