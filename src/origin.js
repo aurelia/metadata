@@ -26,7 +26,7 @@ export class Origin {
     let origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      System.forEachModule((key, value) => {
+      window.eachModule((key, value) => {
         for (let name in value) {
           let exp = value[name];
           if (exp === fn) {

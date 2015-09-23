@@ -16,12 +16,8 @@ const theGlobal = (function() {
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
 
-if (typeof theGlobal.System === 'undefined') {
-  theGlobal.System = {isFake: true};
-}
-
-if (typeof theGlobal.System.forEachModule === 'undefined') {
-  theGlobal.System.forEachModule = function() {};
+if (typeof theGlobal.eachModule === 'undefined') {
+  theGlobal.eachModule = function() {};
 }
 
 if (typeof theGlobal.Reflect === 'undefined') {
