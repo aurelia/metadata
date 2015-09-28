@@ -1,24 +1,8 @@
-const theGlobal = (function() {
-  // Workers don’t have `window`, only `self`
-  if (typeof self !== 'undefined') {
-    return self;
-  }
+import {PLATFORM} from 'aurelia-pal';
 
-  if (typeof global !== 'undefined') {
-    return global;
-  }
-
-  // Not all environments allow eval and Function
-  // Use only as a last resort:
-  return new Function('return this')();
-})();
-
+const theGlobal = PLATFORM.global;
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
-
-if (typeof theGlobal.eachModule === 'undefined') {
-  theGlobal.eachModule = function() {};
-}
 
 if (typeof theGlobal.Reflect === 'undefined') {
   theGlobal.Reflect = {};
@@ -64,8 +48,6 @@ function ensureDecorators(target) {
 }
 
 interface MetadataType {
-  global: Object;
-  noop: Function;
   resource: string;
   paramTypes: string;
   properties: string;
@@ -79,8 +61,6 @@ interface MetadataType {
 * Provides helpers for working with metadata.
 */
 export const Metadata: MetadataType = {
-  global: theGlobal,
-  noop: function() {},
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',

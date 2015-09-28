@@ -1,7 +1,8 @@
 import 'core-js';
+import {PLATFORM} from 'aurelia-pal';
 
-let originStorage = new Map();
-let unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
+const originStorage = new Map();
+const unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
 
 /**
 * A metadata annotation that describes the origin module of the function to which it's attached.
@@ -26,7 +27,7 @@ export class Origin {
     let origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      window.eachModule((key, value) => {
+      PLATFORM.eachModule((key, value) => {
         for (let name in value) {
           let exp = value[name];
           if (exp === fn) {
