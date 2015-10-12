@@ -9,10 +9,10 @@ interface DecoratorsType {
   configure: DecoratorsConfigType;
 }
 
-export const Decorators: DecoratorsType = {
+export const decorators: DecoratorsType = {
   configure: {
     parameterizedDecorator(name: string, decorator: Function): void {
-      Decorators[name] = function() {
+      decorators[name] = function() {
         let applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
       };
@@ -23,7 +23,7 @@ export const Decorators: DecoratorsType = {
       };
     },
     simpleDecorator(name: string, decorator: Function): void {
-      Decorators[name] = function() {
+      decorators[name] = function() {
         return new DecoratorApplicator().decorator(decorator);
       };
 

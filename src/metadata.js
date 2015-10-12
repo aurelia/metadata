@@ -60,7 +60,7 @@ interface MetadataType {
 /**
 * Provides helpers for working with metadata.
 */
-export const Metadata: MetadataType = {
+export const metadata: MetadataType = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -69,8 +69,8 @@ export const Metadata: MetadataType = {
       return undefined;
     }
 
-    let result = Metadata.getOwn(metadataKey, target, targetKey);
-    return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
+    let result = metadata.getOwn(metadataKey, target, targetKey);
+    return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey: string): Object {
     if (!target) {
@@ -87,7 +87,7 @@ export const Metadata: MetadataType = {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
   getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object {
-    let result = Metadata.getOwn(metadataKey, target, targetKey);
+    let result = metadata.getOwn(metadataKey, target, targetKey);
 
     if (result === undefined) {
       result = new Type();

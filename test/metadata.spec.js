@@ -1,24 +1,24 @@
-import {Metadata} from '../src/metadata';
-import {Decorators} from '../src/decorators';
+import {metadata} from '../src/metadata';
+import {decorators} from '../src/decorators';
 
 describe('metadata', () => {
   it('can be located by key', () => {
-    var found = Metadata.getOwn(Metadata.resource, HasMetadata);
+    var found = metadata.getOwn(metadata.resource, HasMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
   it('can be normalized to handle the fallback metadata location', () => {
-    var found = Metadata.getOwn(Metadata.resource, HasFallbackMetadata);
+    var found = metadata.getOwn(metadata.resource, HasFallbackMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
   it('can override base metadata', () => {
-    var found = Metadata.getOwn(Metadata.resource, OverridesMetadata);
+    var found = metadata.getOwn(metadata.resource, OverridesMetadata);
     expect(found.id).toBe(3);
   });
 
   it('can inherit base metadata when searching deep by type', () => {
-    var found = Metadata.get(Metadata.resource, DerivedWithBaseMetadata);
+    var found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
@@ -26,37 +26,37 @@ describe('metadata', () => {
     class Annotated {}
 
     Annotated.decorators = () => {
-      return Decorators.sample();
+      return decorators.sample();
     };
 
-    var found = Metadata.getOwn(Metadata.resource, Annotated);
+    var found = metadata.getOwn(metadata.resource, Annotated);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
   describe('when searching', () => {
     it('returns undefined if the input type is falsy', () => {
-      expect(Metadata.getOwn(Metadata.resource, undefined)).toBe(undefined);
-      expect(Metadata.getOwn(Metadata.resource, null)).toBe(undefined);
+      expect(metadata.getOwn(metadata.resource, undefined)).toBe(undefined);
+      expect(metadata.getOwn(metadata.resource, null)).toBe(undefined);
     });
 
     it('returns undefined if no metadata is defined for the type', () => {
-      var found = Metadata.getOwn(Metadata.resource, HasNoMetadata);
+      var found = metadata.getOwn(metadata.resource, HasNoMetadata);
       expect(found).toBe(undefined);
     });
 
     it('retruns the base metadata when serching deep if no metadata is defined for the type', () => {
-      var found = Metadata.get(Metadata.resource, DerivedWithBaseMetadata);
+      var found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
       expect(found instanceof SampleMetadata).toBe(true);
     });
   });
 
   function sampleES7Decorator(value){
     return function(target){
-      Metadata.define(Metadata.resource, new SampleMetadata(value), target);
+      metadata.define(metadata.resource, new SampleMetadata(value), target);
     }
   }
 
-  Decorators.configure.parameterizedDecorator('sample', sampleES7Decorator);
+  decorators.configure.parameterizedDecorator('sample', sampleES7Decorator);
 
   class SampleMetadata {
     constructor(id) {
@@ -65,22 +65,22 @@ describe('metadata', () => {
   }
 
   class HasMetadata {}
-  HasMetadata.decorators = Decorators.sample();
+  HasMetadata.decorators = decorators.sample();
 
   class HasFallbackMetadata {
     static decorators() {
-      return Decorators.sample();
+      return decorators.sample();
     }
   }
 
   class HasOneMetadataInstance {}
-  HasOneMetadataInstance.decorators = Decorators.sample();
+  HasOneMetadataInstance.decorators = decorators.sample();
 
   class OverridesMetadata extends HasMetadata {}
-  OverridesMetadata.decorators = Decorators.sample(3);
+  OverridesMetadata.decorators = decorators.sample(3);
 
   class DerivedWithBaseMetadata extends HasMetadata {}
-  Metadata.define('another', 'foo', DerivedWithBaseMetadata);
+  metadata.define('another', 'foo', DerivedWithBaseMetadata);
 
   class HasNoMetadata {}
 
