@@ -1,8 +1,7 @@
 declare module 'aurelia-metadata' {
   import 'core-js';
+  import { PLATFORM }  from 'aurelia-pal';
   export interface MetadataType {
-    global: Object;
-    noop: Function;
     resource: string;
     paramTypes: string;
     properties: string;
@@ -22,7 +21,7 @@ declare module 'aurelia-metadata' {
   /**
   * Provides helpers for working with metadata.
   */
-  export const Metadata: MetadataType;
+  export const metadata: MetadataType;
   
   /**
   * A metadata annotation that describes the origin module of the function to which it's attached.
@@ -65,5 +64,5 @@ declare module 'aurelia-metadata' {
       */
     decorator(decorator: Function): DecoratorApplicator;
   }
-  export const Decorators: DecoratorsType;
+  export const decorators: DecoratorsType;
 }

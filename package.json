@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -25,7 +25,7 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-pal": "github:aurelia/pal@^0.1.1",
+      "aurelia-pal": "github:aurelia/pal@^0.2.0",
       "core-js": "npm:core-js@^0.9.5"
     },
     "devDependencies": {
@@ -65,41 +65,8 @@
     "yargs": "^2.1.1"
   },
   "aurelia": {
-    "usedBy": [
-      "aurelia-binding",
-      "aurelia-dependency-injection",
-      "aurelia-framework",
-      "aurelia-loader-default",
-      "aurelia-templating",
-      "aurelia-templating-router"
-    ],
     "documentation": {
-      "links": [
-        {
-          "rel": "license",
-          "mediaType": "text/plain",
-          "title": "The MIT License (MIT)",
-          "href": "LICENSE"
-        },
-        {
-          "rel": "describedby",
-          "mediaType": "application/aurelia-doc+json",
-          "title": "API",
-          "href": "doc/api.json"
-        },
-        {
-          "rel": "version-history",
-          "mediaType": "text/markdown",
-          "title": "Change Log",
-          "href": "doc/CHANGELOG.md"
-        },
-        {
-          "rel": "about",
-          "mediaType": "text/markdown",
-          "title": "What is Metadata?",
-          "href": "doc/what-is-metadata.md"
-        }
-      ]
+      "articles": []
     }
   }
 }

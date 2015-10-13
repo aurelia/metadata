@@ -1,30 +1,9 @@
 import 'core-js';
+import {PLATFORM} from 'aurelia-pal';
 
-const theGlobal = (function() {
-  // Workers don’t have `window`, only `self`
-  if (typeof self !== 'undefined') {
-    return self;
-  }
-
-  if (typeof global !== 'undefined') {
-    return global;
-  }
-
-  // Not all environments allow eval and Function
-  // Use only as a last resort:
-  return new Function('return this')();
-})();
-
+const theGlobal = PLATFORM.global;
 const emptyMetadata = Object.freeze({});
 const metadataContainerKey = '__metadata__';
-
-if (typeof theGlobal.System === 'undefined') {
-  theGlobal.System = {isFake: true};
-}
-
-if (typeof theGlobal.System.forEachModule === 'undefined') {
-  theGlobal.System.forEachModule = function() {};
-}
 
 if (typeof theGlobal.Reflect === 'undefined') {
   theGlobal.Reflect = {};
@@ -70,8 +49,6 @@ function ensureDecorators(target) {
 }
 
 interface MetadataType {
-  global: Object;
-  noop: Function;
   resource: string;
   paramTypes: string;
   properties: string;
@@ -84,9 +61,7 @@ interface MetadataType {
 /**
 * Provides helpers for working with metadata.
 */
-export const Metadata: MetadataType = {
-  global: theGlobal,
-  noop: function() {},
+export const metadata: MetadataType = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -95,8 +70,8 @@ export const Metadata: MetadataType = {
       return undefined;
     }
 
-    let result = Metadata.getOwn(metadataKey, target, targetKey);
-    return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
+    let result = metadata.getOwn(metadataKey, target, targetKey);
+    return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey: string): Object {
     if (!target) {
@@ -113,7 +88,7 @@ export const Metadata: MetadataType = {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
   getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object {
-    let result = Metadata.getOwn(metadataKey, target, targetKey);
+    let result = metadata.getOwn(metadataKey, target, targetKey);
 
     if (result === undefined) {
       result = new Type();
@@ -124,8 +99,8 @@ export const Metadata: MetadataType = {
   }
 };
 
-let originStorage = new Map();
-let unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
+const originStorage = new Map();
+const unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
 
 /**
 * A metadata annotation that describes the origin module of the function to which it's attached.
@@ -150,7 +125,7 @@ export class Origin {
     let origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      System.forEachModule((key, value) => {
+      PLATFORM.eachModule((key, value) => {
         for (let name in value) {
           let exp = value[name];
           if (exp === fn) {
@@ -252,10 +227,10 @@ interface DecoratorsType {
   configure: DecoratorsConfigType;
 }
 
-export const Decorators: DecoratorsType = {
+export const decorators: DecoratorsType = {
   configure: {
     parameterizedDecorator(name: string, decorator: Function): void {
-      Decorators[name] = function() {
+      decorators[name] = function() {
         let applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
       };
@@ -266,7 +241,7 @@ export const Decorators: DecoratorsType = {
       };
     },
     simpleDecorator(name: string, decorator: Function): void {
-      Decorators[name] = function() {
+      decorators[name] = function() {
         return new DecoratorApplicator().decorator(decorator);
       };
 

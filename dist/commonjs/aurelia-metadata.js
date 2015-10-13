@@ -6,28 +6,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 require('core-js');
 
-var theGlobal = (function () {
-  if (typeof self !== 'undefined') {
-    return self;
-  }
+var _aureliaPal = require('aurelia-pal');
 
-  if (typeof global !== 'undefined') {
-    return global;
-  }
-
-  return new Function('return this')();
-})();
-
+var theGlobal = _aureliaPal.PLATFORM.global;
 var emptyMetadata = Object.freeze({});
 var metadataContainerKey = '__metadata__';
-
-if (typeof theGlobal.System === 'undefined') {
-  theGlobal.System = { isFake: true };
-}
-
-if (typeof theGlobal.System.forEachModule === 'undefined') {
-  theGlobal.System.forEachModule = function () {};
-}
 
 if (typeof theGlobal.Reflect === 'undefined') {
   theGlobal.Reflect = {};
@@ -72,9 +55,7 @@ function ensureDecorators(target) {
   }
 }
 
-var Metadata = {
-  global: theGlobal,
-  noop: function noop() {},
+var metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -83,8 +64,8 @@ var Metadata = {
       return undefined;
     }
 
-    var result = Metadata.getOwn(metadataKey, target, targetKey);
-    return result === undefined ? Metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
+    var result = metadata.getOwn(metadataKey, target, targetKey);
+    return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn: function getOwn(metadataKey, target, targetKey) {
     if (!target) {
@@ -101,7 +82,7 @@ var Metadata = {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
   getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, targetKey) {
-    var result = Metadata.getOwn(metadataKey, target, targetKey);
+    var result = metadata.getOwn(metadataKey, target, targetKey);
 
     if (result === undefined) {
       result = new Type();
@@ -112,7 +93,7 @@ var Metadata = {
   }
 };
 
-exports.Metadata = Metadata;
+exports.metadata = metadata;
 var originStorage = new Map();
 var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
@@ -128,7 +109,7 @@ var Origin = (function () {
     var origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      System.forEachModule(function (key, value) {
+      _aureliaPal.PLATFORM.eachModule(function (key, value) {
         for (var _name in value) {
           var exp = value[_name];
           if (exp === fn) {
@@ -226,10 +207,10 @@ var DecoratorApplicator = (function () {
 })();
 
 exports.DecoratorApplicator = DecoratorApplicator;
-var Decorators = {
+var decorators = {
   configure: {
     parameterizedDecorator: function parameterizedDecorator(name, decorator) {
-      Decorators[name] = function () {
+      decorators[name] = function () {
         var applicator = new DecoratorApplicator();
         return applicator[name].apply(applicator, arguments);
       };
@@ -240,7 +221,7 @@ var Decorators = {
       };
     },
     simpleDecorator: function simpleDecorator(name, decorator) {
-      Decorators[name] = function () {
+      decorators[name] = function () {
         return new DecoratorApplicator().decorator(decorator);
       };
 
@@ -250,4 +231,4 @@ var Decorators = {
     }
   }
 };
-exports.Decorators = Decorators;
+exports.decorators = decorators;
