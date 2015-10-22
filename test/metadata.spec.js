@@ -25,9 +25,7 @@ describe('metadata', () => {
   it('can be added with function', () => {
     class Annotated {}
 
-    Annotated.decorators = () => {
-      return decorators.sample();
-    };
+    decorators(new sampleES7Decorator()).on(Annotated);
 
     var found = metadata.getOwn(metadata.resource, Annotated);
     expect(found instanceof SampleMetadata).toBe(true);
@@ -50,39 +48,26 @@ describe('metadata', () => {
     });
   });
 
-  function sampleES7Decorator(value){
-    return function(target){
-      metadata.define(metadata.resource, new SampleMetadata(value), target);
-    }
-  }
-
-  decorators.configure.parameterizedDecorator('sample', sampleES7Decorator);
-
   class SampleMetadata {
     constructor(id) {
       this.id = id;
     }
   }
 
-  class HasMetadata {}
-  HasMetadata.decorators = decorators.sample();
-
-  class HasFallbackMetadata {
-    static decorators() {
-      return decorators.sample();
+  function sampleES7Decorator(value){
+    return function(target){
+      metadata.define(metadata.resource, new SampleMetadata(value), target);
     }
   }
 
-  class HasOneMetadataInstance {}
-  HasOneMetadataInstance.decorators = decorators.sample();
-
-  class OverridesMetadata extends HasMetadata {}
-  OverridesMetadata.decorators = decorators.sample(3);
+  let HasMetadata = decorators(sampleES7Decorator()).on(class {});
+  let HasFallbackMetadata = decorators(sampleES7Decorator()).on(class {});
+  let HasOneMetadataInstance = decorators(sampleES7Decorator()).on(class {});
+  let OverridesMetadata = decorators(sampleES7Decorator(3)).on(class extends HasMetadata {});
 
   class DerivedWithBaseMetadata extends HasMetadata {}
   metadata.define('another', 'foo', DerivedWithBaseMetadata);
 
   class HasNoMetadata {}
-
   class DerivedTypeWithNoMetadata extends HasMetadata {}
 });

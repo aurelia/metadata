@@ -30,23 +30,6 @@ if (typeof theGlobal.Reflect.metadata === 'undefined') {
   };
 }
 
-function ensureDecorators(target) {
-  let applicator;
-
-  if (typeof target.decorators === 'function') {
-    applicator = target.decorators();
-  } else {
-    applicator = target.decorators;
-  }
-
-  if (typeof applicator._decorate === 'function') {
-    delete target.decorators;
-    applicator._decorate(target);
-  } else {
-    throw new Error('The return value of your decorator\'s method was not valid.');
-  }
-}
-
 interface MetadataType {
   resource: string;
   paramTypes: string;
@@ -65,22 +48,12 @@ export const metadata: MetadataType = {
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
   get(metadataKey: string, target: Function, targetKey: string): Object {
-    if (!target) {
-      return undefined;
-    }
-
+    if (!target) { return undefined; }
     let result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey: string): Object {
-    if (!target) {
-      return undefined;
-    }
-
-    if (target.hasOwnProperty('decorators')) {
-      ensureDecorators(target);
-    }
-
+    if (!target) { return undefined; }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
   define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void {

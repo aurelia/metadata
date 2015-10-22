@@ -1,35 +1,33 @@
-import {DecoratorApplicator} from './decorator-applicator';
-
-interface DecoratorsConfigType {
-  parameterizedDecorator(name: string, decorator: Function): void;
-  simpleDecorator(name: string, decorator: Function): void;
+interface DecoratorApplicator {
+  on<T>(target: T, key?: string, descriptor?: Object): T;
 }
 
-interface DecoratorsType {
-  configure: DecoratorsConfigType;
-}
+export function decorators(...rest: Function[]): DecoratorApplicator {
+  let applicator = function(target, key, descriptor) {
+    let i = rest.length;
 
-export const decorators: DecoratorsType = {
-  configure: {
-    parameterizedDecorator(name: string, decorator: Function): void {
-      decorators[name] = function() {
-        let applicator = new DecoratorApplicator();
-        return applicator[name].apply(applicator, arguments);
-      };
-
-      DecoratorApplicator.prototype[name] = function() {
-        let result = decorator.apply(null, arguments);
-        return this.decorator(result);
-      };
-    },
-    simpleDecorator(name: string, decorator: Function): void {
-      decorators[name] = function() {
-        return new DecoratorApplicator().decorator(decorator);
+    if (key) {
+      descriptor = descriptor || {
+        value: target[key],
+        writable: true,
+        configurable: true,
+        enumerable: true
       };
 
-      DecoratorApplicator.prototype[name] = function() {
-        return this.decorator(decorator);
-      };
+      while (i--) {
+        descriptor = rest[i](target, key, descriptor) || descriptor;
+      }
+
+      Object.defineProperty(target, key, descriptor);
+    } else {
+      while (i--) {
+        target = rest[i](target) || target;
+      }
     }
-  }
-};
+
+    return target;
+  };
+
+  applicator.on = applicator;
+  return applicator;
+}
