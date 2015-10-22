@@ -9,9 +9,18 @@ const unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefine
 */
 export class Origin {
   /**
+  * The id of the module from which the item originated.
+  */
+  moduleId: string;
+  /**
+  * The member name of the export on the module object from which the item originated.
+  */
+  moduleMember: string;
+
+  /**
   * Creates an instance of Origin metadata.
-  * @param moduleId The origin module id.
-  * @param moduleMember The name of the export in the origin module.
+  * @param moduleId The id of the module from which the item originated.
+  * @param moduleMember The member name of the export on the module object from which the item originated.
   */
   constructor(moduleId: string, moduleMember: string) {
     this.moduleId = moduleId;
@@ -19,7 +28,7 @@ export class Origin {
   }
 
   /**
-  * Get the Origin annotation for the specified function.
+  * Get the Origin metadata for the specified function.
   * @param fn The function to inspect for Origin metadata.
   * @return Returns the Origin metadata.
   */
@@ -47,7 +56,7 @@ export class Origin {
   }
 
   /**
-  * Set the Origin annotation for the specified function.
+  * Set the Origin metadata for the specified function.
   * @param fn The function to set the Origin metadata on.
   * @param fn The Origin metadata to store on the function.
   * @return Returns the Origin metadata.

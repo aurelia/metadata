@@ -3,6 +3,13 @@ define(['exports', 'core-js', 'aurelia-pal'], function (exports, _coreJs, _aurel
 
   exports.__esModule = true;
 
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  exports.decorators = decorators;
+  exports.deprecated = deprecated;
+  exports.mixin = mixin;
+  exports.protocol = protocol;
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   var theGlobal = _aureliaPal.PLATFORM.global;
@@ -35,23 +42,6 @@ define(['exports', 'core-js', 'aurelia-pal'], function (exports, _coreJs, _aurel
     };
   }
 
-  function ensureDecorators(target) {
-    var applicator = undefined;
-
-    if (typeof target.decorators === 'function') {
-      applicator = target.decorators();
-    } else {
-      applicator = target.decorators;
-    }
-
-    if (typeof applicator._decorate === 'function') {
-      delete target.decorators;
-      applicator._decorate(target);
-    } else {
-      throw new Error('The return value of your decorator\'s method was not valid.');
-    }
-  }
-
   var metadata = {
     resource: 'aurelia:resource',
     paramTypes: 'design:paramtypes',
@@ -60,7 +50,6 @@ define(['exports', 'core-js', 'aurelia-pal'], function (exports, _coreJs, _aurel
       if (!target) {
         return undefined;
       }
-
       var result = metadata.getOwn(metadataKey, target, targetKey);
       return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
     },
@@ -68,11 +57,6 @@ define(['exports', 'core-js', 'aurelia-pal'], function (exports, _coreJs, _aurel
       if (!target) {
         return undefined;
       }
-
-      if (target.hasOwnProperty('decorators')) {
-        ensureDecorators(target);
-      }
-
       return Reflect.getOwnMetadata(metadataKey, target, targetKey);
     },
     define: function define(metadataKey, metadataValue, target, targetKey) {
@@ -134,99 +118,182 @@ define(['exports', 'core-js', 'aurelia-pal'], function (exports, _coreJs, _aurel
 
   exports.Origin = Origin;
 
-  var DecoratorApplicator = (function () {
-    function DecoratorApplicator() {
-      _classCallCheck(this, DecoratorApplicator);
-
-      this._first = null;
-      this._second = null;
-      this._third = null;
-      this._rest = null;
+  function decorators() {
+    for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+      rest[_key] = arguments[_key];
     }
 
-    DecoratorApplicator.prototype.decorator = (function (_decorator) {
-      function decorator(_x) {
-        return _decorator.apply(this, arguments);
-      }
+    var applicator = function applicator(target, key, descriptor) {
+      var i = rest.length;
 
-      decorator.toString = function () {
-        return _decorator.toString();
-      };
+      if (key) {
+        descriptor = descriptor || {
+          value: target[key],
+          writable: true,
+          configurable: true,
+          enumerable: true
+        };
 
-      return decorator;
-    })(function (decorator) {
-      if (this._first === null) {
-        this._first = decorator;
-        return this;
-      }
+        while (i--) {
+          descriptor = rest[i](target, key, descriptor) || descriptor;
+        }
 
-      if (this._second === null) {
-        this._second = decorator;
-        return this;
-      }
-
-      if (this._third === null) {
-        this._third = decorator;
-        return this;
-      }
-
-      if (this._rest === null) {
-        this._rest = [];
-      }
-
-      this._rest.push(decorator);
-
-      return this;
-    });
-
-    DecoratorApplicator.prototype._decorate = function _decorate(target) {
-      if (this._first !== null) {
-        this._first(target);
-      }
-
-      if (this._second !== null) {
-        this._second(target);
-      }
-
-      if (this._third !== null) {
-        this._third(target);
-      }
-
-      var rest = this._rest;
-      if (rest !== null) {
-        for (var i = 0, ii = rest.length; i < ii; ++i) {
-          rest[i](target);
+        Object.defineProperty(target, key, descriptor);
+      } else {
+        while (i--) {
+          target = rest[i](target) || target;
         }
       }
+
+      return target;
     };
 
-    return DecoratorApplicator;
-  })();
+    applicator.on = applicator;
+    return applicator;
+  }
 
-  exports.DecoratorApplicator = DecoratorApplicator;
-  var decorators = {
-    configure: {
-      parameterizedDecorator: function parameterizedDecorator(name, decorator) {
-        decorators[name] = function () {
-          var applicator = new DecoratorApplicator();
-          return applicator[name].apply(applicator, arguments);
-        };
+  function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
+    function decorator(target, key, descriptor) {
+      var methodSignature = target.constructor.name + '#' + key;
+      var options = maybeKey ? {} : optionsOrTarget || {};
+      var message = 'DEPRECATION - ' + methodSignature;
 
-        DecoratorApplicator.prototype[name] = function () {
-          var result = decorator.apply(null, arguments);
-          return this.decorator(result);
-        };
-      },
-      simpleDecorator: function simpleDecorator(name, decorator) {
-        decorators[name] = function () {
-          return new DecoratorApplicator().decorator(decorator);
-        };
-
-        DecoratorApplicator.prototype[name] = function () {
-          return this.decorator(decorator);
-        };
+      if (typeof descriptor.value !== 'function') {
+        throw new SyntaxError('Only methods can be marked as deprecated.');
       }
+
+      if (options.message) {
+        message += ' - ' + options.message;
+      }
+
+      return _extends({}, descriptor, {
+        value: function deprecationWrapper() {
+          if (options.error) {
+            throw new Error(message);
+          } else {
+            console.warn(message);
+          }
+
+          return descriptor.value.apply(this, arguments);
+        }
+      });
     }
+
+    return maybeKey ? decorator(optionsOrTarget, maybeKey, maybeDescriptor) : decorator;
+  }
+
+  function mixin(behavior) {
+    var instanceKeys = Object.keys(behavior);
+
+    function _mixin(possible) {
+      var decorator = function decorator(target) {
+        var resolvedTarget = typeof target === 'function' ? target.prototype : target;
+
+        for (var _iterator = instanceKeys, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref;
+
+          if (_isArray) {
+            if (_i >= _iterator.length) break;
+            _ref = _iterator[_i++];
+          } else {
+            _i = _iterator.next();
+            if (_i.done) break;
+            _ref = _i.value;
+          }
+
+          var property = _ref;
+
+          Object.defineProperty(resolvedTarget, property, {
+            value: behavior[property],
+            writable: true
+          });
+        }
+      };
+
+      return possible ? decorator(possible) : decorator;
+    }
+
+    return _mixin;
+  }
+
+  function alwaysValid() {
+    return true;
+  }
+  function noCompose() {}
+
+  function ensureProtocolOptions(options) {
+    if (options === undefined) {
+      options = {};
+    } else if (typeof options === 'function') {
+      options = {
+        validate: options
+      };
+    }
+
+    if (!options.validate) {
+      options.validate = alwaysValid;
+    }
+
+    if (!options.compose) {
+      options.compose = noCompose;
+    }
+
+    return options;
+  }
+
+  function createProtocolValidator(validate) {
+    return function (target) {
+      var result = validate(target);
+      return result === true;
+    };
+  }
+
+  function createProtocolAsserter(name, validate) {
+    return function (target) {
+      var result = validate(target);
+      if (result !== true) {
+        throw new Error(result || name + ' was not correctly implemented.');
+      }
+    };
+  }
+
+  function protocol(name, options) {
+    options = ensureProtocolOptions(options);
+
+    var result = function result(target) {
+      var resolvedTarget = typeof target === 'function' ? target.prototype : target;
+
+      options.compose(resolvedTarget);
+      result.assert(resolvedTarget);
+
+      Object.defineProperty(resolvedTarget, 'protocol:' + name, {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: true
+      });
+    };
+
+    result.validate = createProtocolValidator(options.validate);
+    result.assert = createProtocolAsserter(name, options.validate);
+
+    return result;
+  }
+
+  protocol.create = function (name, options) {
+    options = ensureProtocolOptions(options);
+    var hidden = 'protocol:' + name;
+    var result = function result(target) {
+      var decorator = protocol(name, options);
+      return target ? decorator(target) : decorator;
+    };
+
+    result.decorates = function (obj) {
+      return obj[hidden] === true;
+    };
+    result.validate = createProtocolValidator(options.validate);
+    result.assert = createProtocolAsserter(name, options.validate);
+
+    return result;
   };
-  exports.decorators = decorators;
 });

@@ -31,30 +31,50 @@ if (typeof theGlobal.Reflect.metadata === 'undefined') {
   };
 }
 
-function ensureDecorators(target) {
-  let applicator;
-
-  if (typeof target.decorators === 'function') {
-    applicator = target.decorators();
-  } else {
-    applicator = target.decorators;
-  }
-
-  if (typeof applicator._decorate === 'function') {
-    delete target.decorators;
-    applicator._decorate(target);
-  } else {
-    throw new Error('The return value of your decorator\'s method was not valid.');
-  }
-}
-
+/**
+* Helpers for working with metadata on functions.
+*/
 interface MetadataType {
+  /**
+  * The metadata key representing pluggable resources.
+  */
   resource: string;
+  /**
+  * The metadata key representing parameter type information.
+  */
   paramTypes: string;
+  /**
+  * The metadata key representing property information.
+  */
   properties: string;
+  /**
+  * Gets metadata specified by a key on a target, searching up the inheritance hierarchy.
+  * @param metadataKey The key for the metadata to lookup.
+  * @param target The target to lookup the metadata on.
+  * @param targetKey The member on the target to lookup the metadata on.
+  */
   get(metadataKey: string, target: Function, targetKey: string): Object;
+  /**
+  * Gets metadata specified by a key on a target, only searching the own instance.
+  * @param metadataKey The key for the metadata to lookup.
+  * @param target The target to lookup the metadata on.
+  * @param targetKey The member on the target to lookup the metadata on.
+  */
   getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+  /**
+  * Defines metadata specified by a key on a target.
+  * @param metadataKey The key for the metadata to define.
+  * @param target The target to set the metadata on.
+  * @param targetKey The member on the target to set the metadata on.
+  */
   define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+  /**
+  * Gets metadata specified by a key on a target, or creates an instance of the specified metadata if not found.
+  * @param metadataKey The key for the metadata to lookup or create.
+  * @param Type The type of metadata to create if existing metadata is not found.
+  * @param target The target to lookup or create the metadata on.
+  * @param targetKey The member on the target to lookup or create the metadata on.
+  */
   getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
 }
 
@@ -66,22 +86,12 @@ export const metadata: MetadataType = {
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
   get(metadataKey: string, target: Function, targetKey: string): Object {
-    if (!target) {
-      return undefined;
-    }
-
+    if (!target) { return undefined; }
     let result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey: string): Object {
-    if (!target) {
-      return undefined;
-    }
-
-    if (target.hasOwnProperty('decorators')) {
-      ensureDecorators(target);
-    }
-
+    if (!target) { return undefined; }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
   define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void {
@@ -107,9 +117,18 @@ const unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefine
 */
 export class Origin {
   /**
+  * The id of the module from which the item originated.
+  */
+  moduleId: string;
+  /**
+  * The member name of the export on the module object from which the item originated.
+  */
+  moduleMember: string;
+
+  /**
   * Creates an instance of Origin metadata.
-  * @param moduleId The origin module id.
-  * @param moduleMember The name of the export in the origin module.
+  * @param moduleId The id of the module from which the item originated.
+  * @param moduleMember The member name of the export on the module object from which the item originated.
   */
   constructor(moduleId: string, moduleMember: string) {
     this.moduleId = moduleId;
@@ -117,7 +136,7 @@ export class Origin {
   }
 
   /**
-  * Get the Origin annotation for the specified function.
+  * Get the Origin metadata for the specified function.
   * @param fn The function to inspect for Origin metadata.
   * @return Returns the Origin metadata.
   */
@@ -145,7 +164,7 @@ export class Origin {
   }
 
   /**
-  * Set the Origin annotation for the specified function.
+  * Set the Origin metadata for the specified function.
   * @param fn The function to set the Origin metadata on.
   * @param fn The Origin metadata to store on the function.
   * @return Returns the Origin metadata.
@@ -156,98 +175,228 @@ export class Origin {
 }
 
 /**
-* Stores and applies a collection of decorators to a target.
+* An object capable of applying it's captured decorators to a target.
 */
-export class DecoratorApplicator {
-  constructor() {
-    this._first = null;
-    this._second = null;
-    this._third = null;
-    this._rest = null;
-  }
-
+interface DecoratorApplicator {
   /**
-  * Adds a decorator to the collection.
-  * @param decorator The decorator to add.
-  * @return The current decorator applicator for chaining.
+  * Applies the decorators to the target.
+  * @param target The target.
+  * @param key If applying to a method, the member name.
+  * @param key If applying to a method, you may supply an initial descriptor to pass to the decorators.
   */
-  decorator(decorator: Function): DecoratorApplicator {
-    if (this._first === null) {
-      this._first = decorator;
-      return this;
-    }
+  on(target: any, key?: string, descriptor?: Object): any;
+}
 
-    if (this._second === null) {
-      this._second = decorator;
-      return this;
-    }
+/**
+* Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
+* @param rest The decorators to apply.
+*/
+export function decorators(...rest: Function[]): DecoratorApplicator {
+  let applicator = function(target, key, descriptor) {
+    let i = rest.length;
 
-    if (this._third === null) {
-      this._third = decorator;
-      return this;
-    }
+    if (key) {
+      descriptor = descriptor || {
+        value: target[key],
+        writable: true,
+        configurable: true,
+        enumerable: true
+      };
 
-    if (this._rest === null) {
-      this._rest = [];
-    }
+      while (i--) {
+        descriptor = rest[i](target, key, descriptor) || descriptor;
+      }
 
-    this._rest.push(decorator);
-
-    return this;
-  }
-
-  _decorate(target: Function): void {
-    if (this._first !== null) {
-      this._first(target);
-    }
-
-    if (this._second !== null) {
-      this._second(target);
-    }
-
-    if (this._third !== null) {
-      this._third(target);
-    }
-
-    let rest = this._rest;
-    if (rest !== null) {
-      for (let i = 0, ii = rest.length; i < ii; ++i) {
-        rest[i](target);
+      Object.defineProperty(target, key, descriptor);
+    } else {
+      while (i--) {
+        target = rest[i](target) || target;
       }
     }
-  }
+
+    return target;
+  };
+
+  applicator.on = applicator;
+  return applicator;
 }
 
-interface DecoratorsConfigType {
-  parameterizedDecorator(name: string, decorator: Function): void;
-  simpleDecorator(name: string, decorator: Function): void;
+/**
+* Options that control how the deprected decorator should function at runtime.
+*/
+interface DeprecatedOptions {
+  /**
+  * Specifies a custom deprecation message.
+  */
+  message: string;
+  /**
+  * Specifies whether or not the deprecation should throw an error.
+  */
+  error: boolean;
 }
 
-interface DecoratorsType {
-  configure: DecoratorsConfigType;
-}
+/**
+* Decorator: Enables marking methods as deprecated.
+* @param optionsOrTarget Options for how the deprected decorator should function at runtime.
+*/
+export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object) {
+  function decorator(target, key, descriptor) {
+    const methodSignature = `${target.constructor.name}#${key}`;
+    let options = maybeKey ? {} : optionsOrTarget || {};
+    let message = `DEPRECATION - ${methodSignature}`;
 
-export const decorators: DecoratorsType = {
-  configure: {
-    parameterizedDecorator(name: string, decorator: Function): void {
-      decorators[name] = function() {
-        let applicator = new DecoratorApplicator();
-        return applicator[name].apply(applicator, arguments);
-      };
-
-      DecoratorApplicator.prototype[name] = function() {
-        let result = decorator.apply(null, arguments);
-        return this.decorator(result);
-      };
-    },
-    simpleDecorator(name: string, decorator: Function): void {
-      decorators[name] = function() {
-        return new DecoratorApplicator().decorator(decorator);
-      };
-
-      DecoratorApplicator.prototype[name] = function() {
-        return this.decorator(decorator);
-      };
+    if (typeof descriptor.value !== 'function') {
+      throw new SyntaxError('Only methods can be marked as deprecated.');
     }
+
+    if (options.message) {
+      message += ` - ${options.message}`;
+    }
+
+    return {
+      ...descriptor,
+      value: function deprecationWrapper() {
+        if (options.error) {
+          throw new Error(message);
+        } else {
+          console.warn(message);
+        }
+
+        return descriptor.value.apply(this, arguments);
+      }
+    };
   }
+
+  return maybeKey ? decorator(optionsOrTarget, maybeKey, maybeDescriptor) : decorator;
+}
+
+/**
+* Decorator: Enables mixing behaior into a class.
+* @param behavior An object with keys for each method to mix into the target class.
+*/
+export function mixin(behavior: Object) {
+  const instanceKeys = Object.keys(behavior);
+
+  function _mixin(possible) {
+    let decorator = function(target) {
+      let resolvedTarget = typeof target === 'function'
+        ? target.prototype
+        : target;
+
+      for (let property of instanceKeys) {
+        Object.defineProperty(resolvedTarget, property, {
+          value: behavior[property],
+          writable: true
+        });
+      }
+    };
+
+    return possible ? decorator(possible) : decorator;
+  }
+
+  return _mixin;
+}
+
+function alwaysValid() { return true; }
+function noCompose() {}
+
+function ensureProtocolOptions(options) {
+  if (options === undefined) {
+    options = {};
+  } else if (typeof options === 'function') {
+    options = {
+      validate: options
+    };
+  }
+
+  if (!options.validate) {
+    options.validate = alwaysValid;
+  }
+
+  if (!options.compose) {
+    options.compose = noCompose;
+  }
+
+  return options;
+}
+
+function createProtocolValidator(validate) {
+  return function(target) {
+    let result = validate(target);
+    return result === true;
+  };
+}
+
+function createProtocolAsserter(name, validate) {
+  return function(target) {
+    let result = validate(target);
+    if (result !== true) {
+      throw new Error(result || `${name} was not correctly implemented.`);
+    }
+  };
+}
+
+/**
+* Options used during protocol creation.
+*/
+interface ProtocolOptions {
+  /**
+  * A function that will be run to validate the decorated class when the protocol is applied. It is also used to validate adhoc instances.
+  * If the validation fails, a message should be returned which directs the developer in how to address the issue.
+  */
+  validate?: (target: any) => string | boolean;
+  /**
+  * A function which has the opportunity to compose additional behavior into the decorated class when the protocol is applied.
+  */
+  compose?: (target: any) => void;
+}
+
+/**
+* Decorator: Creates a protocol.
+* @param name The name of the protocol.
+* @param options The validation function or options object used in configuring the protocol.
+*/
+export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
+  options = ensureProtocolOptions(options);
+
+  let result = function(target) {
+    let resolvedTarget = typeof target === 'function'
+        ? target.prototype
+        : target;
+
+    options.compose(resolvedTarget);
+    result.assert(resolvedTarget);
+
+    Object.defineProperty(resolvedTarget, 'protocol:' + name, {
+      enumerable: false,
+      configurable: false,
+      writable: false,
+      value: true
+    });
+  };
+
+  result.validate = createProtocolValidator(options.validate);
+  result.assert = createProtocolAsserter(name, options.validate);
+
+  return result;
+}
+
+/**
+* Creates a protocol decorator.
+* @param name The name of the protocol.
+* @param options The validation function or options object used in configuring the protocol.
+*/
+protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
+  options = ensureProtocolOptions(options);
+  let hidden = 'protocol:' + name;
+  let result = function(target) {
+    let decorator = protocol(name, options);
+    return target ? decorator(target) : decorator;
+  };
+
+  result.decorates = function(obj) { return obj[hidden] === true; };
+  result.validate = createProtocolValidator(options.validate);
+  result.assert = createProtocolAsserter(name, options.validate);
+
+  return result;
 };

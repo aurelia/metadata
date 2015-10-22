@@ -37,12 +37,27 @@ function createProtocolAsserter(name, validate) {
   };
 }
 
+/**
+* Options used during protocol creation.
+*/
 interface ProtocolOptions {
+  /**
+  * A function that will be run to validate the decorated class when the protocol is applied. It is also used to validate adhoc instances.
+  * If the validation fails, a message should be returned which directs the developer in how to address the issue.
+  */
   validate?: (target: any) => string | boolean;
+  /**
+  * A function which has the opportunity to compose additional behavior into the decorated class when the protocol is applied.
+  */
   compose?: (target: any) => void;
 }
 
-export function protocol(name: string, options?: ProtocolOptions): Function {
+/**
+* Decorator: Creates a protocol.
+* @param name The name of the protocol.
+* @param options The validation function or options object used in configuring the protocol.
+*/
+export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
   options = ensureProtocolOptions(options);
 
   let result = function(target) {
@@ -67,7 +82,12 @@ export function protocol(name: string, options?: ProtocolOptions): Function {
   return result;
 }
 
-protocol.create = function(name, options) {
+/**
+* Creates a protocol decorator.
+* @param name The name of the protocol.
+* @param options The validation function or options object used in configuring the protocol.
+*/
+protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
   options = ensureProtocolOptions(options);
   let hidden = 'protocol:' + name;
   let result = function(target) {

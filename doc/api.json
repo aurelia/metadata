@@ -6,105 +6,7 @@
   "flags": {},
   "children": [
     {
-      "id": 52,
-      "name": "DecoratorApplicator",
-      "kind": 128,
-      "kindString": "Class",
-      "flags": {
-        "isExported": true
-      },
-      "comment": {
-        "shortText": "Stores and applies a collection of decorators to a target."
-      },
-      "children": [
-        {
-          "id": 53,
-          "name": "constructor",
-          "kind": 512,
-          "kindString": "Constructor",
-          "flags": {
-            "isExported": true
-          },
-          "signatures": [
-            {
-              "id": 54,
-              "name": "new DecoratorApplicator",
-              "kind": 16384,
-              "kindString": "Constructor signature",
-              "flags": {},
-              "type": {
-                "type": "reference",
-                "name": "DecoratorApplicator",
-                "id": 52,
-                "moduleName": "\"aurelia-metadata\""
-              }
-            }
-          ]
-        },
-        {
-          "id": 55,
-          "name": "decorator",
-          "kind": 2048,
-          "kindString": "Method",
-          "flags": {
-            "isExported": true
-          },
-          "signatures": [
-            {
-              "id": 56,
-              "name": "decorator",
-              "kind": 4096,
-              "kindString": "Call signature",
-              "flags": {},
-              "comment": {
-                "shortText": "Adds a decorator to the collection.",
-                "returns": "The current decorator applicator for chaining.\n"
-              },
-              "parameters": [
-                {
-                  "id": 57,
-                  "name": "decorator",
-                  "kind": 32768,
-                  "kindString": "Parameter",
-                  "flags": {},
-                  "comment": {
-                    "text": "The decorator to add."
-                  },
-                  "type": {
-                    "type": "reference",
-                    "name": "Function"
-                  }
-                }
-              ],
-              "type": {
-                "type": "reference",
-                "name": "DecoratorApplicator",
-                "id": 52,
-                "moduleName": "\"aurelia-metadata\""
-              }
-            }
-          ]
-        }
-      ],
-      "groups": [
-        {
-          "title": "Constructors",
-          "kind": 512,
-          "children": [
-            53
-          ]
-        },
-        {
-          "title": "Methods",
-          "kind": 2048,
-          "children": [
-            55
-          ]
-        }
-      ]
-    },
-    {
-      "id": 40,
+      "id": 45,
       "name": "Origin",
       "kind": 128,
       "kindString": "Class",
@@ -116,7 +18,7 @@
       },
       "children": [
         {
-          "id": 41,
+          "id": 48,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -128,7 +30,7 @@
           },
           "signatures": [
             {
-              "id": 42,
+              "id": 49,
               "name": "new Origin",
               "kind": 16384,
               "kindString": "Constructor signature",
@@ -138,13 +40,13 @@
               },
               "parameters": [
                 {
-                  "id": 43,
+                  "id": 50,
                   "name": "moduleId",
                   "kind": 32768,
                   "kindString": "Parameter",
                   "flags": {},
                   "comment": {
-                    "shortText": "The origin module id."
+                    "shortText": "The id of the module from which the item originated."
                   },
                   "type": {
                     "type": "instrinct",
@@ -152,13 +54,13 @@
                   }
                 },
                 {
-                  "id": 44,
+                  "id": 51,
                   "name": "moduleMember",
                   "kind": 32768,
                   "kindString": "Parameter",
                   "flags": {},
                   "comment": {
-                    "shortText": "The name of the export in the origin module.\n"
+                    "shortText": "The member name of the export on the module object from which the item originated.\n"
                   },
                   "type": {
                     "type": "instrinct",
@@ -169,14 +71,46 @@
               "type": {
                 "type": "reference",
                 "name": "Origin",
-                "id": 40,
+                "id": 45,
                 "moduleName": "\"aurelia-metadata\""
               }
             }
           ]
         },
         {
-          "id": 45,
+          "id": 46,
+          "name": "moduleId",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "comment": {
+            "shortText": "The id of the module from which the item originated."
+          },
+          "type": {
+            "type": "instrinct",
+            "name": "string"
+          }
+        },
+        {
+          "id": 47,
+          "name": "moduleMember",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "comment": {
+            "shortText": "The member name of the export on the module object from which the item originated."
+          },
+          "type": {
+            "type": "instrinct",
+            "name": "string"
+          }
+        },
+        {
+          "id": 52,
           "name": "get",
           "kind": 2048,
           "kindString": "Method",
@@ -186,18 +120,18 @@
           },
           "signatures": [
             {
-              "id": 46,
+              "id": 53,
               "name": "get",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "comment": {
-                "shortText": "Get the Origin annotation for the specified function.",
+                "shortText": "Get the Origin metadata for the specified function.",
                 "returns": "Returns the Origin metadata.\n"
               },
               "parameters": [
                 {
-                  "id": 47,
+                  "id": 54,
                   "name": "fn",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -214,14 +148,14 @@
               "type": {
                 "type": "reference",
                 "name": "Origin",
-                "id": 40,
+                "id": 45,
                 "moduleName": "\"aurelia-metadata\""
               }
             }
           ]
         },
         {
-          "id": 48,
+          "id": 55,
           "name": "set",
           "kind": 2048,
           "kindString": "Method",
@@ -231,18 +165,18 @@
           },
           "signatures": [
             {
-              "id": 49,
+              "id": 56,
               "name": "set",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "comment": {
-                "shortText": "Set the Origin annotation for the specified function.",
+                "shortText": "Set the Origin metadata for the specified function.",
                 "returns": "Returns the Origin metadata.\n"
               },
               "parameters": [
                 {
-                  "id": 50,
+                  "id": 57,
                   "name": "fn",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -256,7 +190,7 @@
                   }
                 },
                 {
-                  "id": 51,
+                  "id": 58,
                   "name": "origin",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -264,7 +198,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Origin",
-                    "id": 40,
+                    "id": 45,
                     "moduleName": "\"aurelia-metadata\""
                   }
                 }
@@ -282,31 +216,42 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            41
+            48
+          ]
+        },
+        {
+          "title": "Properties",
+          "kind": 1024,
+          "children": [
+            46,
+            47
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            45,
-            48
+            52,
+            55
           ]
         }
       ]
     },
     {
       "id": 29,
-      "name": "DecoratorsConfigType",
+      "name": "DecoratorApplicator",
       "kind": 256,
       "kindString": "Interface",
       "flags": {
         "isExported": true
       },
+      "comment": {
+        "shortText": "An object capable of applying it's captured decorators to a target."
+      },
       "children": [
         {
           "id": 30,
-          "name": "parameterizedDecorator",
+          "name": "on",
           "kind": 2048,
           "kindString": "Method",
           "flags": {
@@ -315,83 +260,52 @@
           "signatures": [
             {
               "id": 31,
-              "name": "parameterizedDecorator",
+              "name": "on",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
                   "id": 32,
-                  "name": "name",
+                  "name": "target",
                   "kind": 32768,
                   "kindString": "Parameter",
                   "flags": {},
                   "type": {
                     "type": "instrinct",
-                    "name": "string"
+                    "name": "any"
                   }
                 },
                 {
                   "id": 33,
-                  "name": "decorator",
+                  "name": "key",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
-                  "type": {
-                    "type": "reference",
-                    "name": "Function"
-                  }
-                }
-              ],
-              "type": {
-                "type": "instrinct",
-                "name": "void"
-              }
-            }
-          ]
-        },
-        {
-          "id": 34,
-          "name": "simpleDecorator",
-          "kind": 2048,
-          "kindString": "Method",
-          "flags": {
-            "isExported": true
-          },
-          "signatures": [
-            {
-              "id": 35,
-              "name": "simpleDecorator",
-              "kind": 4096,
-              "kindString": "Call signature",
-              "flags": {},
-              "parameters": [
-                {
-                  "id": 36,
-                  "name": "name",
-                  "kind": 32768,
-                  "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "string"
                   }
                 },
                 {
-                  "id": 37,
-                  "name": "decorator",
+                  "id": 34,
+                  "name": "descriptor",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "reference",
-                    "name": "Function"
+                    "name": "Object"
                   }
                 }
               ],
               "type": {
                 "type": "instrinct",
-                "name": "void"
+                "name": "any"
               }
             }
           ]
@@ -402,33 +316,53 @@
           "title": "Methods",
           "kind": 2048,
           "children": [
-            30,
-            34
+            30
           ]
         }
       ]
     },
     {
-      "id": 38,
-      "name": "DecoratorsType",
+      "id": 35,
+      "name": "DeprecatedOptions",
       "kind": 256,
       "kindString": "Interface",
       "flags": {
         "isExported": true
       },
+      "comment": {
+        "shortText": "Options that control how the deprected decorator should function at runtime."
+      },
       "children": [
         {
-          "id": 39,
-          "name": "configure",
+          "id": 37,
+          "name": "error",
           "kind": 1024,
           "kindString": "Property",
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "Specifies whether or not the deprecation should throw an error."
+          },
           "type": {
-            "type": "reference",
-            "name": "DecoratorsConfigType",
-            "id": 29
+            "type": "instrinct",
+            "name": "boolean"
+          }
+        },
+        {
+          "id": 36,
+          "name": "message",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "comment": {
+            "shortText": "Specifies a custom deprecation message."
+          },
+          "type": {
+            "type": "instrinct",
+            "name": "string"
           }
         }
       ],
@@ -437,7 +371,8 @@
           "title": "Properties",
           "kind": 1024,
           "children": [
-            39
+            37,
+            36
           ]
         }
       ]
@@ -450,6 +385,9 @@
       "flags": {
         "isExported": true
       },
+      "comment": {
+        "shortText": "Helpers for working with metadata on functions."
+      },
       "children": [
         {
           "id": 5,
@@ -458,6 +396,9 @@
           "kindString": "Property",
           "flags": {
             "isExported": true
+          },
+          "comment": {
+            "shortText": "The metadata key representing parameter type information."
           },
           "type": {
             "type": "instrinct",
@@ -472,6 +413,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "The metadata key representing property information."
+          },
           "type": {
             "type": "instrinct",
             "name": "string"
@@ -484,6 +428,9 @@
           "kindString": "Property",
           "flags": {
             "isExported": true
+          },
+          "comment": {
+            "shortText": "The metadata key representing pluggable resources."
           },
           "type": {
             "type": "instrinct",
@@ -764,22 +711,110 @@
       ]
     },
     {
-      "id": 59,
-      "name": "decorators",
-      "kind": 32,
-      "kindString": "Variable",
+      "id": 38,
+      "name": "ProtocolOptions",
+      "kind": 256,
+      "kindString": "Interface",
       "flags": {
         "isExported": true
       },
-      "type": {
-        "type": "reference",
-        "name": "DecoratorsType",
-        "id": 38,
-        "moduleName": "\"aurelia-metadata\""
-      }
+      "comment": {
+        "shortText": "Options used during protocol creation."
+      },
+      "children": [
+        {
+          "id": 42,
+          "name": "compose",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 43,
+              "name": "compose",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "parameters": [
+                {
+                  "id": 44,
+                  "name": "target",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "instrinct",
+                "name": "void"
+              }
+            }
+          ]
+        },
+        {
+          "id": 39,
+          "name": "validate",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 40,
+              "name": "validate",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "parameters": [
+                {
+                  "id": 41,
+                  "name": "target",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "instrinct",
+                    "name": "string"
+                  },
+                  {
+                    "type": "instrinct",
+                    "name": "boolean"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Methods",
+          "kind": 2048,
+          "children": [
+            42,
+            39
+          ]
+        }
+      ]
     },
     {
-      "id": 58,
+      "id": 59,
       "name": "metadata",
       "kind": 32,
       "kindString": "Variable",
@@ -795,6 +830,272 @@
         "id": 3,
         "moduleName": "\"aurelia-metadata\""
       }
+    },
+    {
+      "id": 60,
+      "name": "decorators",
+      "kind": 64,
+      "kindString": "Function",
+      "flags": {
+        "isExported": true
+      },
+      "signatures": [
+        {
+          "id": 61,
+          "name": "decorators",
+          "kind": 4096,
+          "kindString": "Call signature",
+          "flags": {},
+          "comment": {
+            "shortText": "Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016."
+          },
+          "parameters": [
+            {
+              "id": 62,
+              "name": "rest",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {
+                "isRest": true
+              },
+              "comment": {
+                "text": "The decorators to apply.\n"
+              },
+              "type": {
+                "type": "instrinct",
+                "isArray": true,
+                "name": "any"
+              }
+            }
+          ],
+          "type": {
+            "type": "reference",
+            "name": "DecoratorApplicator",
+            "id": 29,
+            "moduleName": "\"aurelia-metadata\""
+          }
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "name": "deprecated",
+      "kind": 64,
+      "kindString": "Function",
+      "flags": {
+        "isExported": true
+      },
+      "signatures": [
+        {
+          "id": 64,
+          "name": "deprecated",
+          "kind": 4096,
+          "kindString": "Call signature",
+          "flags": {},
+          "comment": {
+            "shortText": "Decorator: Enables marking methods as deprecated."
+          },
+          "parameters": [
+            {
+              "id": 65,
+              "name": "optionsOrTarget",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {
+                "isOptional": true
+              },
+              "comment": {
+                "text": "Options for how the deprected decorator should function at runtime.\n"
+              },
+              "type": {
+                "type": "reference",
+                "name": "DeprecatedOptions",
+                "id": 35,
+                "moduleName": "\"aurelia-metadata\""
+              }
+            },
+            {
+              "id": 66,
+              "name": "maybeKey",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {
+                "isOptional": true
+              },
+              "type": {
+                "type": "instrinct",
+                "name": "string"
+              }
+            },
+            {
+              "id": 67,
+              "name": "maybeDescriptor",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {
+                "isOptional": true
+              },
+              "type": {
+                "type": "reference",
+                "name": "Object"
+              }
+            }
+          ],
+          "type": {
+            "type": "instrinct",
+            "name": "any"
+          }
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "name": "mixin",
+      "kind": 64,
+      "kindString": "Function",
+      "flags": {
+        "isExported": true
+      },
+      "signatures": [
+        {
+          "id": 69,
+          "name": "mixin",
+          "kind": 4096,
+          "kindString": "Call signature",
+          "flags": {},
+          "comment": {
+            "shortText": "Decorator: Enables mixing behaior into a class."
+          },
+          "parameters": [
+            {
+              "id": 70,
+              "name": "behavior",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {},
+              "comment": {
+                "text": "An object with keys for each method to mix into the target class.\n"
+              },
+              "type": {
+                "type": "reference",
+                "name": "Object"
+              }
+            }
+          ],
+          "type": {
+            "type": "instrinct",
+            "name": "any"
+          }
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "name": "protocol",
+      "kind": 64,
+      "kindString": "Function",
+      "flags": {
+        "isExported": true
+      },
+      "signatures": [
+        {
+          "id": 72,
+          "name": "protocol",
+          "kind": 4096,
+          "kindString": "Call signature",
+          "flags": {},
+          "comment": {
+            "shortText": "Decorator: Creates a protocol."
+          },
+          "parameters": [
+            {
+              "id": 73,
+              "name": "name",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {},
+              "comment": {
+                "text": "The name of the protocol."
+              },
+              "type": {
+                "type": "instrinct",
+                "name": "string"
+              }
+            },
+            {
+              "id": 74,
+              "name": "options",
+              "kind": 32768,
+              "kindString": "Parameter",
+              "flags": {
+                "isOptional": true
+              },
+              "comment": {
+                "text": "The validation function or options object used in configuring the protocol.\n"
+              },
+              "type": {
+                "type": "union",
+                "types": [
+                  {
+                    "type": "reflection",
+                    "declaration": {
+                      "id": 75,
+                      "name": "__type",
+                      "kind": 65536,
+                      "kindString": "Type literal",
+                      "flags": {},
+                      "signatures": [
+                        {
+                          "id": 76,
+                          "name": "__call",
+                          "kind": 4096,
+                          "kindString": "Call signature",
+                          "flags": {},
+                          "parameters": [
+                            {
+                              "id": 77,
+                              "name": "target",
+                              "kind": 32768,
+                              "kindString": "Parameter",
+                              "flags": {},
+                              "type": {
+                                "type": "instrinct",
+                                "name": "any"
+                              }
+                            }
+                          ],
+                          "type": {
+                            "type": "union",
+                            "types": [
+                              {
+                                "type": "instrinct",
+                                "name": "string"
+                              },
+                              {
+                                "type": "instrinct",
+                                "name": "boolean"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "reference",
+                    "name": "ProtocolOptions",
+                    "id": 38
+                  }
+                ]
+              }
+            }
+          ],
+          "type": {
+            "type": "instrinct",
+            "name": "any"
+          }
+        }
+      ]
     }
   ],
   "groups": [
@@ -802,8 +1103,7 @@
       "title": "Classes",
       "kind": 128,
       "children": [
-        52,
-        40
+        45
       ]
     },
     {
@@ -811,16 +1111,26 @@
       "kind": 256,
       "children": [
         29,
-        38,
-        3
+        35,
+        3,
+        38
       ]
     },
     {
       "title": "Variables",
       "kind": 32,
       "children": [
-        59,
-        58
+        59
+      ]
+    },
+    {
+      "title": "Functions",
+      "kind": 64,
+      "children": [
+        60,
+        63,
+        68,
+        71
       ]
     }
   ]
