@@ -75,7 +75,7 @@ protocol.create = function(name, options) {
     return target ? decorator(target) : decorator;
   };
 
-  result.decorates = function(obj) { return hidden in obj; };
+  result.decorates = function(obj) { return obj[hidden] === true; };
   result.validate = createProtocolValidator(options.validate);
   result.assert = createProtocolAsserter(name, options.validate);
 
