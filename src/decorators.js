@@ -1,5 +1,5 @@
 interface DecoratorApplicator {
-  on<T>(target: T, key?: string, descriptor?: Object): T;
+  on(target: any, key?: string, descriptor?: Object): any;
 }
 
 export function decorators(...rest: Function[]): DecoratorApplicator {
