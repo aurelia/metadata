@@ -105,7 +105,7 @@ declare module 'aurelia-metadata' {
   * Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
   * @param rest The decorators to apply.
   */
-  export function decorators(...rest: any[]): DecoratorApplicator;
+  export function decorators(...rest: Function[]): DecoratorApplicator;
   
   /**
   * Decorator: Enables marking methods as deprecated.

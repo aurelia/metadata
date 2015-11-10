@@ -1,3 +1,18 @@
+## 0.10.0 (2015-11-09)
+
+
+#### Bug Fixes
+
+* **decorators:** remove generics causing the build to fail ([88067ab4](https://github.com/aurelia/metadata/commit/88067ab4d52b9d8d8b8888a78cd92edd5e0f197c))
+* **eslintrc:** linting configuration ([86ee6498](https://github.com/aurelia/metadata/commit/86ee6498b26565dac53114d64ab42cab1cbbf44a))
+* **protocol:** make decorates work with any object type ([dd64b951](https://github.com/aurelia/metadata/commit/dd64b951f3589573a418ab138046be08ebdc5220))
+
+
+#### Features
+
+* **all:** new decorators, mixin, protocol and deprecated; new way for ES5/6 to apply decor ([b0c2cd4c](https://github.com/aurelia/metadata/commit/b0c2cd4c018dd5deed22e396cd50b468e633751d))
+
+
 ## 0.9.0 (2015-10-13)
 
 
