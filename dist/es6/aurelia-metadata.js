@@ -239,7 +239,7 @@ interface DeprecatedOptions {
 * Decorator: Enables marking methods as deprecated.
 * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
 */
-export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object) {
+export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object): any {
   function decorator(target, key, descriptor) {
     const methodSignature = `${target.constructor.name}#${key}`;
     let options = maybeKey ? {} : optionsOrTarget || {};
@@ -274,7 +274,7 @@ export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: strin
 * Decorator: Enables mixing behaior into a class.
 * @param behavior An object with keys for each method to mix into the target class.
 */
-export function mixin(behavior: Object) {
+export function mixin(behavior: Object): any {
   const instanceKeys = Object.keys(behavior);
 
   function _mixin(possible) {
@@ -356,7 +356,7 @@ interface ProtocolOptions {
 * @param name The name of the protocol.
 * @param options The validation function or options object used in configuring the protocol.
 */
-export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
+export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): any {
   options = ensureProtocolOptions(options);
 
   let result = function(target) {
@@ -385,8 +385,9 @@ export function protocol(name: string, options?: ((target: any) => string | bool
 * Creates a protocol decorator.
 * @param name The name of the protocol.
 * @param options The validation function or options object used in configuring the protocol.
+* @return The protocol decorator;
 */
-protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions) {
+protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): Function {
   options = ensureProtocolOptions(options);
   let hidden = 'protocol:' + name;
   let result = function(target) {

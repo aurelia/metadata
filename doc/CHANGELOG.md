@@ -1,3 +1,11 @@
+### 0.10.1 (2015-11-11)
+
+
+#### Bug Fixes
+
+* **all:** improve TS happiness for decorators ([dd35c4fd](https://github.com/aurelia/metadata/commit/dd35c4fd1ef089764bdbacde8380aa4d47e28d2c))
+
+
 ## 0.10.0 (2015-11-09)
 
 
