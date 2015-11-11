@@ -16,7 +16,7 @@ interface DeprecatedOptions {
 * Decorator: Enables marking methods as deprecated.
 * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
 */
-export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object) {
+export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object): any {
   function decorator(target, key, descriptor) {
     const methodSignature = `${target.constructor.name}#${key}`;
     let options = maybeKey ? {} : optionsOrTarget || {};

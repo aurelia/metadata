@@ -2,7 +2,7 @@
 * Decorator: Enables mixing behaior into a class.
 * @param behavior An object with keys for each method to mix into the target class.
 */
-export function mixin(behavior: Object) {
+export function mixin(behavior: Object): any {
   const instanceKeys = Object.keys(behavior);
 
   function _mixin(possible) {
