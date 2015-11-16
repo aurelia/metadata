@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "0.10.1",
+  "version": "1.0.0-beta.1",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -17,7 +17,7 @@
     "url": "https://github.com/aurelia/metadata"
   },
   "dependencies": {
-    "aurelia-pal": "^0.3.0",
+    "aurelia-pal": "^1.0.0-beta.1",
     "core-js": "zloirock/core-js"
   }
 }

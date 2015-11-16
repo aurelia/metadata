@@ -21,9 +21,38 @@ declare module 'aurelia-metadata' {
       * The metadata key representing property information.
       */
     properties: string;
+    
+    /**
+      * Gets metadata specified by a key on a target, searching up the inheritance hierarchy.
+      * @param metadataKey The key for the metadata to lookup.
+      * @param target The target to lookup the metadata on.
+      * @param targetKey The member on the target to lookup the metadata on.
+      */
     get(metadataKey: string, target: Function, targetKey: string): Object;
+    
+    /**
+      * Gets metadata specified by a key on a target, only searching the own instance.
+      * @param metadataKey The key for the metadata to lookup.
+      * @param target The target to lookup the metadata on.
+      * @param targetKey The member on the target to lookup the metadata on.
+      */
     getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+    
+    /**
+      * Defines metadata specified by a key on a target.
+      * @param metadataKey The key for the metadata to define.
+      * @param target The target to set the metadata on.
+      * @param targetKey The member on the target to set the metadata on.
+      */
     define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+    
+    /**
+      * Gets metadata specified by a key on a target, or creates an instance of the specified metadata if not found.
+      * @param metadataKey The key for the metadata to lookup or create.
+      * @param Type The type of metadata to create if existing metadata is not found.
+      * @param target The target to lookup or create the metadata on.
+      * @param targetKey The member on the target to lookup or create the metadata on.
+      */
     getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
   }
   
@@ -31,6 +60,13 @@ declare module 'aurelia-metadata' {
   * An object capable of applying it's captured decorators to a target.
   */
   export interface DecoratorApplicator {
+    
+    /**
+      * Applies the decorators to the target.
+      * @param target The target.
+      * @param key If applying to a method, the member name.
+      * @param key If applying to a method, you may supply an initial descriptor to pass to the decorators.
+      */
     on(target: any, key?: string, descriptor?: Object): any;
   }
   
@@ -54,8 +90,17 @@ declare module 'aurelia-metadata' {
   * Options used during protocol creation.
   */
   export interface ProtocolOptions {
-    validate(target: any): string | boolean;
-    compose(target: any): void;
+    
+    /**
+      * A function that will be run to validate the decorated class when the protocol is applied. It is also used to validate adhoc instances.
+      * If the validation fails, a message should be returned which directs the developer in how to address the issue.
+      */
+    validate?: (target: any) => string | boolean;
+    
+    /**
+      * A function which has the opportunity to compose additional behavior into the decorated class when the protocol is applied.
+      */
+    compose?: (target: any) => void;
   }
   
   /**
