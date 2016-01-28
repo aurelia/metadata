@@ -18,22 +18,25 @@
     "type": "git",
     "url": "https://github.com/aurelia/metadata"
   },
-  "registry": "npm",
-  "jspmPackage": true,
-  "format": "cjs",
   "jspm": {
+    "registry": "npm",
+    "main": "aurelia-metadata",
+    "format": "amd",
+    "directories": {
+      "dist": "dist/amd"
+    },
     "peerDependencies": {
-      "aurelia-pal": "^1.0.0-beta.1.1.0",
+      "aurelia-pal": "^1.0.0-beta.1.1.1",
       "core-js": "^2.0.3"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^2.0.3"
+      "babel": "babel-core@^5.1.13",
+      "babel-runtime": "^5.1.13",
+      "core-js": "^2.0.3"
     }
   },
   "peerDependencies": {
-    "aurelia-pal": "^1.0.0-beta.1.1.0",
+    "aurelia-pal": "^1.0.0-beta.1.1.1",
     "core-js": "^2.0.3"
   },
   "devDependencies": {
