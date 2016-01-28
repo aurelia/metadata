@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.1.0 (2016-01-28)
+
+
+#### Features
+
+* **all:** update for jspm; update core-js; update aurelia deps ([01aa7e40](https://github.com/aurelia/metadata/commit/01aa7e404834a5d1824501108fc17bce98536a8c))
+
+
 ### 1.0.0-beta.1 (2015-11-15)
 
 
