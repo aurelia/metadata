@@ -17,7 +17,7 @@
     "url": "https://github.com/aurelia/metadata"
   },
   "dependencies": {
-    "aurelia-pal": "^1.0.0-beta.1",
+    "aurelia-pal": "^1.0.0-beta.1.1.0",
     "core-js": "zloirock/core-js"
   }
 }

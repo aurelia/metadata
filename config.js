@@ -13,10 +13,10 @@ System.config({
   },
 
   map: {
-    "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1",
+    "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.0",
     "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
-    "core-js": "npm:core-js@1.2.6",
+    "core-js": "npm:core-js@2.0.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -32,10 +32,15 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
+    "npm:aurelia-pal@1.0.0-beta.1.1.0": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:babel-runtime@5.8.20": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:core-js@1.2.6": {
+    "npm:core-js@2.0.3": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
