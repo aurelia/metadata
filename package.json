@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "1.0.0-beta.1.1.0",
+  "version": "1.0.0-beta.1.1.1",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -23,8 +23,8 @@
   "format": "cjs",
   "jspm": {
     "peerDependencies": {
-      "aurelia-pal": "npm:aurelia-pal@^1.0.0-beta.1.1.0",
-      "core-js": "npm:core-js@^2.0.3"
+      "aurelia-pal": "^1.0.0-beta.1.1.0",
+      "core-js": "^2.0.3"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
