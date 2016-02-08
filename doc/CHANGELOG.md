@@ -1,3 +1,6 @@
+### 1.0.0-beta.1.1.4 (2016-02-08)
+
+
 ### 1.0.0-beta.1.1.2 (2016-01-28)
 
 * fix package metadata for jspm
