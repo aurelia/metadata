@@ -1,4 +1,3 @@
-import 'core-js';
 import {PLATFORM} from 'aurelia-pal';
 
 const originStorage = new Map();
