@@ -1,8 +1,14 @@
+import './setup';
 import {Origin} from '../src/origin';
 
 describe('origin', () => {
-  var origin1 = new Origin('ModuleId1', 'ModuleMember1'),
-      origin2 = new Origin('ModuleId2', 'ModuleMember2');
+  let origin1;
+  let origin2;
+      
+  beforeEach(() => {
+    origin1 = new Origin('ModuleId1', 'ModuleMember1');
+    origin2 = new Origin('ModuleId2', 'ModuleMember2');
+  });
 
   describe('get', () => {
     it('should return an empty origin if not set', () => {
