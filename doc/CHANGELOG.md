@@ -1,3 +1,16 @@
+### 1.0.0-beta.1.1.5 (2016-03-01)
+
+
+#### Bug Fixes
+
+* **all:** remove core-js dependency ([3a300a87](https://github.com/aurelia/metadata/commit/3a300a87126ccf1ab2656c3a09a983a72316d9c9))
+
+
+#### Features
+
+* **all:** remove duplicate code and use new polyfills ([ec2b65ee](https://github.com/aurelia/metadata/commit/ec2b65ee17db5e24b050fca3ea1e088f8ca7aff7))
+
+
 ### 1.0.0-beta.1.1.4 (2016-02-08)
 
 

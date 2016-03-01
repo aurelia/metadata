@@ -1,7 +1,7 @@
-System.register(['core-js', 'aurelia-pal'], function (_export) {
+System.register(['aurelia-pal'], function (_export) {
   'use strict';
 
-  var PLATFORM, theGlobal, emptyMetadata, metadataContainerKey, metadata, originStorage, unknownOrigin, Origin;
+  var PLATFORM, metadata, originStorage, unknownOrigin, Origin;
 
   var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -178,40 +178,10 @@ System.register(['core-js', 'aurelia-pal'], function (_export) {
   }
 
   return {
-    setters: [function (_coreJs) {}, function (_aureliaPal) {
+    setters: [function (_aureliaPal) {
       PLATFORM = _aureliaPal.PLATFORM;
     }],
     execute: function () {
-      theGlobal = PLATFORM.global;
-      emptyMetadata = Object.freeze({});
-      metadataContainerKey = '__metadata__';
-
-      if (typeof theGlobal.Reflect === 'undefined') {
-        theGlobal.Reflect = {};
-      }
-
-      if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
-        Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-          return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
-        };
-      }
-
-      if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
-        Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-          var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
-          var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
-          targetContainer[metadataKey] = metadataValue;
-        };
-      }
-
-      if (typeof theGlobal.Reflect.metadata === 'undefined') {
-        Reflect.metadata = function (metadataKey, metadataValue) {
-          return function (target, targetKey) {
-            Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
-          };
-        };
-      }
-
       metadata = {
         resource: 'aurelia:resource',
         paramTypes: 'design:paramtypes',

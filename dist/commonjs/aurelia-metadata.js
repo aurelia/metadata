@@ -11,39 +11,7 @@ exports.protocol = protocol;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-require('core-js');
-
 var _aureliaPal = require('aurelia-pal');
-
-var theGlobal = _aureliaPal.PLATFORM.global;
-var emptyMetadata = Object.freeze({});
-var metadataContainerKey = '__metadata__';
-
-if (typeof theGlobal.Reflect === 'undefined') {
-  theGlobal.Reflect = {};
-}
-
-if (typeof theGlobal.Reflect.getOwnMetadata === 'undefined') {
-  Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
-    return ((target[metadataContainerKey] || emptyMetadata)[targetKey] || emptyMetadata)[metadataKey];
-  };
-}
-
-if (typeof theGlobal.Reflect.defineMetadata === 'undefined') {
-  Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
-    var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
-    var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
-    targetContainer[metadataKey] = metadataValue;
-  };
-}
-
-if (typeof theGlobal.Reflect.metadata === 'undefined') {
-  Reflect.metadata = function (metadataKey, metadataValue) {
-    return function (target, targetKey) {
-      Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
-    };
-  };
-}
 
 var metadata = {
   resource: 'aurelia:resource',
