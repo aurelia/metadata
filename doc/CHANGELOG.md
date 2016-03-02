@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.1.6 (2016-03-02)
+
+
+#### Bug Fixes
+
+* **for-of:** remove for of loop ([cd1fca10](https://github.com/aurelia/metadata/commit/cd1fca10af480a0228d4e6a8dba8cf3d9b2c0754))
+
+
 ### 1.0.0-beta.1.1.5 (2016-03-01)
 
 
