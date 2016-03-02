@@ -11,7 +11,8 @@ export function mixin(behavior: Object): any {
         ? target.prototype
         : target;
 
-      for (let i = instanceKeys.length - 1; i >= 0; i--) {
+      let i = instanceKeys.length;
+      while (i--) {
         let property = instanceKeys[i];
         Object.defineProperty(resolvedTarget, property, {
           value: behavior[property],
