@@ -1,4 +1,3 @@
-import './setup';
 import {metadata} from '../src/metadata';
 import {decorators} from '../src/decorators';
 

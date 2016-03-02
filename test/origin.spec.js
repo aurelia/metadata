@@ -1,4 +1,3 @@
-import './setup';
 import {Origin} from '../src/origin';
 
 describe('origin', () => {

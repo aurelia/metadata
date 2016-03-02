@@ -1,4 +1,3 @@
-import './setup';
 import {mixin} from '../src/mixin';
 
 describe('mixin', () => {
