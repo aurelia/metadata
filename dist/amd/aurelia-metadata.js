@@ -1,18 +1,36 @@
 define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
   'use strict';
 
-  exports.__esModule = true;
-
-  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Origin = exports.metadata = undefined;
   exports.decorators = decorators;
   exports.deprecated = deprecated;
   exports.mixin = mixin;
   exports.protocol = protocol;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-  var metadata = {
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var metadata = exports.metadata = {
     resource: 'aurelia:resource',
     paramTypes: 'design:paramtypes',
     properties: 'design:properties',
@@ -44,11 +62,10 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     }
   };
 
-  exports.metadata = metadata;
   var originStorage = new Map();
   var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-  var Origin = (function () {
+  var Origin = exports.Origin = function () {
     function Origin(moduleId, moduleMember) {
       _classCallCheck(this, Origin);
 
@@ -61,10 +78,10 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
 
       if (origin === undefined) {
         _aureliaPal.PLATFORM.eachModule(function (key, value) {
-          for (var _name in value) {
-            var exp = value[_name];
+          for (var name in value) {
+            var exp = value[name];
             if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, _name));
+              originStorage.set(fn, origin = new Origin(key, name));
               return true;
             }
           }
@@ -84,9 +101,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     };
 
     return Origin;
-  })();
-
-  exports.Origin = Origin;
+  }();
 
   function decorators() {
     for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {

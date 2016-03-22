@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "1.0.0-beta.1.1.6",
+  "version": "1.0.0-beta.1.2.0",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",

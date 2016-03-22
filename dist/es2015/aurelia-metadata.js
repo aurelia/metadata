@@ -1,43 +1,29 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Origin = exports.metadata = undefined;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-exports.decorators = decorators;
-exports.deprecated = deprecated;
-exports.mixin = mixin;
-exports.protocol = protocol;
+import { PLATFORM } from 'aurelia-pal';
 
-var _aureliaPal = require('aurelia-pal');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var metadata = exports.metadata = {
+export const metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
-  get: function get(metadataKey, target, targetKey) {
+  get(metadataKey, target, targetKey) {
     if (!target) {
       return undefined;
     }
-    var result = metadata.getOwn(metadataKey, target, targetKey);
+    let result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
-  getOwn: function getOwn(metadataKey, target, targetKey) {
+  getOwn(metadataKey, target, targetKey) {
     if (!target) {
       return undefined;
     }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
-  define: function define(metadataKey, metadataValue, target, targetKey) {
+  define(metadataKey, metadataValue, target, targetKey) {
     Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
   },
-  getOrCreateOwn: function getOrCreateOwn(metadataKey, Type, target, targetKey) {
-    var result = metadata.getOwn(metadataKey, target, targetKey);
+  getOrCreateOwn(metadataKey, Type, target, targetKey) {
+    let result = metadata.getOwn(metadataKey, target, targetKey);
 
     if (result === undefined) {
       result = new Type();
@@ -48,24 +34,22 @@ var metadata = exports.metadata = {
   }
 };
 
-var originStorage = new Map();
-var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
+const originStorage = new Map();
+const unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-var Origin = exports.Origin = function () {
-  function Origin(moduleId, moduleMember) {
-    _classCallCheck(this, Origin);
-
+export let Origin = class Origin {
+  constructor(moduleId, moduleMember) {
     this.moduleId = moduleId;
     this.moduleMember = moduleMember;
   }
 
-  Origin.get = function get(fn) {
-    var origin = originStorage.get(fn);
+  static get(fn) {
+    let origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      _aureliaPal.PLATFORM.eachModule(function (key, value) {
-        for (var name in value) {
-          var exp = value[name];
+      PLATFORM.eachModule((key, value) => {
+        for (let name in value) {
+          let exp = value[name];
           if (exp === fn) {
             originStorage.set(fn, origin = new Origin(key, name));
             return true;
@@ -80,22 +64,16 @@ var Origin = exports.Origin = function () {
     }
 
     return origin || unknownOrigin;
-  };
-
-  Origin.set = function set(fn, origin) {
-    originStorage.set(fn, origin);
-  };
-
-  return Origin;
-}();
-
-function decorators() {
-  for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
-    rest[_key] = arguments[_key];
   }
 
-  var applicator = function applicator(target, key, descriptor) {
-    var i = rest.length;
+  static set(fn, origin) {
+    originStorage.set(fn, origin);
+  }
+};
+
+export function decorators(...rest) {
+  let applicator = function (target, key, descriptor) {
+    let i = rest.length;
 
     if (key) {
       descriptor = descriptor || {
@@ -123,18 +101,18 @@ function decorators() {
   return applicator;
 }
 
-function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
+export function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
   function decorator(target, key, descriptor) {
-    var methodSignature = target.constructor.name + '#' + key;
-    var options = maybeKey ? {} : optionsOrTarget || {};
-    var message = 'DEPRECATION - ' + methodSignature;
+    const methodSignature = `${ target.constructor.name }#${ key }`;
+    let options = maybeKey ? {} : optionsOrTarget || {};
+    let message = `DEPRECATION - ${ methodSignature }`;
 
     if (typeof descriptor.value !== 'function') {
       throw new SyntaxError('Only methods can be marked as deprecated.');
     }
 
     if (options.message) {
-      message += ' - ' + options.message;
+      message += ` - ${ options.message }`;
     }
 
     return _extends({}, descriptor, {
@@ -153,16 +131,16 @@ function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
   return maybeKey ? decorator(optionsOrTarget, maybeKey, maybeDescriptor) : decorator;
 }
 
-function mixin(behavior) {
-  var instanceKeys = Object.keys(behavior);
+export function mixin(behavior) {
+  const instanceKeys = Object.keys(behavior);
 
   function _mixin(possible) {
-    var decorator = function decorator(target) {
-      var resolvedTarget = typeof target === 'function' ? target.prototype : target;
+    let decorator = function (target) {
+      let resolvedTarget = typeof target === 'function' ? target.prototype : target;
 
-      var i = instanceKeys.length;
+      let i = instanceKeys.length;
       while (i--) {
-        var property = instanceKeys[i];
+        let property = instanceKeys[i];
         Object.defineProperty(resolvedTarget, property, {
           value: behavior[property],
           writable: true
@@ -203,25 +181,25 @@ function ensureProtocolOptions(options) {
 
 function createProtocolValidator(validate) {
   return function (target) {
-    var result = validate(target);
+    let result = validate(target);
     return result === true;
   };
 }
 
 function createProtocolAsserter(name, validate) {
   return function (target) {
-    var result = validate(target);
+    let result = validate(target);
     if (result !== true) {
-      throw new Error(result || name + ' was not correctly implemented.');
+      throw new Error(result || `${ name } was not correctly implemented.`);
     }
   };
 }
 
-function protocol(name, options) {
+export function protocol(name, options) {
   options = ensureProtocolOptions(options);
 
-  var result = function result(target) {
-    var resolvedTarget = typeof target === 'function' ? target.prototype : target;
+  let result = function (target) {
+    let resolvedTarget = typeof target === 'function' ? target.prototype : target;
 
     options.compose(resolvedTarget);
     result.assert(resolvedTarget);
@@ -242,9 +220,9 @@ function protocol(name, options) {
 
 protocol.create = function (name, options) {
   options = ensureProtocolOptions(options);
-  var hidden = 'protocol:' + name;
-  var result = function result(target) {
-    var decorator = protocol(name, options);
+  let hidden = 'protocol:' + name;
+  let result = function (target) {
+    let decorator = protocol(name, options);
     return target ? decorator(target) : decorator;
   };
 

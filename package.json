@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "1.0.0-beta.1.1.6",
+  "version": "1.0.0-beta.1.2.0",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.12",
-    "babel-dts-generator": "^0.4.5",
+    "babel-dts-generator": "^0.4.7",
     "babel-eslint": "^4.1.1",
     "babel-plugin-syntax-flow": "^6.5.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",

@@ -1,5 +1,7 @@
 declare module 'aurelia-metadata' {
-  import { PLATFORM }  from 'aurelia-pal';
+  import {
+    PLATFORM
+  } from 'aurelia-pal';
   
   /**
   * Helpers for working with metadata on functions.
@@ -105,6 +107,9 @@ declare module 'aurelia-metadata' {
   /**
   * Provides helpers for working with metadata.
   */
+  /**
+  * Provides helpers for working with metadata.
+  */
   export const metadata: MetadataType;
   
   /**
@@ -149,8 +154,16 @@ declare module 'aurelia-metadata' {
   * Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
   * @param rest The decorators to apply.
   */
+  /**
+  * Enables applying decorators, particularly for use when there is no syntax support in the language, such as with ES5 and ES2016.
+  * @param rest The decorators to apply.
+  */
   export function decorators(...rest: Function[]): DecoratorApplicator;
   
+  /**
+  * Decorator: Enables marking methods as deprecated.
+  * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
+  */
   /**
   * Decorator: Enables marking methods as deprecated.
   * @param optionsOrTarget Options for how the deprected decorator should function at runtime.
@@ -163,6 +176,11 @@ declare module 'aurelia-metadata' {
   */
   export function mixin(behavior: Object): any;
   
+  /**
+  * Decorator: Creates a protocol.
+  * @param name The name of the protocol.
+  * @param options The validation function or options object used in configuring the protocol.
+  */
   /**
   * Decorator: Creates a protocol.
   * @param name The name of the protocol.
