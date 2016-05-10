@@ -509,7 +509,9 @@
                   "name": "targetKey",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "comment": {
                     "text": "The member on the target to set the metadata on.\n"
                   },
@@ -578,7 +580,9 @@
                   "name": "targetKey",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "comment": {
                     "text": "The member on the target to lookup the metadata on.\n"
                   },
@@ -661,7 +665,9 @@
                   "name": "targetKey",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "comment": {
                     "text": "The member on the target to lookup or create the metadata on.\n"
                   },
@@ -730,7 +736,9 @@
                   "name": "targetKey",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "comment": {
                     "text": "The member on the target to lookup the metadata on.\n"
                   },

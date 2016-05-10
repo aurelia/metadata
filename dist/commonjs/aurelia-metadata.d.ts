@@ -29,7 +29,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup the metadata on.
       * @param targetKey The member on the target to lookup the metadata on.
       */
-    get(metadataKey: string, target: Function, targetKey: string): Object;
+    get(metadataKey: string, target: Function, targetKey?: string): Object;
     
     /**
       * Gets metadata specified by a key on a target, only searching the own instance.
@@ -37,7 +37,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup the metadata on.
       * @param targetKey The member on the target to lookup the metadata on.
       */
-    getOwn(metadataKey: string, target: Function, targetKey: string): Object;
+    getOwn(metadataKey: string, target: Function, targetKey?: string): Object;
     
     /**
       * Defines metadata specified by a key on a target.
@@ -45,7 +45,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to set the metadata on.
       * @param targetKey The member on the target to set the metadata on.
       */
-    define(metadataKey: string, metadataValue: Object, target: Function, targetKey: string): void;
+    define(metadataKey: string, metadataValue: Object, target: Function, targetKey?: string): void;
     
     /**
       * Gets metadata specified by a key on a target, or creates an instance of the specified metadata if not found.
@@ -54,7 +54,7 @@ declare module 'aurelia-metadata' {
       * @param target The target to lookup or create the metadata on.
       * @param targetKey The member on the target to lookup or create the metadata on.
       */
-    getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey: string): Object;
+    getOrCreateOwn(metadataKey: string, Type: Function, target: Function, targetKey?: string): Object;
   }
   
   /**

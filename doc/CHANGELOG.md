@@ -1,3 +1,11 @@
+### 1.0.0-beta.1.2.1 (2016-05-10)
+
+
+#### Bug Fixes
+
+* **metadata:** targetKey in Reflect.defineMetadata is optional ([fa861f7c](https://github.com/aurelia/metadata/commit/fa861f7c8fd867331b607021ec3b0e871262990f))
+
+
 ### 1.0.0-beta.1.2.0 (2016-03-22)
 
 * Update to Babel 6
