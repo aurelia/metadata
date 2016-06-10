@@ -1,22 +1,10 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Origin = exports.metadata = undefined;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-exports.decorators = decorators;
-exports.deprecated = deprecated;
-exports.mixin = mixin;
-exports.protocol = protocol;
-
-var _aureliaPal = require('aurelia-pal');
 
 
+import { PLATFORM } from 'aurelia-pal';
 
-var metadata = exports.metadata = {
+export var metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   properties: 'design:properties',
@@ -51,7 +39,7 @@ var metadata = exports.metadata = {
 var originStorage = new Map();
 var unknownOrigin = Object.freeze({ moduleId: undefined, moduleMember: undefined });
 
-var Origin = exports.Origin = function () {
+export var Origin = function () {
   function Origin(moduleId, moduleMember) {
     
 
@@ -63,7 +51,7 @@ var Origin = exports.Origin = function () {
     var origin = originStorage.get(fn);
 
     if (origin === undefined) {
-      _aureliaPal.PLATFORM.eachModule(function (key, value) {
+      PLATFORM.eachModule(function (key, value) {
         for (var name in value) {
           var exp = value[name];
           if (exp === fn) {
@@ -91,7 +79,7 @@ var Origin = exports.Origin = function () {
   return Origin;
 }();
 
-function decorators() {
+export function decorators() {
   for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
     rest[_key] = arguments[_key];
   }
@@ -125,7 +113,7 @@ function decorators() {
   return applicator;
 }
 
-function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
+export function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
   function decorator(target, key, descriptor) {
     var methodSignature = target.constructor.name + '#' + key;
     var options = maybeKey ? {} : optionsOrTarget || {};
@@ -155,7 +143,7 @@ function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
   return maybeKey ? decorator(optionsOrTarget, maybeKey, maybeDescriptor) : decorator;
 }
 
-function mixin(behavior) {
+export function mixin(behavior) {
   var instanceKeys = Object.keys(behavior);
 
   function _mixin(possible) {
@@ -219,7 +207,7 @@ function createProtocolAsserter(name, validate) {
   };
 }
 
-function protocol(name, options) {
+export function protocol(name, options) {
   options = ensureProtocolOptions(options);
 
   var result = function result(target) {

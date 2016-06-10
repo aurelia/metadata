@@ -126,6 +126,8 @@ export class Origin {
           originStorage.set(fn, origin = new Origin(key, 'default'));
           return true;
         }
+
+        return false;
       });
     }
 

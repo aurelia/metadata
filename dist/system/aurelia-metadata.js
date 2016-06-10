@@ -1,13 +1,11 @@
 'use strict';
 
 System.register(['aurelia-pal'], function (_export, _context) {
+  "use strict";
+
   var PLATFORM, _extends, metadata, originStorage, unknownOrigin, Origin;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   function alwaysValid() {
     return true;
@@ -108,7 +106,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
 
       _export('Origin', Origin = function () {
         function Origin(moduleId, moduleMember) {
-          _classCallCheck(this, Origin);
+          
 
           this.moduleId = moduleId;
           this.moduleMember = moduleMember;
@@ -131,6 +129,8 @@ System.register(['aurelia-pal'], function (_export, _context) {
                 originStorage.set(fn, origin = new Origin(key, 'default'));
                 return true;
               }
+
+              return false;
             });
           }
 

@@ -24,11 +24,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     return target;
   };
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var metadata = exports.metadata = {
     resource: 'aurelia:resource',
@@ -67,7 +63,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
 
   var Origin = exports.Origin = function () {
     function Origin(moduleId, moduleMember) {
-      _classCallCheck(this, Origin);
+      
 
       this.moduleId = moduleId;
       this.moduleMember = moduleMember;
@@ -90,6 +86,8 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
             originStorage.set(fn, origin = new Origin(key, 'default'));
             return true;
           }
+
+          return false;
         });
       }
 
