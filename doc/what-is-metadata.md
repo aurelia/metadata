@@ -1,5 +1,0 @@
-# What is Metadata?
-
-Metadata is data that describes your code. It is attached to `function` objects and can be used by a developer to provide libraries and frameworks with information they can use to correctly interoperate with the developer's code. Some common uses for metadata include [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection), [data validation frameworks](http://en.wikipedia.org/wiki/Data_validation), [AOP](http://en.wikipedia.org/wiki/Aspect-oriented_programming) and [metaprogramming](http://en.wikipedia.org/wiki/Metaprogramming).
-
-The `aurelia-metadata` library provides useful functions for reading and writing metadata. This metadata is referred to as `annotations` throughout the documentation and that terminology is also reflected in the API naming scheme.
