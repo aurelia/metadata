@@ -3,6 +3,7 @@
 [![npm Version](https://img.shields.io/npm/v/aurelia-metadata.svg)](https://www.npmjs.com/package/aurelia-metadata)
 [![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
 [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CircleCI](https://circleci.com/gh/aurelia/metadata.svg?style=svg)](https://circleci.com/gh/aurelia/metadata)
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains utilities for reading and writing the metadata of JavaScript functions. It provides a consistent way of accessing type, annotation and origin metadata across a number of languages and formats. This library supports TypeScript metadata and contains helper functions that understand several simple, alternate locations and formats for metadata which are more easily leveraged by developers authoring code in plain ES6 or ES5.
 
