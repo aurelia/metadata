@@ -11,6 +11,10 @@ interface MetadataType {
   */
   paramTypes: string;
   /**
+  * The metadata key representing object property type information.
+  */
+  propertyType: string;
+  /**
   * The metadata key representing property information.
   */
   properties: string;
@@ -51,6 +55,7 @@ interface MetadataType {
 export const metadata: MetadataType = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
+  propertyType: 'design:type',
   properties: 'design:properties',
   get(metadataKey: string, target: Function, targetKey?: string): Object {
     if (!target) { return undefined; }
