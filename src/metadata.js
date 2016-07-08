@@ -1,5 +1,7 @@
 /**
 * Helpers for working with metadata on functions.
+*
+* Note for the Typescript to ES5 transpiler: Due to the non-standard compliant implementation of 'extends', these methods, when applied to derived classes, will operate on the parent class and not on the child class. This can be circumvented by either transpiling to ES2015 (ES6) or by making the targetKey parameter class-specific eg. by using target.name for the targetKey parameter.
 */
 interface MetadataType {
   /**
