@@ -5,6 +5,7 @@ import { PLATFORM } from 'aurelia-pal';
 export const metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
+  propertyType: 'design:type',
   properties: 'design:properties',
   get(metadataKey, target, targetKey) {
     if (!target) {

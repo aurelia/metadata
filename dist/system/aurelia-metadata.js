@@ -70,6 +70,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
       _export('metadata', metadata = {
         resource: 'aurelia:resource',
         paramTypes: 'design:paramtypes',
+        propertyType: 'design:type',
         properties: 'design:properties',
         get: function get(metadataKey, target, targetKey) {
           if (!target) {

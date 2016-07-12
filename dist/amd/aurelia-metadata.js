@@ -29,6 +29,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
   var metadata = exports.metadata = {
     resource: 'aurelia:resource',
     paramTypes: 'design:paramtypes',
+    propertyType: 'design:type',
     properties: 'design:properties',
     get: function get(metadataKey, target, targetKey) {
       if (!target) {
