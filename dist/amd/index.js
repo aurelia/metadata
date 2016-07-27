@@ -5,7 +5,7 @@ define(['exports', './aurelia-metadata'], function (exports, _aureliaMetadata) {
     value: true
   });
   Object.keys(_aureliaMetadata).forEach(function (key) {
-    if (key === "default") return;
+    if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
