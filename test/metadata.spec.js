@@ -42,7 +42,7 @@ describe('metadata', () => {
       expect(found).toBe(undefined);
     });
 
-    it('retruns the base metadata when serching deep if no metadata is defined for the type', () => {
+    it('returns the base metadata when serching deep if no metadata is defined for the type', () => {
       var found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
       expect(found instanceof SampleMetadata).toBe(true);
     });

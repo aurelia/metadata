@@ -27,11 +27,12 @@ export function decorators(...rest: Function[]): DecoratorApplicator {
         enumerable: true
       };
 
+      const { prototype } = target;
       while (i--) {
-        descriptor = rest[i](target, key, descriptor) || descriptor;
+        descriptor = rest[i](prototype, key, descriptor) || descriptor;
       }
 
-      Object.defineProperty(target, key, descriptor);
+      Object.defineProperty(prototype, key, descriptor);
     } else {
       while (i--) {
         target = rest[i](target) || target;
