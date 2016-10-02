@@ -121,13 +121,11 @@ export class Origin {
 
     if (origin === undefined) {
       PLATFORM.eachModule((key, value) => {
-        if (typeof value === 'object') {
-          for (let name in value) {
-            let exp = value[name];
-            if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, name));
-              return true;
-            }
+        for (let name in value) {
+          let exp = value[name];
+          if (exp === fn) {
+            originStorage.set(fn, origin = new Origin(key, name));
+            return true;
           }
         }
 
