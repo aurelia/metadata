@@ -1,5 +1,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 
 
 import { PLATFORM } from 'aurelia-pal';
@@ -53,11 +55,13 @@ export var Origin = function () {
 
     if (origin === undefined) {
       PLATFORM.eachModule(function (key, value) {
-        for (var name in value) {
-          var exp = value[name];
-          if (exp === fn) {
-            originStorage.set(fn, origin = new Origin(key, name));
-            return true;
+        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+          for (var name in value) {
+            var exp = value[name];
+            if (exp === fn) {
+              originStorage.set(fn, origin = new Origin(key, name));
+              return true;
+            }
           }
         }
 

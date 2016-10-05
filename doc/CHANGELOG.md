@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/aurelia/metadata/compare/1.0.0...v1.0.1) (2016-10-05)
+
+
+### Bug Fixes
+
+* issue [#41](https://github.com/aurelia/metadata/issues/41) ([7b4a0bc](https://github.com/aurelia/metadata/commit/7b4a0bc))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/aurelia/metadata/compare/1.0.0-rc.1.0.1...v1.0.0) (2016-07-27)
 
