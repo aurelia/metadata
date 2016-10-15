@@ -162,9 +162,9 @@ interface DecoratorApplicator {
   * Applies the decorators to the target.
   * @param target The target.
   * @param key If applying to a method, the member name.
-  * @param key If applying to a method, you may supply an initial descriptor to pass to the decorators.
+  * @param descriptor If applying to a method, you may supply an initial descriptor to pass to the decorators.
   */
-  on(target: any, key?: string, descriptor?: Object): any;
+  on(target: any, key?: string, descriptor?: PropertyDescriptor): any;
 }
 
 /**
