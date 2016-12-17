@@ -22,6 +22,44 @@ describe('metadata', () => {
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
+  it ('attempting to access metadata of primitive targets returns undefined', () => {
+    const metadataKey = 'fizz:bang';
+    const targets = [null, undefined, 'aurelia-dom-boundary', '', 0, 1, true, false];
+    let i = targets.length;
+    while (i--) {
+      const target = targets[i];
+      expect(metadata.get(metadataKey, target)).toBe(undefined);
+      expect(metadata.getOwn(metadataKey, target)).toBe(undefined);
+    }
+  });
+
+  it ('attempting to access metadata of object targets succeeds', () => {
+    const metadataKey = 'fizz:bang';
+    const metadataValue = 'foo bar';
+    const targets = [function() {}, {}, /*Object.create(null),*/ Object.prototype];
+    let i = targets.length;
+    while (i--) {
+      const target = targets[i];
+
+      expect(metadata.get(metadataKey, target)).toBe(undefined);
+      expect(metadata.getOwn(metadataKey, target)).toBe(undefined);
+
+      Reflect.defineMetadata(metadataKey, metadataValue, target);
+
+      expect(metadata.get(metadataKey, target)).toBe(metadataValue);
+      expect(metadata.getOwn(metadataKey, target)).toBe(metadataValue);
+
+      if (Reflect.deleteMetadata) {
+        Reflect.deleteMetadata(metadataKey, target);
+      } else if (target.__metadata__) {
+        delete target.__metadata__;
+      }
+
+      expect(metadata.get(metadataKey, target)).toBe(undefined);
+      expect(metadata.getOwn(metadataKey, target)).toBe(undefined);
+    }
+  });
+
   it('can be added with function', () => {
     class Annotated {}
 
