@@ -1,3 +1,7 @@
+function isObject(val) {
+  return val && (typeof val === 'function' || typeof val === 'object');
+}
+
 /**
 * Helpers for working with metadata on functions.
 *
@@ -60,12 +64,16 @@ export const metadata: MetadataType = {
   propertyType: 'design:type',
   properties: 'design:properties',
   get(metadataKey: string, target: Function, targetKey?: string): Object {
-    if (!target) { return undefined; }
+    if (!isObject(target)) {
+      return undefined;
+    }
     let result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey?: string): Object {
-    if (!target) { return undefined; }
+    if (!isObject(target)) {
+      return undefined;
+    }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
   },
   define(metadataKey: string, metadataValue: Object, target: Function, targetKey?: string): void {
