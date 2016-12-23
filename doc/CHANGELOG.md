@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/aurelia/metadata/compare/1.0.2...v1.0.3) (2016-12-23)
+
+
+### Bug Fixes
+
+* **metadata:** handle primitive targets ([ecf28dd](https://github.com/aurelia/metadata/commit/ecf28dd)), closes [aurelia/templating-resources#267](https://github.com/aurelia/templating-resources/issues/267) [aurelia/metadata#47](https://github.com/aurelia/metadata/issues/47) [aurelia/binding#551](https://github.com/aurelia/binding/issues/551) [aurelia/dependency-injection#141](https://github.com/aurelia/dependency-injection/issues/141) [aurelia/binding#376](https://github.com/aurelia/binding/issues/376)
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/aurelia/metadata/compare/1.0.0...v1.0.1) (2016-10-05)
 

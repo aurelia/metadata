@@ -24,13 +24,17 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     return target;
   };
 
+  
+
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
   } : function (obj) {
     return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
   };
 
-  
+  function isObject(val) {
+    return val && (typeof val === 'function' || (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object');
+  }
 
   var metadata = exports.metadata = {
     resource: 'aurelia:resource',
@@ -38,14 +42,14 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     propertyType: 'design:type',
     properties: 'design:properties',
     get: function get(metadataKey, target, targetKey) {
-      if (!target) {
+      if (!isObject(target)) {
         return undefined;
       }
       var result = metadata.getOwn(metadataKey, target, targetKey);
       return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
     },
     getOwn: function getOwn(metadataKey, target, targetKey) {
-      if (!target) {
+      if (!isObject(target)) {
         return undefined;
       }
       return Reflect.getOwnMetadata(metadataKey, target, targetKey);

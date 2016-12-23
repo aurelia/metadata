@@ -6,20 +6,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 import { PLATFORM } from 'aurelia-pal';
 
+function isObject(val) {
+  return val && (typeof val === 'function' || (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object');
+}
+
 export var metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   propertyType: 'design:type',
   properties: 'design:properties',
   get: function get(metadataKey, target, targetKey) {
-    if (!target) {
+    if (!isObject(target)) {
       return undefined;
     }
     var result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn: function getOwn(metadataKey, target, targetKey) {
-    if (!target) {
+    if (!isObject(target)) {
       return undefined;
     }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);

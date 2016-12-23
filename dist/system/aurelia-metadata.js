@@ -7,6 +7,10 @@ System.register(['aurelia-pal'], function (_export, _context) {
 
   
 
+  function isObject(val) {
+    return val && (typeof val === 'function' || (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object');
+  }
+
   function decorators() {
     for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
       rest[_key] = arguments[_key];
@@ -197,14 +201,14 @@ System.register(['aurelia-pal'], function (_export, _context) {
         propertyType: 'design:type',
         properties: 'design:properties',
         get: function get(metadataKey, target, targetKey) {
-          if (!target) {
+          if (!isObject(target)) {
             return undefined;
           }
           var result = metadata.getOwn(metadataKey, target, targetKey);
           return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
         },
         getOwn: function getOwn(metadataKey, target, targetKey) {
-          if (!target) {
+          if (!isObject(target)) {
             return undefined;
           }
           return Reflect.getOwnMetadata(metadataKey, target, targetKey);

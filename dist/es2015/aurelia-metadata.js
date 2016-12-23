@@ -2,20 +2,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 import { PLATFORM } from 'aurelia-pal';
 
+function isObject(val) {
+  return val && (typeof val === 'function' || typeof val === 'object');
+}
+
 export const metadata = {
   resource: 'aurelia:resource',
   paramTypes: 'design:paramtypes',
   propertyType: 'design:type',
   properties: 'design:properties',
   get(metadataKey, target, targetKey) {
-    if (!target) {
+    if (!isObject(target)) {
       return undefined;
     }
     let result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey, target, targetKey) {
-    if (!target) {
+    if (!isObject(target)) {
       return undefined;
     }
     return Reflect.getOwnMetadata(metadataKey, target, targetKey);
