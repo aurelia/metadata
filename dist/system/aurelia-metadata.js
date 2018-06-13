@@ -192,7 +192,7 @@ System.register(['aurelia-pal'], function (_export, _context) {
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
       } : function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
 
       _export('metadata', metadata = {
@@ -248,11 +248,13 @@ System.register(['aurelia-pal'], function (_export, _context) {
             PLATFORM.eachModule(function (key, value) {
               if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
                 for (var name in value) {
-                  var exp = value[name];
-                  if (exp === fn) {
-                    originStorage.set(fn, origin = new Origin(key, name));
-                    return true;
-                  }
+                  try {
+                    var exp = value[name];
+                    if (exp === fn) {
+                      originStorage.set(fn, origin = new Origin(key, name));
+                      return true;
+                    }
+                  } catch (e) {}
                 }
               }
 

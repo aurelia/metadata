@@ -131,10 +131,15 @@ export class Origin {
       PLATFORM.eachModule((key, value) => {
         if (typeof value === 'object') {
           for (let name in value) {
-            let exp = value[name];
-            if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, name));
-              return true;
+            try {
+              let exp = value[name];
+              if (exp === fn) {
+                originStorage.set(fn, origin = new Origin(key, name));
+                return true;
+              }
+            } catch (e) {
+              // IE11 in cross origin frame fails when accessing Window['frameElement'] with Access Denied script error.
+              // Window gets exported from webpack buildin/global.js.
             }
           }
         }

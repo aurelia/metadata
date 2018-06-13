@@ -55,11 +55,13 @@ export let Origin = class Origin {
       PLATFORM.eachModule((key, value) => {
         if (typeof value === 'object') {
           for (let name in value) {
-            let exp = value[name];
-            if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, name));
-              return true;
-            }
+            try {
+              let exp = value[name];
+              if (exp === fn) {
+                originStorage.set(fn, origin = new Origin(key, name));
+                return true;
+              }
+            } catch (e) {}
           }
         }
 
@@ -112,16 +114,16 @@ export function decorators(...rest) {
 
 export function deprecated(optionsOrTarget, maybeKey, maybeDescriptor) {
   function decorator(target, key, descriptor) {
-    const methodSignature = `${ target.constructor.name }#${ key }`;
+    const methodSignature = `${target.constructor.name}#${key}`;
     let options = maybeKey ? {} : optionsOrTarget || {};
-    let message = `DEPRECATION - ${ methodSignature }`;
+    let message = `DEPRECATION - ${methodSignature}`;
 
     if (typeof descriptor.value !== 'function') {
       throw new SyntaxError('Only methods can be marked as deprecated.');
     }
 
     if (options.message) {
-      message += ` - ${ options.message }`;
+      message += ` - ${options.message}`;
     }
 
     return _extends({}, descriptor, {
@@ -199,7 +201,7 @@ function createProtocolAsserter(name, validate) {
   return function (target) {
     let result = validate(target);
     if (result !== true) {
-      throw new Error(result || `${ name } was not correctly implemented.`);
+      throw new Error(result || `${name} was not correctly implemented.`);
     }
   };
 }

@@ -1,3 +1,14 @@
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/aurelia/metadata/compare/1.0.3...1.0.4) (2018-06-13)
+
+
+### Bug Fixes
+
+* **metadata:** IE cross origin frame Access Denied on Window['frameElement'] in Origin.get ([5e678d7](https://github.com/aurelia/metadata/commit/5e678d7))
+* **metadata:** IE cross origin frame Access Denied on Window['frameElement'] in Origin.get - add test ([553c5a2](https://github.com/aurelia/metadata/commit/553c5a2))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/aurelia/metadata/compare/1.0.2...v1.0.3) (2016-12-23)
 
