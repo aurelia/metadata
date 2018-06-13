@@ -25,8 +25,9 @@ describe('origin', () => {
   });
 
   describe('get - search modules', () => {
-    let modules = {'text-file': 'abcdef', 'real-module':{name:'test', x() {return 'hey'}}};
+    let modules = undefined;
     beforeEach(()=> {
+      modules = {'text-file': 'abcdef', 'real-module':{name: 'test', x() { return 'hey' }}};
       spyOn(PLATFORM, 'eachModule').and.callFake((callback) => {
         for (let key in modules) callback(key, modules[key]);
       });
@@ -45,6 +46,13 @@ describe('origin', () => {
 
     it('but it should not search in strings', () => {
       expect(Origin.get('a').moduleId).toBe(undefined);
+    });
+
+    it('should not fail on accessing restricted/failing members', () => {
+      Object.defineProperty(modules['real-module'], 'restricted1', { get: () => { throw new Error('restricted') }, enumerable: true });
+      class Test {}
+      expect(Origin.get(Test).moduleId).toBe(undefined);
+      expect(PLATFORM.eachModule).toHaveBeenCalled();
     });
   });
 
