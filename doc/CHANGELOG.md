@@ -1,3 +1,8 @@
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/aurelia/metadata/compare/1.0.4...1.0.5) (2019-01-18)
+
+* Add module field to package.json.
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/aurelia/metadata/compare/1.0.3...1.0.4) (2018-06-13)
 
