@@ -1,6 +1,6 @@
 {
   "name": "aurelia-metadata",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Utilities for reading and writing the metadata of JavaScript functions.",
   "keywords": [
     "aurelia",
@@ -30,16 +30,12 @@
   ],
   "jspm": {
     "registry": "npm",
-    "jspmPackage": true,
     "main": "aurelia-metadata",
     "format": "amd",
     "directories": {
       "dist": "dist/amd"
     },
     "dependencies": {
-      "aurelia-pal": "^1.0.0"
-    },
-    "peerDependencies": {
       "aurelia-pal": "^1.0.0"
     },
     "devDependencies": {
@@ -50,7 +46,8 @@
     }
   },
   "dependencies": {
-    "aurelia-pal": "^1.0.0"
+    "aurelia-pal": "^1.0.0",
+    "jspm": "^0.16.53"
   },
   "devDependencies": {
     "aurelia-tools": "^0.2.4",
