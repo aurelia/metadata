@@ -14,12 +14,20 @@
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-metadata.js",
-  "module": "dist/es2015/aurelia-metadata.js",
+  "module": "dist/native-modules/aurelia-metadata.js",
   "typings": "dist/aurelia-metadata.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/aurelia/metadata"
   },
+  "files": [
+    "dist",
+    "doc",
+    "src",
+    "typings.json",
+    "README.md",
+    "LICENSE"
+  ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
