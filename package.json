@@ -20,6 +20,14 @@
     "type": "git",
     "url": "https://github.com/aurelia/metadata"
   },
+  "files": [
+    "dist",
+    "doc",
+    "src",
+    "typings.json",
+    "README.md",
+    "LICENSE"
+  ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
