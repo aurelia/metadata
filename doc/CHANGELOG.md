@@ -1,5 +1,5 @@
 <a name="1.0.6"></a>
-## [1.0.6](https://github.com/aurelia/metadata/compare/1.0.5...1.0.6) (2019-02-03)
+## [1.0.6](https://github.com/aurelia/metadata/compare/1.0.5...1.0.6) (2019-02-04)
 
 
 ### Bug Fixes
