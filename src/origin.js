@@ -37,7 +37,7 @@ export class Origin {
     if (origin === undefined) {
       PLATFORM.eachModule((key, value) => {
         if (typeof value === 'object') {
-          var isBrowserWindow = typeof window !== 'undefined' && value === window;
+          let isBrowserWindow = typeof window !== 'undefined' && value === window;
           for (let name in value) {
             if (isBrowserWindow && name === 'webkitStorageInfo') { continue; } // Avoid warning to console
             try {
