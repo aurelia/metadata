@@ -54,7 +54,11 @@ export let Origin = class Origin {
     if (origin === undefined) {
       PLATFORM.eachModule((key, value) => {
         if (typeof value === 'object') {
+          let isBrowserWindow = typeof window !== 'undefined' && value === window;
           for (let name in value) {
+            if (isBrowserWindow && name === 'webkitStorageInfo') {
+              continue;
+            }
             try {
               let exp = value[name];
               if (exp === fn) {
