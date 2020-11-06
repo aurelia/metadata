@@ -1,3 +1,8 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/aurelia/metadata/compare/1.0.6...1.0.8) (2020-11-05)
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/aurelia/metadata/compare/1.0.5...1.0.7) (2019-03-26)
 

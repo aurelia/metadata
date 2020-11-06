@@ -86,7 +86,11 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
       if (origin === undefined) {
         _aureliaPal.PLATFORM.eachModule(function (key, value) {
           if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+            var isBrowserWindow = typeof window !== 'undefined' && value === window;
             for (var name in value) {
+              if (isBrowserWindow && name === 'webkitStorageInfo') {
+                continue;
+              }
               try {
                 var exp = value[name];
                 if (exp === fn) {
