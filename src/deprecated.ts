@@ -1,7 +1,7 @@
 /**
 * Options that control how the deprected decorator should function at runtime.
 */
-interface DeprecatedOptions {
+export interface DeprecatedOptions {
   /**
   * Specifies a custom deprecation message.
   */
@@ -19,7 +19,7 @@ interface DeprecatedOptions {
 export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object): any {
   function decorator(target, key, descriptor) {
     const methodSignature = `${target.constructor.name}#${key}`;
-    let options = maybeKey ? {} : optionsOrTarget || {};
+    let options = (maybeKey ? {} : optionsOrTarget || {}) as DeprecatedOptions;
     let message = `DEPRECATION - ${methodSignature}`;
 
     if (typeof descriptor.value !== 'function') {

@@ -1,7 +1,7 @@
 /**
 * An object capable of applying it's captured decorators to a target.
 */
-interface DecoratorApplicator {
+export interface DecoratorApplicator {
   /**
   * Applies the decorators to the target.
   * @param target The target.
@@ -39,8 +39,8 @@ export function decorators(...rest: Function[]): DecoratorApplicator {
     }
 
     return target;
-  };
+  } as unknown as DecoratorApplicator;
 
-  applicator.on = applicator;
+  applicator.on = applicator as unknown as DecoratorApplicator['on'];
   return applicator;
 }

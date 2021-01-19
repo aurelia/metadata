@@ -1,4 +1,4 @@
-import {PLATFORM} from 'aurelia-pal';
+import { PLATFORM } from 'aurelia-pal';
 
 const originStorage = new Map();
 const unknownOrigin = Object.freeze({moduleId: undefined, moduleMember: undefined});
