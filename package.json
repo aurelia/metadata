@@ -25,6 +25,7 @@
     "test": "karma start --single-run",
     "test:watch": "karma start",
     "build": "npm run clean && npm run rollup && npm run build:types",
+    "doc": "typedoc --entryPoints src/index.ts --json doc/api.json",
     "rollup": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "lint": "eslint ./src ./test --ext .ts,.tsx",
