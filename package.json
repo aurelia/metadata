@@ -21,8 +21,13 @@
     "url": "https://github.com/aurelia/metadata"
   },
   "scripts": {
+    "clean": "rimraf dist",
     "test": "karma start --single-run",
-    "build": "gulp build",
+    "test:watch": "karma start",
+    "build": "npm run clean && npm run rollup && npm run build:types",
+    "rollup": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "lint": "eslint ./src ./test --ext .ts,.tsx",
     "cut-release": "gulp prepare-release"
   },
   "files": [
@@ -54,6 +59,11 @@
     "aurelia-pal": "^1.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.1.0",
+    "@types/jasmine": "^3.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "aurelia-polyfills": "^1.3.4",
     "aurelia-tools": "^0.2.4",
     "babel-dts-generator": "^0.6.1",
     "babel-eslint": "^6.1.2",
@@ -68,11 +78,12 @@
     "babel-preset-es2015-loose-native-modules": "^1.0.0",
     "babel-preset-stage-1": "^6.5.0",
     "del": "^2.2.1",
-    "gulp": "^3.9.1",
+    "eslint": "^7.18.0",
+    "gulp": "^4.0.2",
     "gulp-babel": "^6.1.2",
-    "gulp-bump": "^2.2.0",
+    "gulp-bump": "^3.2.0",
     "gulp-concat": "^2.6.0",
-    "gulp-conventional-changelog": "^1.1.0",
+    "gulp-conventional-changelog": "^2.0.35",
     "gulp-eslint": "^3.0.1",
     "gulp-ignore": "^2.0.1",
     "gulp-insert": "^0.5.0",
@@ -81,28 +92,26 @@
     "gulp-typedoc-extractor": "0.0.8",
     "gulp-typescript": "^2.13.6",
     "gulp-util": "^3.0.7",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^3.6.0",
     "jspm": "^0.16.53",
-    "karma": "^1.1.2",
+    "karma": "^5.2.3",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.0.2",
+    "karma-jasmine": "^4.0.1",
     "karma-jspm": "^2.2.0",
+    "karma-typescript": "^5.2.0",
     "merge2": "^1.0.2",
     "object.assign": "^4.0.4",
     "require-dir": "^0.3.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.36.2",
     "run-sequence": "^1.2.2",
     "through2": "^2.0.1",
     "typedoc": "^0.4.4",
-    "typescript": "^1.9.0-dev.20160622-1.0",
-    "vinyl": "^1.1.1",
-    "vinyl-paths": "^2.1.0",
+    "typescript": "^4.1.3",
+    "vinyl": "^2.2.1",
+    "vinyl-paths": "^3.0.1",
     "yargs": "^4.8.1"
-  },
-  "aurelia": {
-    "documentation": {
-      "articles": []
-    }
   }
 }
