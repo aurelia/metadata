@@ -18,9 +18,9 @@ describe('mixin', () => {
   });
   
   const sourceMixin = {
-    testMethod1() {},
-    testMethod2() {},
-    testMethod3() {},
+    testMethod1() {/* empty */},
+    testMethod2() {/* empty */},
+    testMethod3() {/* empty */},
     name: 'aurelia'
   };
   

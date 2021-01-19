@@ -9,5 +9,9 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
-  rules: {}
+  rules: {
+    "prefer-rest-params": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+  }
 };

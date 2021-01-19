@@ -1,5 +1,5 @@
 function alwaysValid() { return true; }
-function noCompose() {}
+function noCompose() {/* empty */}
 
 function ensureProtocolOptions(options): ProtocolOptions {
   if (options === undefined) {

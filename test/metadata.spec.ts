@@ -3,8 +3,9 @@ import { metadata } from '../src/metadata';
 import { decorators } from '../src/decorators';
 
 declare global {
+  // eslint-disable-next-line
   namespace Reflect {
-    var deleteMetadata: (...args: any[]) => void;
+    const deleteMetadata: (...args: any[]) => void;
   }
 }
 
@@ -43,7 +44,7 @@ describe('metadata', () => {
   it('attempting to access metadata of object targets succeeds', () => {
     const metadataKey = 'fizz:bang';
     const metadataValue = 'foo bar';
-    const targets = [function () { }, {}, /*Object.create(null),*/ Object.prototype];
+    const targets = [function () {/* empty */}, {}, /*Object.create(null),*/ Object.prototype];
     let i = targets.length;
     while (i--) {
       const target = targets[i] as any;

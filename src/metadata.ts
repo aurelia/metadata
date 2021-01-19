@@ -6,6 +6,7 @@ function isObject(val) {
  * @internal
  */
 declare global {
+  // eslint-disable-next-line
   namespace Reflect {
     export function getOwnMetadata(key: any, target: any, targetKey?: any): any;
     export function defineMetadata(key: any, value: any, target: any, targetKey?: any): void;
