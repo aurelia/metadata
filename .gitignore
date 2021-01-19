@@ -6,4 +6,3 @@ bower_components
 *.swp
 build/reports
 coverage
-dist
