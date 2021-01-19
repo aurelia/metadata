@@ -2,13 +2,23 @@
 const gulp = require('gulp');
 const bump = require('gulp-bump');
 const conventionalChangelog = require('gulp-conventional-changelog');
+const yargs = require('yargs');
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').exec;
 const promisify = require('util').promisify;
-const args = require('./build/args');
 const DIR_DOC = './doc';
 const FILE_DOC = path.resolve(DIR_DOC, 'CHANGELOG.md');
+/**@type {{ bump: 'major' | 'minor' | 'patch' | 'prerelease' }}
+ // @ts-ignore */
+const argv = yargs.argv;
+const validBumpTypes = "major|minor|patch|prerelease".split("|");
+/**@type  */
+const bumpType = (argv.bump || 'patch').toLowerCase();
+
+if(validBumpTypes.indexOf(bumpType) === -1) {
+  throw new Error('Unrecognized bump "' + bumpType + '".');
+}
 
 gulp.task('build', async () => {
   const { stderr: err1, stdout: out1 } = await promisify(exec)('npm run build');
@@ -49,15 +59,13 @@ gulp.task('doc', async () => {
 gulp.task('changelog', function () {
   return gulp
     .src(FILE_DOC)
-    .pipe(conventionalChangelog({
-      
-    }))
+    .pipe(conventionalChangelog({}))
     .pipe(gulp.dest(DIR_DOC));
 });
 
 gulp.task('bump-version', function () {
   return gulp.src(['./package.json', './bower.json'])
-    .pipe(bump({ type: args.bump })) //major|minor|patch|prerelease
+    .pipe(bump({ type: bumpType }))
     .pipe(gulp.dest('./'));
 });
 
