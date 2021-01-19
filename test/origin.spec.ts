@@ -1,3 +1,4 @@
+import './setup';
 import {Origin} from '../src/origin';
 import {PLATFORM} from 'aurelia-pal';
 
@@ -45,7 +46,7 @@ describe('origin', () => {
     });
 
     it('but it should not search in strings', () => {
-      expect(Origin.get('a').moduleId).toBe(undefined);
+      expect(Origin.get('a' as any).moduleId).toBe(undefined);
     });
 
     it('should not fail on accessing restricted/failing members', () => {

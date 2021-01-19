@@ -1,5 +1,12 @@
-import {metadata} from '../src/metadata';
-import {decorators} from '../src/decorators';
+import './setup';
+import { metadata } from '../src/metadata';
+import { decorators } from '../src/decorators';
+
+declare global {
+  namespace Reflect {
+    var deleteMetadata: (...args: any[]) => void;
+  }
+}
 
 describe('metadata', () => {
   it('can be located by key', () => {
@@ -13,7 +20,7 @@ describe('metadata', () => {
   });
 
   it('can override base metadata', () => {
-    var found = metadata.getOwn(metadata.resource, OverridesMetadata);
+    var found = metadata.getOwn(metadata.resource, OverridesMetadata) as typeof OverridesMetadata;
     expect(found.id).toBe(3);
   });
 
@@ -22,24 +29,24 @@ describe('metadata', () => {
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
-  it ('attempting to access metadata of primitive targets returns undefined', () => {
+  it('attempting to access metadata of primitive targets returns undefined', () => {
     const metadataKey = 'fizz:bang';
     const targets = [null, undefined, 'aurelia-dom-boundary', '', 0, 1, true, false];
     let i = targets.length;
     while (i--) {
-      const target = targets[i];
+      const target = targets[i] as any;
       expect(metadata.get(metadataKey, target)).toBe(undefined);
       expect(metadata.getOwn(metadataKey, target)).toBe(undefined);
     }
   });
 
-  it ('attempting to access metadata of object targets succeeds', () => {
+  it('attempting to access metadata of object targets succeeds', () => {
     const metadataKey = 'fizz:bang';
     const metadataValue = 'foo bar';
-    const targets = [function() {}, {}, /*Object.create(null),*/ Object.prototype];
+    const targets = [function () { }, {}, /*Object.create(null),*/ Object.prototype];
     let i = targets.length;
     while (i--) {
-      const target = targets[i];
+      const target = targets[i] as any;
 
       expect(metadata.get(metadataKey, target)).toBe(undefined);
       expect(metadata.getOwn(metadataKey, target)).toBe(undefined);
@@ -61,9 +68,9 @@ describe('metadata', () => {
   });
 
   it('can be added with function', () => {
-    class Annotated {}
+    class Annotated { }
 
-    decorators(new sampleES7Decorator()).on(Annotated);
+    decorators(sampleES7Decorator()).on(Annotated);
 
     var found = metadata.getOwn(metadata.resource, Annotated);
     expect(found instanceof SampleMetadata).toBe(true);
@@ -87,25 +94,23 @@ describe('metadata', () => {
   });
 
   class SampleMetadata {
-    constructor(id) {
-      this.id = id;
-    }
+    constructor(public id) {}
   }
 
-  function sampleES7Decorator(value){
-    return function(target){
+  function sampleES7Decorator(value?) {
+    return function (target) {
       metadata.define(metadata.resource, new SampleMetadata(value), target);
     }
   }
 
-  let HasMetadata = decorators(sampleES7Decorator()).on(class {});
-  let HasFallbackMetadata = decorators(sampleES7Decorator()).on(class {});
-  let HasOneMetadataInstance = decorators(sampleES7Decorator()).on(class {});
-  let OverridesMetadata = decorators(sampleES7Decorator(3)).on(class extends HasMetadata {});
+  let HasMetadata = decorators(sampleES7Decorator()).on(class { });
+  let HasFallbackMetadata = decorators(sampleES7Decorator()).on(class { });
+  let HasOneMetadataInstance = decorators(sampleES7Decorator()).on(class { });
+  let OverridesMetadata = decorators(sampleES7Decorator(3)).on(class extends HasMetadata { });
 
-  class DerivedWithBaseMetadata extends HasMetadata {}
+  class DerivedWithBaseMetadata extends HasMetadata { }
   metadata.define('another', 'foo', DerivedWithBaseMetadata);
 
-  class HasNoMetadata {}
-  class DerivedTypeWithNoMetadata extends HasMetadata {}
+  class HasNoMetadata { }
+  class DerivedTypeWithNoMetadata extends HasMetadata { }
 });
