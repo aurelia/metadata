@@ -19,7 +19,7 @@ export interface DeprecatedOptions {
 export function deprecated(optionsOrTarget?: DeprecatedOptions, maybeKey?: string, maybeDescriptor?: Object): any {
   function decorator(target, key, descriptor) {
     const methodSignature = `${target.constructor.name}#${key}`;
-    let options = (maybeKey ? {} : optionsOrTarget || {}) as DeprecatedOptions;
+    const options = (maybeKey ? {} : optionsOrTarget || {}) as DeprecatedOptions;
     let message = `DEPRECATION - ${methodSignature}`;
 
     if (typeof descriptor.value !== 'function') {

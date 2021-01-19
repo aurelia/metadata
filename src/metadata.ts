@@ -77,7 +77,7 @@ export const metadata: MetadataType = {
     if (!isObject(target)) {
       return undefined;
     }
-    let result = metadata.getOwn(metadataKey, target, targetKey);
+    const result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey?: string): Object {

@@ -10,22 +10,22 @@ declare global {
 
 describe('metadata', () => {
   it('can be located by key', () => {
-    var found = metadata.getOwn(metadata.resource, HasMetadata);
+    const found = metadata.getOwn(metadata.resource, HasMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
   it('can be normalized to handle the fallback metadata location', () => {
-    var found = metadata.getOwn(metadata.resource, HasFallbackMetadata);
+    const found = metadata.getOwn(metadata.resource, HasFallbackMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
   it('can override base metadata', () => {
-    var found = metadata.getOwn(metadata.resource, OverridesMetadata) as typeof OverridesMetadata;
+    const found = metadata.getOwn(metadata.resource, OverridesMetadata) as typeof OverridesMetadata;
     expect(found.id).toBe(3);
   });
 
   it('can inherit base metadata when searching deep by type', () => {
-    var found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
+    const found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
@@ -72,7 +72,7 @@ describe('metadata', () => {
 
     decorators(sampleES7Decorator()).on(Annotated);
 
-    var found = metadata.getOwn(metadata.resource, Annotated);
+    const found = metadata.getOwn(metadata.resource, Annotated);
     expect(found instanceof SampleMetadata).toBe(true);
   });
 
@@ -83,12 +83,12 @@ describe('metadata', () => {
     });
 
     it('returns undefined if no metadata is defined for the type', () => {
-      var found = metadata.getOwn(metadata.resource, HasNoMetadata);
+      const found = metadata.getOwn(metadata.resource, HasNoMetadata);
       expect(found).toBe(undefined);
     });
 
     it('retruns the base metadata when serching deep if no metadata is defined for the type', () => {
-      var found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
+      const found = metadata.get(metadata.resource, DerivedWithBaseMetadata);
       expect(found instanceof SampleMetadata).toBe(true);
     });
   });
@@ -103,10 +103,10 @@ describe('metadata', () => {
     }
   }
 
-  let HasMetadata = decorators(sampleES7Decorator()).on(class { });
-  let HasFallbackMetadata = decorators(sampleES7Decorator()).on(class { });
-  let HasOneMetadataInstance = decorators(sampleES7Decorator()).on(class { });
-  let OverridesMetadata = decorators(sampleES7Decorator(3)).on(class extends HasMetadata { });
+  const HasMetadata = decorators(sampleES7Decorator()).on(class { });
+  const HasFallbackMetadata = decorators(sampleES7Decorator()).on(class { });
+  const HasOneMetadataInstance = decorators(sampleES7Decorator()).on(class { });
+  const OverridesMetadata = decorators(sampleES7Decorator(3)).on(class extends HasMetadata { });
 
   class DerivedWithBaseMetadata extends HasMetadata { }
   metadata.define('another', 'foo', DerivedWithBaseMetadata);

@@ -23,14 +23,14 @@ function ensureProtocolOptions(options): ProtocolOptions {
 
 function createProtocolValidator(validate) {
   return function(target) {
-    let result = validate(target);
+    const result = validate(target);
     return result === true;
   };
 }
 
 function createProtocolAsserter(name, validate) {
   return function(target) {
-    let result = validate(target);
+    const result = validate(target);
     if (result !== true) {
       throw new Error(result || `${name} was not correctly implemented.`);
     }
@@ -60,8 +60,8 @@ interface ProtocolOptions {
 export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): any {
   options = ensureProtocolOptions(options);
 
-  let result = function(target) {
-    let resolvedTarget = typeof target === 'function'
+  const result = function(target) {
+    const resolvedTarget = typeof target === 'function'
         ? target.prototype
         : target;
 
@@ -90,9 +90,9 @@ export function protocol(name: string, options?: ((target: any) => string | bool
 */
 protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): Function {
   options = ensureProtocolOptions(options);
-  let hidden = 'protocol:' + name;
-  let result = function(target) {
-    let decorator = protocol(name, options);
+  const hidden = 'protocol:' + name;
+  const result = function(target) {
+    const decorator = protocol(name, options);
     return target ? decorator(target) : decorator;
   } as any;
 

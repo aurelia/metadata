@@ -16,7 +16,7 @@ export interface DecoratorApplicator {
 * @param rest The decorators to apply.
 */
 export function decorators(...rest: Function[]): DecoratorApplicator {
-  let applicator = function(target, key, descriptor) {
+  const applicator = function(target, key, descriptor) {
     let i = rest.length;
 
     if (key) {

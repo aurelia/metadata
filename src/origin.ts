@@ -37,11 +37,11 @@ export class Origin {
     if (origin === undefined) {
       PLATFORM.eachModule((key, value) => {
         if (typeof value === 'object') {
-          let isBrowserWindow = typeof window !== 'undefined' && value === window;
-          for (let name in value) {
+          const isBrowserWindow = typeof window !== 'undefined' && value === window;
+          for (const name in value) {
             if (isBrowserWindow && name === 'webkitStorageInfo') { continue; } // Avoid warning to console
             try {
-              let exp = value[name];
+              const exp = value[name];
               if (exp === fn) {
                 originStorage.set(fn, origin = new Origin(key, name));
                 return true;

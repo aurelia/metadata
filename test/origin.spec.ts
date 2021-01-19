@@ -30,7 +30,7 @@ describe('origin', () => {
     beforeEach(()=> {
       modules = {'text-file': 'abcdef', 'real-module':{name: 'test', x() { return 'hey' }}};
       spyOn(PLATFORM, 'eachModule').and.callFake((callback) => {
-        for (let key in modules) callback(key, modules[key]);
+        for (const key in modules) callback(key, modules[key]);
       });
     });
 
@@ -41,7 +41,7 @@ describe('origin', () => {
     });
 
     it('should find member of loaded module', () => {
-      let origin = Origin.get(modules['real-module']['x']);
+      const origin = Origin.get(modules['real-module']['x']);
       expect(origin.moduleId).toBe('real-module');
     });
 
