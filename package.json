@@ -29,8 +29,7 @@
     "rollup": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "lint": "eslint ./src ./test --ext .ts,.tsx",
-    "versioning": "gulp prepare-release",
-    "cut-release": "npm run build && npm run lint && npm run versioning"
+    "cut-release": "gulp prepare-release"
   },
   "files": [
     "dist",
