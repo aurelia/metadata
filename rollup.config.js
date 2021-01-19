@@ -1,15 +1,20 @@
 // @ts-check
 import typescript from '@rollup/plugin-typescript';
 
+const name = require('./package.json').name;
+
 /**
  * @type {import('rollup').RollupOptions[]}
  */
 const rollupOptions = [
   {
     input: 'src/index.ts',
+    external: [
+      'aurelia-pal'
+    ],
     output: [
       {
-        file: 'dist/es2015/index.js',
+        file: `dist/es2015/${name}.js`,
         format: 'es',
         sourcemap: true,
       },
@@ -23,25 +28,28 @@ const rollupOptions = [
   },
   {
     input: 'src/index.ts',
+    external: [
+      'aurelia-pal'
+    ],
     output: [
       {
-        file: 'dist/native-modules/index.js',
+        file: `dist/native-modules/${name}.js`,
         format: 'es',
         sourcemap: true,
       },
       {
-        file: 'dist/amd/index.js',
+        file: `dist/amd/${name}.js`,
         format: 'amd',
         name: 'aurelia-metadata',
         sourcemap: true,
       },
       {
-        file: 'dist/commonjs/index.js',
+        file: `dist/commonjs/${name}.js`,
         format: 'cjs',
         sourcemap: true,
       },
       {
-        file: 'dist/system/index.js',
+        file: `dist/system/${name}.js`,
         format: 'system',
         sourcemap: true,
       }
