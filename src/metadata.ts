@@ -3,11 +3,22 @@ function isObject(val) {
 }
 
 /**
+ * @internal
+ */
+declare global {
+  // eslint-disable-next-line
+  namespace Reflect {
+    export function getOwnMetadata(key: any, target: any, targetKey?: any): any;
+    export function defineMetadata(key: any, value: any, target: any, targetKey?: any): void;
+  }
+}
+
+/**
 * Helpers for working with metadata on functions.
 *
 * Note for the Typescript to ES5 transpiler: Due to the non-standard compliant implementation of 'extends', these methods, when applied to derived classes, will operate on the parent class and not on the child class. This can be circumvented by either transpiling to ES2015 (ES6) or by making the targetKey parameter class-specific eg. by using target.name for the targetKey parameter.
 */
-interface MetadataType {
+export interface MetadataType {
   /**
   * The metadata key representing pluggable resources.
   */
@@ -67,7 +78,7 @@ export const metadata: MetadataType = {
     if (!isObject(target)) {
       return undefined;
     }
-    let result = metadata.getOwn(metadataKey, target, targetKey);
+    const result = metadata.getOwn(metadataKey, target, targetKey);
     return result === undefined ? metadata.get(metadataKey, Object.getPrototypeOf(target), targetKey) : result;
   },
   getOwn(metadataKey: string, target: Function, targetKey?: string): Object {
@@ -83,7 +94,7 @@ export const metadata: MetadataType = {
     let result = metadata.getOwn(metadataKey, target, targetKey);
 
     if (result === undefined) {
-      result = new Type();
+      result = new (Type as { new(): any })();
       Reflect.defineMetadata(metadataKey, result, target, targetKey);
     }
 

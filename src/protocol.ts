@@ -1,7 +1,7 @@
 function alwaysValid() { return true; }
-function noCompose() {}
+function noCompose() {/* empty */}
 
-function ensureProtocolOptions(options) {
+function ensureProtocolOptions(options): ProtocolOptions {
   if (options === undefined) {
     options = {};
   } else if (typeof options === 'function') {
@@ -23,14 +23,14 @@ function ensureProtocolOptions(options) {
 
 function createProtocolValidator(validate) {
   return function(target) {
-    let result = validate(target);
+    const result = validate(target);
     return result === true;
   };
 }
 
 function createProtocolAsserter(name, validate) {
   return function(target) {
-    let result = validate(target);
+    const result = validate(target);
     if (result !== true) {
       throw new Error(result || `${name} was not correctly implemented.`);
     }
@@ -60,12 +60,12 @@ interface ProtocolOptions {
 export function protocol(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): any {
   options = ensureProtocolOptions(options);
 
-  let result = function(target) {
-    let resolvedTarget = typeof target === 'function'
+  const result = function(target) {
+    const resolvedTarget = typeof target === 'function'
         ? target.prototype
         : target;
 
-    options.compose(resolvedTarget);
+    (options as ProtocolOptions).compose(resolvedTarget);
     result.assert(resolvedTarget);
 
     Object.defineProperty(resolvedTarget, 'protocol:' + name, {
@@ -74,10 +74,10 @@ export function protocol(name: string, options?: ((target: any) => string | bool
       writable: false,
       value: true
     });
-  };
+  } as any;
 
-  result.validate = createProtocolValidator(options.validate);
-  result.assert = createProtocolAsserter(name, options.validate);
+  result.validate = createProtocolValidator((options as ProtocolOptions).validate);
+  result.assert = createProtocolAsserter(name, (options as ProtocolOptions).validate);
 
   return result;
 }
@@ -90,15 +90,15 @@ export function protocol(name: string, options?: ((target: any) => string | bool
 */
 protocol.create = function(name: string, options?: ((target: any) => string | boolean) | ProtocolOptions): Function {
   options = ensureProtocolOptions(options);
-  let hidden = 'protocol:' + name;
-  let result = function(target) {
-    let decorator = protocol(name, options);
+  const hidden = 'protocol:' + name;
+  const result = function(target) {
+    const decorator = protocol(name, options);
     return target ? decorator(target) : decorator;
-  };
+  } as any;
 
   result.decorates = function(obj) { return obj[hidden] === true; };
   result.validate = createProtocolValidator(options.validate);
   result.assert = createProtocolAsserter(name, options.validate);
 
-  return result;
+  return result as Function;
 };
