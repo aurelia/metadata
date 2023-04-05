@@ -1,7 +1,3 @@
-import {
-  PLATFORM
-} from 'aurelia-pal';
-
 /**
 * Helpers for working with metadata on functions.
 *
